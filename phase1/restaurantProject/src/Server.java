@@ -1,5 +1,3 @@
-import Foods.Food;
-
 public class Server {
     private Order currentOrder;
 
