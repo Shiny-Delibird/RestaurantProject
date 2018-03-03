@@ -1,3 +1,5 @@
+import com.sun.javaws.exceptions.InvalidArgumentException;
+
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -60,6 +62,31 @@ public class OrderManager {
             cookedOrders.remove(order);
         else
             throw new IllegalArgumentException("This order isn't ready to be picked up!");
+    }
+
+    public Order getOrder(int id, String list){
+        LinkedList<Order> search;
+        switch (list){
+            case "pending":
+                search = pendingOrders;
+                break;
+            case "in progress":
+                search = ordersInProgress;
+                break;
+            case "cooked":
+                search = cookedOrders;
+                break;
+            case "completed":
+                search = completedOrders;
+                break;
+            default:
+                throw new IllegalArgumentException("That's not a list I can search!");
+        }
+        for (Order o : search){
+            if (o.orderNumber == id)
+                return o;
+        }
+        throw new IllegalArgumentException("That list doesn't contain the specified order!");
     }
 
     public void confirmCompleted(Order order){
