@@ -47,4 +47,8 @@ public class Food{
         Map<String, Integer> ingredientsCopy = new HashMap<String, Integer>(another.ingredients);
         Food newFood = new Food(another.name, another.price, ingredientsCopy);
     }
+
+    public Map<String, Integer> getIngredients(){
+        return ingredients;
+    }
 }
