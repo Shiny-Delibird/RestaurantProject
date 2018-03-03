@@ -12,8 +12,18 @@ public class Restaurant {
     private Map<String, Food> menu;
 
     private static final String MENUFILE = "phase1/restaurantProject/src/menu.txt";
+    private static final String EVENTFILE = "phase1/restaurantProject/src/events.txt";
 
     public Restaurant() {
+        this.orderManager = new OrderManager();
+        this.kitchen = new Kitchen(orderManager);
+        this.menu = new HashMap<>();
+
+        constructMenu(MENUFILE);
+    }
+
+    public Restaurant(List<Server> servers, List<Cook> cooks){
+        this.servers = servers;
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager);
         this.menu = new HashMap<>();
@@ -54,6 +64,64 @@ public class Restaurant {
             e.printStackTrace();
         }
 
+    }
+
+    private void processEvents(String file){
+        try {
+            BufferedReader fileReader = new BufferedReader(new FileReader(file));
+
+            String line = fileReader.readLine();
+            while (line != null){
+
+                processEvent(line);
+                line = fileReader.readLine();
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void processEvent(String event) {
+        String[] split = event.split("\\|");
+
+        String workerName = split[0].trim();
+        String eventType = split[1].trim();
+        String orderId = split[2].trim();
+        String notes = split[3].trim();
+
+        switch (eventType){
+            case "takeOrder":
+                placeOrder(workerName, notes);
+                break;
+            case "cookConfirmOrder":
+                confirmOrder(workerName, orderId);
+                break;
+            case "cookFinishedOrder":
+                orderFilled(workerName, orderId);
+                break;
+            case "tableReceivedOrder":
+                orderReceived(workerName, orderId);
+                break;
+            case "tableRejectedOrder":
+                orderRejected(workerName, orderId, notes);
+                break;
+        }
+    }
+
+    private void orderRejected(String workerName, String orderId, String notes) {
+    }
+
+    private void orderReceived(String server, String orderId) {
+    }
+
+    private void orderFilled(String cook, String orderId) {
+    }
+
+    private void confirmOrder(String cook, String orderId) {
+    }
+
+    private void placeOrder(String server, String foods) {
     }
 
     //Main loop that will read the events and do them

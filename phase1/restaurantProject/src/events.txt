@@ -1,0 +1,11 @@
+The event structure will be like:
+
+Server/Cook doing event | Type of Event | Order that Event is happening on | Notes? maybe idk
+
+Event types will be:
+
+takeOrder
+cookConfirmOrder
+cookFinishedOrder
+tableReceivedOrder
+tableRejectedOrder
