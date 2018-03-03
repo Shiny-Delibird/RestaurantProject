@@ -7,7 +7,7 @@ public class Order {
     private List<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
-    private int orderNumber;
+    int orderNumber;
     public Order(int tableNumber){
         this.tableNumber = tableNumber;
         this.orderNumber = classOrderNumber;
