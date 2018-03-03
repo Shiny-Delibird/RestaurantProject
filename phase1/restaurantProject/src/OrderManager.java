@@ -2,10 +2,10 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class OrderManager {
-    private Queue<Order> pendingOrders; // server placed order, cooking not started
-    private Queue<Order> ordersInProgress; // cook accepted order, cooking in progress
-    private Queue<Order> cookedOrders; // order has been cooked, waiting for server pick up
-    private Queue<Order> completedOrders; // order has been delivered and accepted by customer
+    private LinkedList<Order> pendingOrders; // server placed order, cooking not started
+    private LinkedList<Order> ordersInProgress; // cook accepted order, cooking in progress
+    private LinkedList<Order> cookedOrders; // order has been cooked, waiting for server pick up
+    private LinkedList<Order> completedOrders; // order has been delivered and accepted by customer
 
     OrderManager(){
         pendingOrders = new LinkedList<>();
@@ -14,19 +14,19 @@ public class OrderManager {
         completedOrders = new LinkedList<>();
     }
 
-    public Queue<Order> getPendingOrders(){
+    public LinkedList<Order> getPendingOrders(){
         return pendingOrders;
     }
 
-    public Queue<Order> getOrdersInProgress(){
+    public LinkedList<Order> getOrdersInProgress(){
         return ordersInProgress;
     }
 
-    public Queue<Order> getCookedOrders(){
+    public LinkedList<Order> getCookedOrders(){
         return cookedOrders;
     }
 
-    public Queue<Order> getCompletedOrders(){
+    public LinkedList<Order> getCompletedOrders(){
         return completedOrders;
     }
 
