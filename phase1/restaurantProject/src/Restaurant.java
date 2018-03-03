@@ -110,6 +110,7 @@ public class Restaurant {
     }
 
     private void orderRejected(String workerName, String orderId, String notes) {
+
     }
 
     private void orderReceived(String server, String orderId) {
@@ -121,7 +122,21 @@ public class Restaurant {
     private void confirmOrder(String cook, String orderId) {
     }
 
-    private void placeOrder(String server, String foods) {
+    private void placeOrder(String server, String notes) {
+        Integer tableNumber = Integer.valueOf(notes.split("-")[0].trim());
+        String[] items = notes.split("-")[1].split(",");
+        Order myOrder = new Order(tableNumber);
+
+        for (String s : items){
+            Integer amount = Integer.valueOf(s.split("x")[0].trim());
+            String foodItem = s.split("x")[1].trim();
+
+            if (menu.containsKey(s)){
+                myOrder.addFood(new Food(menu.get(foodItem)));
+            }
+        }
+
+        orderManager.placeOrder(myOrder);
     }
 
     //Main loop that will read the events and do them
