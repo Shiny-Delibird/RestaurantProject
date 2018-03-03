@@ -16,6 +16,7 @@ public class Restaurant {
     public Restaurant() {
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager);
+        this.menu = new HashMap<>();
 
         constructMenu(MENUFILE);
     }
@@ -46,8 +47,8 @@ public class Restaurant {
                     allIngredients.put(ingredientName, ingredientAmount);
                 }
 
-                //Now I have price, foodName and a Map of ingredients, up to Leon to make the food constructor so I can
-                //actually make the food object now.
+                menu.put(foodName, new Food(foodName, price, allIngredients));
+                line = fileReader.readLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -58,6 +59,5 @@ public class Restaurant {
     //Main loop that will read the events and do them
     public static void main(String[] args) {
         Restaurant mainRestaurant = new Restaurant();
-
     }
 }
