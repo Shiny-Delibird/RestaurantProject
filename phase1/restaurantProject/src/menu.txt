@@ -1,0 +1,2 @@
+Burger | 2 x bun, 1 x patty, 1 x lettuce, 1 x tomato
+Salad | 2 x lettuce, 1 x tomato, 1 x cucumber

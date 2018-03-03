@@ -4,7 +4,7 @@ Represents a food
 import java.util.Map;
 
 public class Food{
-    //Make static list of types of ingredients
+    //Make list of types of ingredients
     Map<String, Integer> ingredients;
     private float price;
 
@@ -19,5 +19,5 @@ public class Food{
     public float getPrice() { return price; }
 
     //This is here so when we make an order we can give a copy of the Food
-    public Food copyFood(){ return null; }
+    public Food(Food another){}
 }
