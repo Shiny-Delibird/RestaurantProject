@@ -1,5 +1,15 @@
 public class Server {
     private Order currentOrder;
+    private static int classIdNumber = 1;
+    private int idNumber;
+    private Restaurant restaurant;
+
+    public Server(Restaurant restaurant){
+        this.idNumber = classIdNumber;
+        classIdNumber += 1;
+        this.restaurant = restaurant;
+    }
+
 
     public void submitOrder(OrderManager manager){
         manager.placeOrder(currentOrder);
