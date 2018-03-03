@@ -32,10 +32,11 @@ public class Restaurant {
 
                 //First item is name, rest is ingredients
                 String[] barSplit = line.split("\\|");
-                String foodName = barSplit[0].trim();
+                Float price = Float.valueOf(barSplit[0].trim());
+                String foodName = barSplit[1].trim();
 
                 //Each ingredient is separated by a comma
-                String[] ingredients = barSplit[1].split(",");
+                String[] ingredients = barSplit[2].split(",");
                 for (String s : ingredients){
                     //There is an "x" between the amount and the ingredient name
                     String[] ingredient = s.split("x");
@@ -45,7 +46,7 @@ public class Restaurant {
                     allIngredients.put(ingredientName, ingredientAmount);
                 }
 
-                //Now I have foodName and a Map of ingredients, up to Leon to make the food constructor so I can
+                //Now I have price, foodName and a Map of ingredients, up to Leon to make the food constructor so I can
                 //actually make the food object now.
             }
         } catch (IOException e) {
