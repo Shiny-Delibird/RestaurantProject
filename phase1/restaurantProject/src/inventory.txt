@@ -1,0 +1,7 @@
+bun | 50
+lettuce | 20
+cucumber | 5
+tomato | 15
+patty | 25
+onion | 10
+ketchup | 50

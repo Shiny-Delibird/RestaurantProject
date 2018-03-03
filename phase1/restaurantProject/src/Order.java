@@ -26,7 +26,7 @@ public class Order {
                 Integer quantity = entry.getValue();
                 if (allIngredients.containsKey(name)){
                     int originalQuantity = allIngredients.get(name);
-                    allIngredients.put(name, originalQuantity + quantity);
+                    allIngredients.replace(name, originalQuantity, originalQuantity + quantity);
                 }else{
                     allIngredients.put(name, quantity);
                 }
