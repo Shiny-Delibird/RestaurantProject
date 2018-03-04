@@ -7,6 +7,10 @@ import java.util.Map;
 class InventoryManager {
     private Map<String, Integer> inventory;
 
+    /**
+     * Read a file with the inventory quantity and instantiate the inventory as a HashMap
+     * @param file A txt file that stores the quantity of the inventory stock
+     */
     InventoryManager (String file){
         inventory = new HashMap<>();
         try {
@@ -24,6 +28,10 @@ class InventoryManager {
         }
     }
 
+    /**
+     * Subtracts <inventory> hashmap with a hashmap of the ingredients used
+     * @param used a HashMap that contains ingredients to be subtracted
+     */
     public void useIngredients(Map<String, Integer> used){
         for (String key : used.keySet()){
             if (inventory.containsKey(key)) {

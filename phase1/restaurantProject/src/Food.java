@@ -10,11 +10,18 @@ public class Food{
     private float price;
     private String name;
 
+    /**
+     * Creates a item on the menu with a name, price, and ingredients
+     * @param name The name of the dish
+     * @param price The base price of the dish
+     * @param ingredients Ingredients used to prepare this dish
+     */
     public Food(String name, float price, Map<String, Integer> ingredients){
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
     }
+
 
     public void addIngredient(String ingredientName, int ingredientQuantity){
         if (ingredients.containsKey(ingredientName)){
@@ -42,10 +49,15 @@ public class Food{
 
     public float getPrice() { return price; }
 
-    //This is here so when we make an order we can give a copy of the Food
+    /**
+     * This constructor is used STRICTLY for making a copy of the given food
+     * @param another The food instance that must be copied
+     */
     public Food(Food another){
         Map<String, Integer> ingredientsCopy = new HashMap<String, Integer>(another.ingredients);
-        Food newFood = new Food(another.name, another.price, ingredientsCopy);
+        this.name = another.name;
+        this.price = another.price;
+        this.ingredients = ingredientsCopy;
     }
 
     public Map<String, Integer> getIngredients(){
