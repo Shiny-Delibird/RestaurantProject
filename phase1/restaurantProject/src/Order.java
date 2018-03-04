@@ -12,12 +12,12 @@ public class Order {
         this.tableNumber = tableNumber;
         this.orderNumber = classOrderNumber;
         classOrderNumber += 1;
-        foods = new ArrayList<Food>(foods);
+        foods = new ArrayList<>(foods);
     }
 
     //Returns a Map with the name and amount of each ingredient
     public Map<String, Integer> getAllIngredients(){
-        Map<String, Integer> allIngredients = new HashMap<String, Integer>();
+        Map<String, Integer> allIngredients = new HashMap<>();
 
         for (Food food : foods){
             Map<String, Integer> currentIngredients = food.getIngredients();
