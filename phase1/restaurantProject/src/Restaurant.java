@@ -1,5 +1,4 @@
 import java.io.*;
-import java.lang.reflect.Member;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,15 +10,15 @@ public class Restaurant {
     private List<Server> servers;
     private Map<String, Food> menu;
 
-    private static final String MENUFILE = "phase1/restaurantProject/src/menu.txt";
-    private static final String EVENTFILE = "phase1/restaurantProject/src/events.txt";
+    private static final String MENU_FILE = "phase1/restaurantProject/src/menu.txt";
+    private static final String EVENT_FILE = "phase1/restaurantProject/src/events.txt";
 
     public Restaurant() {
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager);
         this.menu = new HashMap<>();
 
-        constructMenu(MENUFILE);
+        constructMenu(MENU_FILE);
     }
 
     public Restaurant(List<Server> servers, List<Cook> cooks){
@@ -28,10 +27,10 @@ public class Restaurant {
         this.kitchen = new Kitchen(orderManager);
         this.menu = new HashMap<>();
 
-        constructMenu(MENUFILE);
+        constructMenu(MENU_FILE);
     }
 
-    //Will make the Menu from the text file
+    //Generates the Menu from the menu.txt file
     private void constructMenu(String file) {
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(file));
@@ -66,6 +65,7 @@ public class Restaurant {
 
     }
 
+    //Iterates through every line in the events.txt file
     private void processEvents(String file){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(file));
@@ -82,6 +82,7 @@ public class Restaurant {
         }
     }
 
+    //Takes one event line from the file and processes it
     private void processEvent(String event) {
         String[] split = event.split("\\|");
 
@@ -111,13 +112,15 @@ public class Restaurant {
         }
     }
 
+    //Table has requested the Bill for the Order
     private void requestBill(String server, String orderId) {
         Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
         Server myServer = getServer(server);
 
-        toPay.getPrice();
+        System.out.println(toPay.getPrice());
     }
 
+    //Order has been taken to the table and they have rejected it
     private void orderRejected(String server, String orderId, String notes) {
         Order toReject = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
         Server myServer = getServer(server);
@@ -125,6 +128,7 @@ public class Restaurant {
         orderManager.retrieveOrder(toReject);
     }
 
+    //Order has been taken to the table and they have accepted it
     private void orderReceived(String server, String orderId) {
         Order toReceive = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
         Server myServer = getServer(server);
@@ -133,27 +137,23 @@ public class Restaurant {
         orderManager.confirmCompleted(toReceive);
     }
 
+    //Order is finished cooking and ready to be taken out by the Server
     private void orderFilled(String cook, String orderId) {
         Order toFill = orderManager.getOrder(Integer.valueOf(orderId), "in progress");
         Cook myCook = kitchen.getCook(cook);
+
         kitchen.cook(toFill, myCook);
     }
 
+    //Cook confirms the Order is received
     private void confirmOrder(String cook, String orderId) {
         Order toConfirm = orderManager.getOrder(Integer.valueOf(orderId), "pending");
         Cook myCook = kitchen.getCook(cook);
+
         kitchen.cook(toConfirm, myCook);
     }
 
-    private Server getServer(String serverID){
-        for (Server server : servers){
-            if (serverID.equals(server.getID())){
-                return server;
-            }
-        }
-        return null;
-    }
-
+    //Constructs the Order object and then places the Order
     private void placeOrder(String server, String notes) {
         Integer tableNumber = Integer.valueOf(notes.split("-")[0].trim());
         String[] items = notes.split("-")[1].split(",");
@@ -174,8 +174,19 @@ public class Restaurant {
         orderManager.placeOrder(myOrder);
     }
 
+    //Gets the Server object from the list based on the serverID
+    private Server getServer(String serverID){
+        for (Server server : servers){
+            if (serverID.equals(server.getID())){
+                return server;
+            }
+        }
+        return null;
+    }
+
     //Main loop that will read the events and do them
     public static void main(String[] args) {
         Restaurant mainRestaurant = new Restaurant();
+        //mainRestaurant.processEvents(Restaurant.EVENT_FILE);
     }
 }
