@@ -1,6 +1,6 @@
 The event structure will be like:
 
-Server/Cook doing event | Type of Event | Order that Event is happening on | Notes? maybe idk
+Server/Cook doing event | Type of Event | Order that Event is happening on | Notes?
 
 Event types will be:
 
@@ -15,6 +15,6 @@ Notes will have either order info or reason why order was rejected
 
 ex:
 
-1 | takeOrder |  | 4 - Burger x 2, fries x 1
+server1 | takeOrder |  | 4 - Burger x 2, fries x 1
 
-1 | cookConfirmOrder | 2 |
+cook1 | cookConfirmOrder | 2 |
