@@ -1,20 +1,25 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 class InventoryManager {
     private Map<String, Integer> inventory;
+    private Map<String, Integer> minimums;
+
+    private static final String INVENTORY_FILE = "phase1/restaurantProject/src/inventory.txt";
+    private static final String MINIMUM_FILE = "phase1/restaurantProject/src/minimums.txt";
+    private static final String REORDER_FILE = "phase1/restaurantProject/src/requests.txt";
 
     /**
-     * Read a file with the inventory quantity and instantiate the inventory as a HashMap
-     * @param file A txt file that stores the quantity of the inventory stock
+     * Read a file with the inventory quantity and instantiate the inventory as a HashMap. Also reads another file with
+     * the minimum quantities for each item in the inventory and instantiates as a HashMap. Orders more inventory if
+     * necessary.
      */
-    InventoryManager (String file){
+    InventoryManager (){
         inventory = new HashMap<>();
         try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(file));
+            BufferedReader fileReader = new BufferedReader(new FileReader(INVENTORY_FILE));
 
             String line = fileReader.readLine();
             while (line != null){
@@ -26,6 +31,23 @@ class InventoryManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        minimums = new HashMap<>();
+        try{
+            BufferedReader fileReader = new BufferedReader(new FileReader(MINIMUM_FILE));
+
+            String line = fileReader.readLine();
+            while (line != null){
+                String[] split = line.split("\\s\\|\\s");
+                inventory.put(split[0], Integer.parseInt(split[1]));
+
+                line = fileReader.readLine();
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+        checkAndReorder();
     }
 
     /**
@@ -42,17 +64,62 @@ class InventoryManager {
             }
 
         }
+        checkAndReorder(used.keySet());
     }
 
     //Adds more ingredients to the inventory
-    public void addIngredient(String ingredient, int amount){}
+    public void receiveShipment(Map<String, Integer> shipment){
+        for (String key : shipment.keySet()){
+            addIngredient(key, shipment.get(key));
+        }
+    }
 
-    //Removes ingredients from the inventory
-    public void removeIngredient(String ingredient, int amount){}
+    public void addIngredient(String food, Integer amount){
+        if (inventory.containsKey(food)){
+            Integer old = inventory.get(food);
+            inventory.replace(food, old, old + amount);
+        } else{
+            inventory.put(food, amount);
+        }
+    }
 
-    //Removes all ingredients in the food from the inventory
-    public void removeIngredient(Food food){}
+    private void checkAndReorder(){
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
 
-    //Removes all ingredients in the order from the inventory
-    public void removeIngredient(Order order){}
+            for (String key : inventory.keySet()){
+                if (inventory.get(key) < minimums.get(key)){
+                    out.println(key + " x 20");
+                }
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    private void checkAndReorder(Set<String> keys){
+        try {
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
+
+            for (String key : keys){
+                if (inventory.get(key) < minimums.get(key)){
+                    out.println(key + " x 20");
+                }
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public String toString(){
+        StringBuilder full = new StringBuilder();
+        for (String key : inventory.keySet()){
+            full.append(key);
+            full.append(" x ");
+            full.append(inventory.get(key));
+            full.append(System.lineSeparator());
+        }
+        return full.toString();
+    }
 }
