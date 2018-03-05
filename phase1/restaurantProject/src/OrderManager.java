@@ -5,7 +5,7 @@ import java.util.Queue;
 
 public class OrderManager {
     private LinkedList<Order> pendingOrders; // server placed order, cooking not started
-    private LinkedList<Order> ordersInProgress; // cook accepted order, cooking in progress
+    private LinkedList<Order> ordersInProgress; // cook confirmed order, cooking in progress
     private LinkedList<Order> cookedOrders; // order has been cooked, waiting for server pick up
     private LinkedList<Order> completedOrders; // order has been delivered and accepted by customer
 

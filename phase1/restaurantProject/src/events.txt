@@ -9,9 +9,12 @@ cookConfirmOrder
 cookFinishedOrder
 tableReceivedOrder
 tableRejectedOrder
+tableRequestedBill
 
 Notes will have either order info or reason why order was rejected
 
 ex:
 
-server1 | placeOrder |  | 4 - Burger x 2, fries x 1
+1 | takeOrder |  | 4 - Burger x 2, fries x 1
+
+1 | cookConfirmOrder | 2 |

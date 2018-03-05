@@ -1,12 +1,10 @@
 public class Server {
     private Order currentOrder;
-    private static int classIdNumber = 1;
-    private int idNumber;
+    private String ID;
     private Restaurant restaurant;
 
-    public Server(Restaurant restaurant){
-        this.idNumber = classIdNumber;
-        classIdNumber += 1;
+    public Server(Restaurant restaurant, String ID){
+        this.ID = ID;
         this.restaurant = restaurant;
     }
 
@@ -31,4 +29,7 @@ public class Server {
         currentOrder = new Order(tableNumber);
     }
 
+    public String getID() {
+        return ID;
+    }
 }

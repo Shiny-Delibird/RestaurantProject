@@ -106,20 +106,52 @@ public class Restaurant {
             case "tableRejectedOrder":
                 orderRejected(workerName, orderId, notes);
                 break;
+            case "tableRequestedBill":
+                requestBill(workerName, orderId);
         }
     }
 
-    private void orderRejected(String workerName, String orderId, String notes) {
+    private void requestBill(String server, String orderId) {
+        Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
+        Server myServer = getServer(server);
 
+        toPay.getPrice();
+    }
+
+    private void orderRejected(String server, String orderId, String notes) {
+        Order toReject = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
+        Server myServer = getServer(server);
+
+        orderManager.retrieveOrder(toReject);
     }
 
     private void orderReceived(String server, String orderId) {
+        Order toReceive = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
+        Server myServer = getServer(server);
+
+        orderManager.retrieveOrder(toReceive);
+        orderManager.confirmCompleted(toReceive);
     }
 
     private void orderFilled(String cook, String orderId) {
+        Order toFill = orderManager.getOrder(Integer.valueOf(orderId), "in progress");
+        Cook myCook = kitchen.getCook(cook);
+        kitchen.cook(toFill, myCook);
     }
 
     private void confirmOrder(String cook, String orderId) {
+        Order toConfirm = orderManager.getOrder(Integer.valueOf(orderId), "pending");
+        Cook myCook = kitchen.getCook(cook);
+        kitchen.cook(toConfirm, myCook);
+    }
+
+    private Server getServer(String serverID){
+        for (Server server : servers){
+            if (serverID.equals(server.getID())){
+                return server;
+            }
+        }
+        return null;
     }
 
     private void placeOrder(String server, String notes) {
@@ -132,9 +164,12 @@ public class Restaurant {
             String foodItem = s.split("x")[1].trim();
 
             if (menu.containsKey(s)){
-                myOrder.addFood(new Food(menu.get(foodItem)));
+                for (int i = 0; i < amount; i++){
+                    myOrder.addFood(new Food(menu.get(foodItem)));
+                }
             }
         }
+        Server myServer = getServer(server);
 
         orderManager.placeOrder(myOrder);
     }
