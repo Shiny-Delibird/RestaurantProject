@@ -9,15 +9,12 @@ public class Cook {
     private static int classIdNumber = 1;
     private String ID;
     private Order currentOrder;
-    private Kitchen kitchen;
 
     /**
      * Creates an instance of cook with an id number and updates the counter for cooks
-     * @param kitchen The kitchen where this cook will operate in
      */
-    public Cook(Kitchen kitchen, String ID){
+    public Cook(String ID){
         this.ID = ID;
-        this.kitchen = kitchen;
     }
 
     public void acceptOrder(OrderManager manager){
