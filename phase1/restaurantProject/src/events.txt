@@ -1,1 +1,4 @@
 server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, Fries x 1 -salt
+cook1 | cookConfirmOrder | 1 |
+cook1 | cookFinishedOrder | 1 |
+server1 | tableRejectedOrder | 1 | There's a fly in my soup!

@@ -85,12 +85,17 @@ public class Restaurant {
 
     //Takes one event line from the file and processes it
     private void processEvent(String event) {
+        String notes = "";
+
         String[] split = event.split("\\|");
 
         String workerName = split[0].trim();
         String eventType = split[1].trim();
         String orderId = split[2].trim();
-        String notes = split[3].trim();
+
+        if (split.length == 4){
+            notes = split[3].trim();
+        }
 
         switch (eventType){
             case "takeOrder":
@@ -104,7 +109,7 @@ public class Restaurant {
                 Order toConfirm = orderManager.getOrder(Integer.valueOf(orderId), "pending");
                 Cook confirmingCook = kitchen.getCook(workerName);
 
-                kitchen.cook(toConfirm, confirmingCook);
+                kitchen.acceptOrder(toConfirm, confirmingCook);
                 System.out.println("Cook " + confirmingCook.getID() + " confirmed order" + toConfirm.orderNumber);
                 break;
             case "cookFinishedOrder":
@@ -127,7 +132,7 @@ public class Restaurant {
                 Server rejectingServer = getServer(workerName);
 
                 orderManager.retrieveOrder(toReject);
-                System.out.println("Server" + rejectingServer.getID() + "rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber());
+                System.out.println("Server" + rejectingServer.getID() + "rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
                 break;
             case "tableRequestedBill":
                 Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
@@ -145,7 +150,7 @@ public class Restaurant {
         }
     }
 
-
+    //Parses the string to a shipment
     private Map<String,Integer> parseShipment(String shipment) {
         Map<String, Integer> allItems = new HashMap<>();
         String[] items = shipment.split(",");
@@ -160,6 +165,7 @@ public class Restaurant {
         return allItems;
     }
 
+    //Parses the string to a valid Order obhect
     private Order parseOrder(String event){
         Integer tableNumber = Integer.valueOf(event.split(";")[0].trim());
         String[] items = event.split(";")[1].split(",");

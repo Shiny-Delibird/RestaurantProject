@@ -20,4 +20,4 @@ server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, fries x 1
 
 cook1 | cookConfirmOrder | 2 |
 
- | receiveShipment |  | bread x 2, eggs x 12
+ | receiveShipment |  | bread x 2, eggs x 12, milk x 5

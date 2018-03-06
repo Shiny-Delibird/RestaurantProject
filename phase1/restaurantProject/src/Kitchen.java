@@ -49,7 +49,7 @@ public class Kitchen {
                 return cook;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Cook not found");
     }
 }
 
