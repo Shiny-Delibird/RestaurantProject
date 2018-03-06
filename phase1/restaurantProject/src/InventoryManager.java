@@ -36,14 +36,8 @@ class InventoryManager {
             minimums = new HashMap<>();
 
             //Generates the minimums file if it doesn't exist
-            File minimumFile = new File(MINIMUM_FILE);
-            if (!minimumFile.exists() || minimumFile.isDirectory()){
-                try {
-                    new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE)));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+            if (!(new File(MINIMUM_FILE).exists())) {
+                new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE)));}
 
             //Adds items from the minimum file to the Map
             BufferedReader minimumReader = new BufferedReader(new FileReader(MINIMUM_FILE));
