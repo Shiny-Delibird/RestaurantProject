@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,7 +25,7 @@ public class Restaurant {
     public Restaurant(List<Server> servers, List<Cook> cooks){
         this.servers = servers;
         this.orderManager = new OrderManager();
-        this.kitchen = new Kitchen(orderManager);
+        this.kitchen = new Kitchen(orderManager, cooks);
         this.menu = new HashMap<>();
 
         constructMenu(MENU_FILE);
@@ -155,23 +156,56 @@ public class Restaurant {
 
     //Constructs the Order object and then places the Order
     private void placeOrder(String server, String notes) {
-        Integer tableNumber = Integer.valueOf(notes.split("-")[0].trim());
-        String[] items = notes.split("-")[1].split(",");
-        Order myOrder = new Order(tableNumber);
-
-        for (String s : items){
-            Integer amount = Integer.valueOf(s.split("x")[0].trim());
-            String foodItem = s.split("x")[1].trim();
-
-            if (menu.containsKey(s)){
-                for (int i = 0; i < amount; i++){
-                    myOrder.addFood(new Food(menu.get(foodItem)));
-                }
-            }
-        }
+        Order myOrder = parseOrder(notes);
         Server myServer = getServer(server);
 
         orderManager.placeOrder(myOrder);
+    }
+
+    private Order parseOrder(String event){
+        Integer tableNumber = Integer.valueOf(event.split(";")[0].trim());
+        String[] items = event.split(";")[1].split(",");
+        Order myOrder = new Order(tableNumber);
+
+        for (String s : items){
+            String foodItem = s.split("x")[0].trim();
+            Integer amount = (int) s.split("x")[1].trim().charAt(0);
+
+            if (menu.containsKey(foodItem)){
+                for (int i = 0; i < amount; i++){
+                    Food toAdd = new Food(menu.get(foodItem));
+
+                    if (s.contains("+")){
+                        List<String> additions = parseChanges(s, '+');
+                        for (String addition : additions){
+                            toAdd.addIngredient(addition, 1);
+                        }
+                    } else if (s.contains("-")){
+                        List<String> removals = parseChanges(s, '-');
+                        for (String removal : removals){
+                            toAdd.removeIngredient(removal, 1);
+                        }
+                    }
+
+                    myOrder.addFood(toAdd);
+                }
+            }
+        }
+
+        return myOrder;
+    }
+
+    private List<String> parseChanges(String fullText, char change) {
+        String[] allThings = fullText.split("\\s");
+        ArrayList<String> items = new ArrayList<>();
+
+        for (String s : allThings){
+            if (s.charAt(0) == change){
+                items.add(s.substring(1));
+            }
+        }
+
+        return items;
     }
 
     //Gets the Server object from the list based on the serverID
@@ -186,7 +220,17 @@ public class Restaurant {
 
     //Main loop that will read the events and do them
     public static void main(String[] args) {
-        Restaurant mainRestaurant = new Restaurant();
-        //mainRestaurant.processEvents(Restaurant.EVENT_FILE);
+        List<Server> servers = new ArrayList<>();
+        servers.add(new Server("server1"));
+        servers.add(new Server("server2"));
+        servers.add(new Server("server3"));
+
+        List<Cook> cooks = new ArrayList<>();
+        cooks.add(new Cook("cook1"));
+        cooks.add(new Cook("cook2"));
+        cooks.add(new Cook("cook3"));
+
+        Restaurant mainRestaurant = new Restaurant(servers, cooks);
+        mainRestaurant.processEvents(Restaurant.EVENT_FILE);
     }
 }

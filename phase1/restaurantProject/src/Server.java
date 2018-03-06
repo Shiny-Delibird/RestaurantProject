@@ -1,11 +1,9 @@
 public class Server {
     private Order currentOrder;
     private String ID;
-    private Restaurant restaurant;
 
-    public Server(Restaurant restaurant, String ID){
+    public Server(String ID){
         this.ID = ID;
-        this.restaurant = restaurant;
     }
 
 

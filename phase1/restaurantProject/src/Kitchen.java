@@ -16,8 +16,14 @@ public class Kitchen {
      */
     Kitchen(OrderManager orderManager) {
         this.orderManager = orderManager;
-        this.inventoryManager = new InventoryManager("inventory.txt");
+        this.inventoryManager = new InventoryManager();
         this.cooks = new ArrayList<>();
+    }
+
+    Kitchen(OrderManager orderManager, List<Cook> cooks) {
+        this.orderManager = orderManager;
+        this.inventoryManager = new InventoryManager();
+        this.cooks = cooks;
     }
 
     //Will take an order and the given cook will "cook" it, thereby moving it to next stage

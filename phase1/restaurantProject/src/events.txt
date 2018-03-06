@@ -15,6 +15,6 @@ Notes will have either order info or reason why order was rejected
 
 ex:
 
-server1 | takeOrder |  | 4 - Burger x 2, fries x 1
+server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, fries x 1
 
 cook1 | cookConfirmOrder | 2 |
