@@ -39,7 +39,7 @@ class InventoryManager {
             String line = fileReader.readLine();
             while (line != null){
                 String[] split = line.split("\\s\\|\\s");
-                inventory.put(split[0], Integer.parseInt(split[1]));
+                minimums.put(split[0], Integer.parseInt(split[1]));
 
                 line = fileReader.readLine();
             }
