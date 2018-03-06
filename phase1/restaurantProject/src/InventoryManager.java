@@ -49,6 +49,7 @@ class InventoryManager {
                 minimumLine = minimumReader.readLine();
             }
 
+            // detects and fills in missing entries from the minimums file
             fillMinimumFile();
 
             checkAndReorder(inventory.keySet());
@@ -119,8 +120,12 @@ class InventoryManager {
      * */
     private void checkAndReorder(Set<String> keys){
         try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
+            // generates the reorder file if it isn't present
+            if (!(new File(REORDER_FILE).exists())) {
+                new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));}
 
+            // fills the reorder file with the required ingredients if there are any
+            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)));
             for (String key : keys){
                 if (inventory.get(key) < minimums.get(key)){
                     out.println(key + " x 20");
