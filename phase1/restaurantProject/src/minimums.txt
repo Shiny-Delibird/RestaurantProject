@@ -1,5 +1,5 @@
 patty | 6
-cucumber | 1
+cucumber | 5
 onion | 10
 potato | 10
 vegetable oil | 10

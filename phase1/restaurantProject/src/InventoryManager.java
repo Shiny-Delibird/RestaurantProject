@@ -125,15 +125,17 @@ class InventoryManager {
      * @param keys the set of ingredients to check
      * */
     private void checkAndReorder(Set<String> keys){
+        // generates the reorder file if it isn't present
         try {
-            // generates the reorder file if it isn't present
             if (!(new File(REORDER_FILE).exists())) {
                 new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));}
-
+        } catch(IOException e){
+            e.printStackTrace();
+        }
             // fills the reorder file with the required ingredients if there are any
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)));
-            for (String key : keys){
-                if (inventory.get(key) < minimums.get(key)){
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)))) {
+            for (String key : keys) {
+                if (inventory.get(key) < minimums.get(key)) {
                     out.println(key + " x 20");
                 }
             }
