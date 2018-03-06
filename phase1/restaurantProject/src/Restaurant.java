@@ -200,7 +200,7 @@ public class Restaurant {
         ArrayList<String> items = new ArrayList<>();
 
         for (String s : allThings){
-            if (s.charAt(0) == change){
+            if (!s.isEmpty() && s.charAt(0) == change){
                 items.add(s.substring(1));
             }
         }

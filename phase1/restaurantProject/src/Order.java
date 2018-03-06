@@ -12,7 +12,7 @@ public class Order {
         this.tableNumber = tableNumber;
         this.orderNumber = classOrderNumber;
         classOrderNumber += 1;
-        foods = new ArrayList<>(foods);
+        foods = new ArrayList<>();
     }
 
     //Returns a Map with the name and amount of each ingredient

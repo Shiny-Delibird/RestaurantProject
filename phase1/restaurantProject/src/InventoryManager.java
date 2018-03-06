@@ -88,7 +88,8 @@ class InventoryManager {
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
 
             for (String key : inventory.keySet()){
-                if (inventory.get(key) < minimums.get(key)){
+                //TODO: Un-hardcode the value of 20 and make the minimum Map work
+                if (inventory.get(key) < 20){
                     out.println(key + " x 20");
                 }
             }
