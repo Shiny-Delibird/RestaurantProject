@@ -50,7 +50,7 @@ class InventoryManager {
             }
 
             // detects and fills in missing entries from the minimums file
-            fillMinimumFile();
+            fillMinimums();
 
             checkAndReorder(inventory.keySet());
         } catch (IOException e) {
@@ -58,15 +58,18 @@ class InventoryManager {
         }
     }
 
-    private void fillMinimumFile() throws IOException {
+    /**
+     * Analyses for missing entries in the minimums Map or the minimums.txt file and generates default minimums for each
+     * By default, the default minimum for all ingredients is 10 units. This can be adjusted afterwards in the
+     * minimums.txt file
+     * */
+    private void fillMinimums() throws IOException {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
 
             for (String key : inventory.keySet()){
                 if (!minimums.containsKey(key)){
-                    int amountToAdd = 10;
-
-                    out.println(key + " | " + amountToAdd);
-                    minimums.put(key, amountToAdd);
+                    out.println(key + " | " + 10);
+                    minimums.put(key, 10);
                 }
             }
         }
