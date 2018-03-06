@@ -23,21 +23,6 @@ public class OrderManager {
         return pendingOrders;
     }
 
-    // getter for list of Orders being cooked
-    public LinkedList<Order> getOrdersInProgress(){
-        return ordersInProgress;
-    }
-
-    // getter for list of Orders cooked and ready to be brought to customers
-    public LinkedList<Order> getCookedOrders(){
-        return cookedOrders;
-    }
-
-    // getter for list of Orders brought to and accepted by customers
-    public LinkedList<Order> getCompletedOrders(){
-        return completedOrders;
-    }
-
     /**
      * Submits an Order to the kitchen through the OrderManager
      * @param order the Order being placed
