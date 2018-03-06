@@ -80,7 +80,10 @@ class InventoryManager {
         for (String key : used.keySet()){
             if (inventory.containsKey(key)) {
                 Integer old = inventory.get(key);
-                inventory.replace(key, old, old - used.get(key));
+                if (old - used.get(key) >= 0){
+                    inventory.replace(key, old, old - used.get(key));}
+                else{
+                    throw new IllegalArgumentException("We don't have enough " + key + " for that order!");}
             } else{
                 throw new IllegalArgumentException(key + " is not a valid ingredient!");
             }
