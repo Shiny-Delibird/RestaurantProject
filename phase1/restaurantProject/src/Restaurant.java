@@ -125,14 +125,14 @@ public class Restaurant {
 
                 orderManager.retrieveOrder(toReceive);
                 orderManager.confirmCompleted(toReceive);
-                System.out.println("Server" + receivingServer.getID() + "gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
+                System.out.println("Server " + receivingServer.getID() + " gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
                 break;
             case "tableRejectedOrder":
                 Order toReject = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
                 Server rejectingServer = getServer(workerName);
 
                 orderManager.retrieveOrder(toReject);
-                System.out.println("Server" + rejectingServer.getID() + "rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
+                System.out.println("Server " + rejectingServer.getID() + " rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
                 break;
             case "tableRequestedBill":
                 Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");

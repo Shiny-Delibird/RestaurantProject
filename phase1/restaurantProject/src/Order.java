@@ -32,7 +32,7 @@ public class Order {
                 }
             }
         }
-        return null;
+        return allIngredients;
     }
 
     //Adds the food to the order

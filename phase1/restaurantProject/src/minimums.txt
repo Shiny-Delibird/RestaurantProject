@@ -5,3 +5,5 @@ tomato | 15
 patty | 10
 onion | 10
 ketchup | 25
+potato | 5
+vegetable oil | 5
