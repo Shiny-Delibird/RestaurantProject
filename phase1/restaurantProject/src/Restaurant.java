@@ -138,13 +138,14 @@ public class Restaurant {
                 Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
                 Server billServer = getServer(workerName);
 
-                System.out.println("Server " + billServer.getID() + "gave bill of " + toPay.getPrice() + " to table " + toPay.getTableNumber());
-
+                System.out.println("Server " + billServer.getID() + " gave bill of " + toPay.getPrice() + " to table " + toPay.getTableNumber());
+                break;
             case "receiveShipment":
                 Map<String, Integer> inventoryShipment = parseShipment(notes);
                 kitchen.inventoryManager.receiveShipment(inventoryShipment);
 
                 System.out.println("Received shipment of " + inventoryShipment);
+                break;
             default:
                 System.out.println("Event " + eventType + "not recognized");
         }

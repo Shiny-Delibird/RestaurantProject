@@ -40,4 +40,4 @@ Each line is structured in the format ingredient x 20 where ingredient is whatev
 quantity is desired it must be changed manually in your email)
 
 It is the user's responsibility to empty the file after the ingredients have been requested, or else the old requests
-will still be there the next time the file is visited, resulting in more requests tha necessary
+will still be there the next time the file is visited, resulting in more requests than necessary
