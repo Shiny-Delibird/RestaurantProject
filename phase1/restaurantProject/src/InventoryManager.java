@@ -20,37 +20,61 @@ class InventoryManager {
      * necessary.
      */
     InventoryManager (){
-        inventory = new HashMap<>();
-        try {
-            BufferedReader fileReader = new BufferedReader(new FileReader(INVENTORY_FILE));
+        try{
+            inventory = new HashMap<>();
 
-            String line = fileReader.readLine();
-            while (line != null){
-                String[] split = line.split("\\s\\|\\s");
+            //Adds items from the inventory file to the Map
+            BufferedReader inventoryReader = new BufferedReader(new FileReader(INVENTORY_FILE));
+            String inventoryLine = inventoryReader.readLine();
+            while (inventoryLine != null){
+                String[] split = inventoryLine.split("\\s\\|\\s");
                 addIngredient(split[0], Integer.parseInt(split[1]));
 
-                line = fileReader.readLine();
+                inventoryLine = inventoryReader.readLine();
             }
+
+            minimums = new HashMap<>();
+
+            //Generates the minimums file if it doesn't exist
+            File minimumFile = new File(MINIMUM_FILE);
+            if (!minimumFile.exists() || minimumFile.isDirectory()){
+                try {
+                    new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE)));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            //Adds items from the minimum file to the Map
+            BufferedReader minimumReader = new BufferedReader(new FileReader(MINIMUM_FILE));
+            String minimumLine = minimumReader.readLine();
+            while (minimumLine != null){
+                String[] split = minimumLine.split("\\s\\|\\s");
+                minimums.put(split[0], Integer.parseInt(split[1]));
+
+                minimumLine = minimumReader.readLine();
+            }
+
+            fillMinimumFile();
+
+            checkAndReorder(inventory.keySet());
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
 
-        minimums = new HashMap<>();
-        try{
-            BufferedReader fileReader = new BufferedReader(new FileReader(MINIMUM_FILE));
+    private void fillMinimumFile() throws IOException {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
 
-            String line = fileReader.readLine();
-            while (line != null){
-                String[] split = line.split("\\s\\|\\s");
-                minimums.put(split[0], Integer.parseInt(split[1]));
+            for (String key : inventory.keySet()){
+                if (!minimums.containsKey(key)){
+                    int amountToAdd = 10;
 
-                line = fileReader.readLine();
+                    out.println(key + " | " + amountToAdd);
+                    minimums.put(key, amountToAdd);
+                }
             }
-        } catch(IOException e){
-            e.printStackTrace();
         }
-
-        checkAndReorder(inventory.keySet());
     }
 
     /**

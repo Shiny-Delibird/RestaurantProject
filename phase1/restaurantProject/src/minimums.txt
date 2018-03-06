@@ -1,9 +1,9 @@
-bun | 10
-lettuce | 10
-cucumber | 3
-tomato | 15
-patty | 10
+patty | 6
+cucumber | 1
 onion | 10
-ketchup | 25
-potato | 5
-vegetable oil | 5
+potato | 10
+vegetable oil | 10
+bun | 10
+tomato | 10
+lettuce | 10
+ketchup | 10
