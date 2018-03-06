@@ -2,7 +2,10 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
-
+/**
+ * The InventoryManager class.
+ * Represents the inventory of a Restaurant and manages the stock of ingredients for cooking
+ * */
 class InventoryManager {
     private Map<String, Integer> inventory;
     private Map<String, Integer> minimums;
@@ -24,7 +27,7 @@ class InventoryManager {
             String line = fileReader.readLine();
             while (line != null){
                 String[] split = line.split("\\s\\|\\s");
-                inventory.put(split[0], Integer.parseInt(split[1]));
+                addIngredient(split[0], Integer.parseInt(split[1]));
 
                 line = fileReader.readLine();
             }
@@ -47,7 +50,7 @@ class InventoryManager {
             e.printStackTrace();
         }
 
-        checkAndReorder();
+        checkAndReorder(inventory.keySet());
     }
 
     /**
@@ -67,13 +70,21 @@ class InventoryManager {
         checkAndReorder(used.keySet());
     }
 
-    //Adds more ingredients to the inventory
+    /**
+     * Incorporates a new shipment of ingredients into the inventory
+     * @param shipment A map of each ingredient name and the amount received
+     * */
     public void receiveShipment(Map<String, Integer> shipment){
         for (String key : shipment.keySet()){
             addIngredient(key, shipment.get(key));
         }
     }
 
+    /**
+     * Adds a given amount of a single ingredient into the inventory
+     * @param food the ingredient being added
+     * @param amount the amount of the ingredient being added
+     * */
     public void addIngredient(String food, Integer amount){
         if (inventory.containsKey(food)){
             Integer old = inventory.get(food);
@@ -83,20 +94,11 @@ class InventoryManager {
         }
     }
 
-    private void checkAndReorder(){
-        try {
-            PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
-
-            for (String key : inventory.keySet()){
-                if (inventory.get(key) < minimums.get(key)){
-                    out.println(key + " x 20");
-                }
-            }
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-    }
-
+    /**
+     * checks if there is enough of each ingredient in the inventory for a given set of ingredients and writes to the
+     * reorder file if necessary
+     * @param keys the set of ingredients to check
+     * */
     private void checkAndReorder(Set<String> keys){
         try {
             PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
@@ -111,6 +113,9 @@ class InventoryManager {
         }
     }
 
+    /**
+     * Generates a list of all ingredients and the amount in stock of each for a manager to see
+     * */
     @Override
     public String toString(){
         StringBuilder full = new StringBuilder();
