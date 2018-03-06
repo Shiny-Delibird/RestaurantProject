@@ -3,7 +3,7 @@ import java.util.List;
 
 public class Kitchen {
     private OrderManager orderManager;
-    private InventoryManager inventoryManager;
+    InventoryManager inventoryManager;
     private List<Cook> cooks;
 
     //Constructor will take the orderManager from restaurant

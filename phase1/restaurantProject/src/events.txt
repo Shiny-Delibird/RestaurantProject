@@ -1,1 +1,1 @@
-server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, fries x 1 -salt
+server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, Fries x 1 -salt

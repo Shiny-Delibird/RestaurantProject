@@ -85,7 +85,7 @@ class InventoryManager {
      * @param food the ingredient being added
      * @param amount the amount of the ingredient being added
      * */
-    public void addIngredient(String food, Integer amount){
+    private void addIngredient(String food, Integer amount){
         if (inventory.containsKey(food)){
             Integer old = inventory.get(food);
             inventory.replace(food, old, old + amount);

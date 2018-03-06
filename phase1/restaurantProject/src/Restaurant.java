@@ -94,72 +94,70 @@ public class Restaurant {
 
         switch (eventType){
             case "takeOrder":
-                placeOrder(workerName, notes);
+                Order myOrder = parseOrder(notes);
+                Server orderServer = getServer(workerName);
+
+                orderManager.placeOrder(myOrder);
+                System.out.println("Order " + myOrder.orderNumber + " placed with foods: " + myOrder.foods + " by Server " + orderServer.getID());
                 break;
             case "cookConfirmOrder":
-                confirmOrder(workerName, orderId);
+                Order toConfirm = orderManager.getOrder(Integer.valueOf(orderId), "pending");
+                Cook confirmingCook = kitchen.getCook(workerName);
+
+                kitchen.cook(toConfirm, confirmingCook);
+                System.out.println("Cook " + confirmingCook.getID() + " confirmed order" + toConfirm.orderNumber);
                 break;
             case "cookFinishedOrder":
-                orderFilled(workerName, orderId);
+                Order toFill = orderManager.getOrder(Integer.valueOf(orderId), "in progress");
+                Cook cookingCook = kitchen.getCook(workerName);
+
+                kitchen.cook(toFill, cookingCook);
+                System.out.println("Cook " + cookingCook.getID() + " cooked order" + toFill.orderNumber);
                 break;
             case "tableReceivedOrder":
-                orderReceived(workerName, orderId);
+                Order toReceive = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
+                Server receivingServer = getServer(workerName);
+
+                orderManager.retrieveOrder(toReceive);
+                orderManager.confirmCompleted(toReceive);
+                System.out.println("Server" + receivingServer.getID() + "gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
                 break;
             case "tableRejectedOrder":
-                orderRejected(workerName, orderId, notes);
+                Order toReject = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
+                Server rejectingServer = getServer(workerName);
+
+                orderManager.retrieveOrder(toReject);
+                System.out.println("Server" + rejectingServer.getID() + "rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber());
                 break;
             case "tableRequestedBill":
-                requestBill(workerName, orderId);
+                Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
+                Server billServer = getServer(workerName);
+
+                System.out.println("Server " + billServer.getID() + "gave bill of " + toPay.getPrice() + " to table " + toPay.getTableNumber());
+
+            case "receiveShipment":
+                Map<String, Integer> inventoryShipment = parseShipment(notes);
+                kitchen.inventoryManager.receiveShipment(inventoryShipment);
+
+                System.out.println("Received shipment of " + inventoryShipment);
+            default:
+                System.out.println("Event " + eventType + "not recognized");
         }
     }
 
-    //Table has requested the Bill for the Order
-    private void requestBill(String server, String orderId) {
-        Order toPay = orderManager.getOrder(Integer.valueOf(orderId), "completed");
-        Server myServer = getServer(server);
 
-        System.out.println(toPay.getPrice());
-    }
+    private Map<String,Integer> parseShipment(String shipment) {
+        Map<String, Integer> allItems = new HashMap<>();
+        String[] items = shipment.split(",");
 
-    //Order has been taken to the table and they have rejected it
-    private void orderRejected(String server, String orderId, String notes) {
-        Order toReject = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
-        Server myServer = getServer(server);
+        for (String s : items){
+            String itemName = s.split("x")[0].trim();
+            Integer amount = Integer.valueOf(s.split("x")[1].trim());
 
-        orderManager.retrieveOrder(toReject);
-    }
+            allItems.put(itemName, amount);
+        }
 
-    //Order has been taken to the table and they have accepted it
-    private void orderReceived(String server, String orderId) {
-        Order toReceive = orderManager.getOrder(Integer.valueOf(orderId), "cooked");
-        Server myServer = getServer(server);
-
-        orderManager.retrieveOrder(toReceive);
-        orderManager.confirmCompleted(toReceive);
-    }
-
-    //Order is finished cooking and ready to be taken out by the Server
-    private void orderFilled(String cook, String orderId) {
-        Order toFill = orderManager.getOrder(Integer.valueOf(orderId), "in progress");
-        Cook myCook = kitchen.getCook(cook);
-
-        kitchen.cook(toFill, myCook);
-    }
-
-    //Cook confirms the Order is received
-    private void confirmOrder(String cook, String orderId) {
-        Order toConfirm = orderManager.getOrder(Integer.valueOf(orderId), "pending");
-        Cook myCook = kitchen.getCook(cook);
-
-        kitchen.cook(toConfirm, myCook);
-    }
-
-    //Constructs the Order object and then places the Order
-    private void placeOrder(String server, String notes) {
-        Order myOrder = parseOrder(notes);
-        Server myServer = getServer(server);
-
-        orderManager.placeOrder(myOrder);
+        return allItems;
     }
 
     private Order parseOrder(String event){
@@ -169,7 +167,7 @@ public class Restaurant {
 
         for (String s : items){
             String foodItem = s.split("x")[0].trim();
-            Integer amount = (int) s.split("x")[1].trim().charAt(0);
+            Integer amount = Character.getNumericValue(s.split("x")[1].trim().charAt(0));
 
             if (menu.containsKey(foodItem)){
                 for (int i = 0; i < amount; i++){
@@ -215,7 +213,7 @@ public class Restaurant {
                 return server;
             }
         }
-        return null;
+        throw new IllegalArgumentException("Server not found");
     }
 
     //Main loop that will read the events and do them

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Order {
-    private List<Food> foods;
+    public List<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
     int orderNumber;
@@ -47,5 +47,9 @@ public class Order {
             total += food.getPrice();
         }
         return total;
+    }
+
+    public int getTableNumber() {
+        return tableNumber;
     }
 }

@@ -1,2 +1,3 @@
 5 | Burger | 2 x bun, 1 x patty, 1 x lettuce, 1 x tomato
 4 | Salad | 2 x lettuce, 1 x tomato, 1 x cucumber
+2 | Fries | 1 x potato, 1 x vegetable oil

@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class Food{
     //Make list of types of ingredients
-    Map<String, Integer> ingredients;
+    private Map<String, Integer> ingredients;
     private float price;
     private String name;
 
@@ -16,7 +16,7 @@ public class Food{
      * @param price The base price of the dish
      * @param ingredients Ingredients used to prepare this dish
      */
-    public Food(String name, float price, Map<String, Integer> ingredients){
+    Food(String name, float price, Map<String, Integer> ingredients){
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
@@ -53,8 +53,8 @@ public class Food{
      * This constructor is used STRICTLY for making a copy of the given food
      * @param another The food instance that must be copied
      */
-    public Food(Food another){
-        Map<String, Integer> ingredientsCopy = new HashMap<String, Integer>(another.ingredients);
+    Food(Food another){
+        Map<String, Integer> ingredientsCopy = new HashMap<>(another.ingredients);
         this.name = another.name;
         this.price = another.price;
         this.ingredients = ingredientsCopy;
@@ -62,5 +62,10 @@ public class Food{
 
     public Map<String, Integer> getIngredients(){
         return ingredients;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
