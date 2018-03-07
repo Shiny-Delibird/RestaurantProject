@@ -23,6 +23,20 @@ cook1 | cookConfirmOrder | 2 |
 
  | receiveShipment |  | bread x 2, eggs x 12, milk x 5
 
+==============MENU================
+The menu is generated when the program runs from the file called menu.txt
+
+It is in the format:
+price | Name of food | ingredients needed to make food
+
+The ingredients needed to make a food are written as "amount x ingredientName"
+
+So for example, a sample menu item might look like:
+10 | Spaghetti | 1 x tomato, 1 x noodles, 1 x ground beef
+
+Also, if the menu has a food which is not currently in the inventory,
+it is added to the inventory file with am amount of 0 to stop the program from crashing
+
 =============MINIMUMS===========
 The minimums file determines what the minimum amount of each ingredient should be before reordering
 

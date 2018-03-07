@@ -31,6 +31,10 @@ public class Restaurant {
     //Generates the Menu from the menu.txt file
     private void constructMenu(String file) {
         try {
+            //Create the menu file if it does not exist
+            if (!(new File(file).exists())) {
+                new PrintWriter(new BufferedWriter(new FileWriter(file)));}
+
             BufferedReader fileReader = new BufferedReader(new FileReader(file));
             Set<String> ingredientTypes = new HashSet<>();
 

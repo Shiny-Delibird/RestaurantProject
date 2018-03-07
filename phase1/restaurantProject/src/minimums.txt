@@ -15,3 +15,6 @@ cheese | 10
 noodles | 10
 soda | 2
 steak sauce | 10
+bread | 10
+flour | 10
+dough | 10
