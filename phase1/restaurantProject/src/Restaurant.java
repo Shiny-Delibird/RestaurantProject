@@ -59,7 +59,7 @@ public class Restaurant {
                 menu.put(foodName, new Food(foodName, price, allIngredients));
                 line = fileReader.readLine();
             }
-            //TODO David call your inventory generator here with the HashSet ingredientTypes
+            kitchen.inventoryManager.checkIntegrity(ingredientTypes);
         } catch (IOException e) {
             e.printStackTrace();
         }
