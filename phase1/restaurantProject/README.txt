@@ -23,15 +23,15 @@ cook1 | cookConfirmOrder | 2 |
 
  | receiveShipment |  | bread x 2, eggs x 12, milk x 5
 
-
 =============MINIMUMS===========
-The minimums file determines what the minimum amount should be before reordering
+The minimums file determines what the minimum amount of each ingredient should be before reordering
 
-If the file minimums.txt does not exist, it generates the file with default minimums of 10 for each item
+The file is structured in the format ingredient | quantity
 
-Also, if there is an ingredient in the inventory that does not have a minimum value,
-the ingredient will be automatically added to the minimums file with a default minimum amount of 10
+If the file minimums.txt does not exist, it generates the file with default minimums of 10 for each item in the
+inventory (this is also the case with an incomplete minimums file with missing entries)
 
+NOTE: the minimums can be changed directly by altering the minimums.txt file. PLEASE ONLY INSERT NON-NEGATIVE INTEGERS
 
 ================REORDERING============
 Requests for more ingredients are auto-generated and stored in the requests.txt file as ingredients are used.
