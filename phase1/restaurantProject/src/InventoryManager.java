@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 /**
  * The InventoryManager class.
  * Represents the inventory of a Restaurant and manages the stock of ingredients for cooking
@@ -9,6 +8,7 @@ import java.util.Set;
 class InventoryManager {
     private Map<String, Integer> inventory;
     private Map<String, Integer> minimums;
+    private Set<String> requested;
 
     private static final String INVENTORY_FILE = "phase1/restaurantProject/src/inventory.txt";
     private static final String MINIMUM_FILE = "phase1/restaurantProject/src/minimums.txt";
@@ -22,6 +22,7 @@ class InventoryManager {
     InventoryManager (){
         try{
             inventory = new HashMap<>();
+            requested = new HashSet<>();
 
             //Creates the minimums file if it doesn't exist
             if (!(new File(INVENTORY_FILE).exists())) {
@@ -71,7 +72,6 @@ class InventoryManager {
      * */
     private void fillMinimums() throws IOException {
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
-
             for (String key : inventory.keySet()){
                 if (!minimums.containsKey(key)){
                     out.println(key + " | " + 10);
@@ -82,7 +82,9 @@ class InventoryManager {
     }
 
     /**
-     * Subtracts <inventory> hashmap with a hashmap of the ingredients used
+     * Subtracts <inventory> hashmap with a hashmap of the ingredients used.
+     * if any items in the inventory go below the minimum threshold for its stock, it is noted in requests.txt
+     * changes to the inventory are also reflected in inventory.txt
      * @param used a HashMap that contains ingredients to be subtracted
      */
     public void useIngredients(Map<String, Integer> used){
@@ -99,16 +101,30 @@ class InventoryManager {
 
         }
         checkAndReorder(used.keySet());
+        updateInventory();
     }
 
     /**
-     * Incorporates a new shipment of ingredients into the inventory
+     * Incorporates a new shipment of ingredients into the inventory. requests.txt is then cleared and ingredients still
+     * under threshold are reordered. also updates inventory.txt
      * @param shipment A map of each ingredient name and the amount received
      * */
     public void receiveShipment(Map<String, Integer> shipment){
         for (String key : shipment.keySet()){
             addIngredient(key, shipment.get(key));
         }
+        try{
+            // clears the requests.txt file
+            FileWriter clear = new FileWriter(REORDER_FILE, false);
+            clear.write("");
+            // clears the requested set
+            requested.clear();
+            // rechecks the inventory for insufficient stock
+            checkAndReorder(inventory.keySet());
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        updateInventory();
     }
 
     /**
@@ -127,7 +143,7 @@ class InventoryManager {
 
     /**
      * checks if there is enough of each ingredient in the inventory for a given set of ingredients and writes to the
-     * reorder file if necessary
+     * reorder file if necessary. if an ingredient has already been noted in requests.txt then it is ignored
      * @param keys the set of ingredients to check
      * */
     private void checkAndReorder(Set<String> keys){
@@ -138,12 +154,32 @@ class InventoryManager {
         } catch(IOException e){
             e.printStackTrace();
         }
-            // fills the reorder file with the required ingredients if there are any
+            // fills the reorder file with the required ingredients and keeps note of ordered items in the requested set
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)))) {
             for (String key : keys) {
-                if (inventory.get(key) < minimums.get(key)) {
+                if (inventory.get(key) < minimums.get(key) && !requested.contains(key)) {
                     out.println(key + " x 20");
+                    requested.add(key);
                 }
+            }
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * updates the inventory.txt file to match the inventory map
+     * */
+    private void updateInventory(){
+        try{
+            FileWriter clear = new FileWriter(INVENTORY_FILE,false);
+            clear.write("");
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+        try(PrintWriter fresh = new PrintWriter(new BufferedWriter(new FileWriter(INVENTORY_FILE, true)))){
+            for (String key : inventory.keySet()){
+                fresh.println(key + " | " + inventory.get(key));
             }
         } catch(IOException e){
             e.printStackTrace();
