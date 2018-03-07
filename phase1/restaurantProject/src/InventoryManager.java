@@ -1,7 +1,6 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
 /**
  * The InventoryManager class.
  * Represents the inventory of a Restaurant and manages the stock of ingredients for cooking
@@ -9,6 +8,7 @@ import java.util.Set;
 class InventoryManager {
     private Map<String, Integer> inventory;
     private Map<String, Integer> minimums;
+    private Set<String> requested;
 
     private static final String INVENTORY_FILE = "phase1/restaurantProject/src/inventory.txt";
     private static final String MINIMUM_FILE = "phase1/restaurantProject/src/minimums.txt";
@@ -56,6 +56,8 @@ class InventoryManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        requested = new HashSet<>();
     }
 
     /**
@@ -96,12 +98,24 @@ class InventoryManager {
     }
 
     /**
-     * Incorporates a new shipment of ingredients into the inventory
+     * Incorporates a new shipment of ingredients into the inventory. requests.txt is then cleared and ingredients still
+     * under threshold are reordered.
      * @param shipment A map of each ingredient name and the amount received
      * */
     public void receiveShipment(Map<String, Integer> shipment){
         for (String key : shipment.keySet()){
             addIngredient(key, shipment.get(key));
+        }
+        try{
+            // clears the requests.txt file
+            PrintWriter clear = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, false)));
+            clear.write("");
+            // clears the requested set
+            requested.clear();
+            // rechecks the inventory for insufficient stock
+            checkAndReorder(inventory.keySet());
+        } catch(IOException e){
+            e.printStackTrace();
         }
     }
 
@@ -121,7 +135,7 @@ class InventoryManager {
 
     /**
      * checks if there is enough of each ingredient in the inventory for a given set of ingredients and writes to the
-     * reorder file if necessary
+     * reorder file if necessary. if an ingredient has already been noted in requests.txt then it is ignored
      * @param keys the set of ingredients to check
      * */
     private void checkAndReorder(Set<String> keys){
@@ -132,11 +146,12 @@ class InventoryManager {
         } catch(IOException e){
             e.printStackTrace();
         }
-            // fills the reorder file with the required ingredients if there are any
+            // fills the reorder file with the required ingredients and keeps note of ordered items in the requested set
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)))) {
             for (String key : keys) {
-                if (inventory.get(key) < minimums.get(key)) {
+                if (inventory.get(key) < minimums.get(key) && !requested.contains(key)) {
                     out.println(key + " x 20");
+                    requested.add(key);
                 }
             }
         } catch(IOException e){

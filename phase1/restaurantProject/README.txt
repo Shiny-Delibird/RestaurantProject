@@ -36,8 +36,8 @@ the ingredient will be automatically added to the minimums file with a default m
 ================REORDERING============
 Requests for more ingredients are auto-generated and stored in the requests.txt file as ingredients are used.
 
-Each line is structured in the format ingredient x 20 where ingredient is whatever ingredient is needed. (if a different
-quantity is desired it must be changed manually in your email)
+Each line is structured in the format ingredient x quantity. WARNING: the default quantity ordered is 20 and it is up to
+the user to change it if the default is insufficient.
 
-It is the user's responsibility to empty the file after the ingredients have been requested, or else the old requests
-will still be there the next time the file is visited, resulting in more requests tha necessary
+When a new shipment of ingredients is processed, the requests.txt file is wiped and any ingredients still under the
+minimum threshold are then added back to requests.txt
