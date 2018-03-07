@@ -22,9 +22,8 @@ class InventoryManager {
     InventoryManager (){
         try{
             inventory = new HashMap<>();
-            requested = new HashSet<>();
 
-            //Creates the minimums file if it doesn't exist
+            //Creates the inventory file if it doesn't exist
             if (!(new File(INVENTORY_FILE).exists())) {
                 new PrintWriter(new BufferedWriter(new FileWriter(INVENTORY_FILE)));}
 
@@ -56,6 +55,8 @@ class InventoryManager {
 
             // detects and fills in missing entries from the minimums file
             fillMinimums();
+
+            requested = new HashSet<>();
 
             new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
             checkAndReorder(inventory.keySet());
