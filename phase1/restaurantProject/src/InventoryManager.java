@@ -1,5 +1,3 @@
-import com.sun.javaws.exceptions.InvalidArgumentException;
-
 import java.io.*;
 import java.util.*;
 
@@ -17,9 +15,9 @@ class InventoryManager {
     private static final String REORDER_FILE = "phase1/restaurantProject/src/requests.txt";
 
     /**
-     * Read a file with the inventory quantity and instantiate the inventory as a HashMap. Also reads another file with
-     * the minimum quantities for each item in the inventory and instantiates as a HashMap. Orders more inventory if
-     * necessary.
+     * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
+     * auto-generated with pre-determined values. Also creates the requests.txt file which holds all the items which
+     * a manager must order from the supplier
      */
     InventoryManager (){
         try{
@@ -43,21 +41,23 @@ class InventoryManager {
                 parseFile(MINIMUM_FILE);
             }
 
-            // detects and fills in any missing entries in inventory and minimums
-            // this ensures the two sets and files have the same entries
-            checkIntegrity(minimums.keySet());
-            fillMinimums();
-
             // creates the file and set for reordering
             requested = new HashSet<>();
             new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
 
-            checkAndReorder(inventory.keySet());
+            // detects and fills in any missing entries in inventory and minimums
+            // this ensures the two sets and files have the same entries
+            // also reorders any insufficient stock in the inventory
+            checkIntegrity(minimums.keySet());
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * reads the inventory or minimum file and creates the associated map attribute in the instance
+     * @param fileName the file to be parsed. must either be the INVENTORY_FILE or MINIMUM_FILE
+     * */
     private void parseFile(String fileName) throws IOException{
         Map<String, Integer> target;
         switch (fileName){
@@ -85,7 +85,7 @@ class InventoryManager {
      * By default, the default minimum for all ingredients is 10 units. This can be adjusted afterwards in the
      * minimums.txt file
      * */
-    private void fillMinimums() throws IOException {
+    private void fillMinimums(){
         try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
             for (String key : inventory.keySet()){
                 if (!minimums.containsKey(key)){
@@ -93,12 +93,15 @@ class InventoryManager {
                     minimums.put(key, 10);
                 }
             }
+        }catch(IOException e){
+            e.printStackTrace();
         }
     }
 
     /**
      * checks if each ingredient in a given set of ingredients is recorded in the inventory. if it is not, it is added
-     * to the inventory with a stock-value of 0. any insufficient ingredients are then reordered
+     * to the inventory with a stock-value of 0. any insufficient ingredients are then reordered. entries missing in the
+     * minimums file are also added
      * @param ingredients the set of ingredients to check
      * */
     public void checkIntegrity(Set<String> ingredients){
@@ -107,7 +110,7 @@ class InventoryManager {
                 inventory.put(key, 0);
             }
         }
-
+        fillMinimums();
         checkAndReorder(inventory.keySet());
     }
 
