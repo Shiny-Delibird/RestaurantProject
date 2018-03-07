@@ -1,0 +1,18 @@
+patty | 60
+cucumber | 50
+onion | 30
+potato | 40
+vegetable oil | 20
+bun | 30
+tomato | 20
+lettuce | 50
+ketchup | 40
+cucumber | 20
+raw steak | 5
+salt | 100
+cheese | 30
+chicken | 15
+ground beef | 15
+noodles | 30
+soda | 5
+steak sauce | 50
