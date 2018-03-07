@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 // The main class of the project that controls all other classes
 public class Restaurant {
@@ -35,6 +32,7 @@ public class Restaurant {
     private void constructMenu(String file) {
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(file));
+            Set<String> ingredientTypes = new HashSet<>();
 
             // Iterate through the lines from the file starting at 1.
             String line = fileReader.readLine();
@@ -55,11 +53,13 @@ public class Restaurant {
                     Integer ingredientAmount = Integer.valueOf(ingredient[0].trim());
 
                     allIngredients.put(ingredientName, ingredientAmount);
+                    ingredientTypes.add(ingredientName);
                 }
 
                 menu.put(foodName, new Food(foodName, price, allIngredients));
                 line = fileReader.readLine();
             }
+            //TODO David call your inventory generator here with the HashSet ingredientTypes
         } catch (IOException e) {
             e.printStackTrace();
         }
