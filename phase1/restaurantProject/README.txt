@@ -1,3 +1,7 @@
+IMPORTANT NOTE: When running the project, ensure that the root folder opened in IntelliJ is the "group_0221" folder
+                Otherwise, the program may crash when trying to open its files as they are all referenced via that root
+                If the program crashes with a file not found error, try ensureing the root folder opened is "group_0221"
+
 =============EVENTS==========
 The event structure in the event.txt file is:
 
