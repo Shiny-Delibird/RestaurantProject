@@ -3,11 +3,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Order class. Orders contain a list of foods to be cooked and are passed through OrderManager and are
+ * given a tableNumber
+ */
+
 public class Order {
     public List<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
     int orderNumber;
+
+    /**
+     * Creates an Order with a tableNumber, OrderNumber, and list of foods.
+     * OrderNumber is set based on the number of Orders taken already
+     * @param tableNumber The number of the table
+     */
     public Order(int tableNumber){
         this.tableNumber = tableNumber;
         this.orderNumber = classOrderNumber;

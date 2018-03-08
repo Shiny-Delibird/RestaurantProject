@@ -1,10 +1,8 @@
 import java.util.LinkedList;
-
 /**
  * The Cook class takes an Order from OrderManager to prepare and pass it on
  */
 public class Cook {
-
 
     private static int classIdNumber = 1;
     private String ID;

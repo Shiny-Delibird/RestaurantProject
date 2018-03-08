@@ -1,5 +1,5 @@
 /*
-Represents a food
+Represents a food.
  */
 import java.util.HashMap;
 import java.util.Map;
@@ -22,7 +22,7 @@ public class Food{
         this.ingredients = ingredients;
     }
 
-
+    // Adds quantity of ingredient to the ingredients map. Creates a new entry if not already present
     public void addIngredient(String ingredientName, int ingredientQuantity){
         if (ingredients.containsKey(ingredientName)){
             int originalQuantity = ingredients.get(ingredientName);
@@ -31,7 +31,7 @@ public class Food{
             ingredients.put(ingredientName, ingredientQuantity);
         }
     }
-
+    // Remove quantity of ingredient to the ingredients map. Removes entry if quantity becomes 0
     public void removeIngredient(String ingredientName, int ingredientQuantity){
         if (ingredients.containsKey(ingredientName)) {
             int originalQuantity = ingredients.get(ingredientName);

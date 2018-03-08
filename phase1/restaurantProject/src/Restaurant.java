@@ -170,7 +170,7 @@ public class Restaurant {
         return allItems;
     }
 
-    //Parses the string to a valid Order obhect
+    //Parses the string to a valid Order object
     private Order parseOrder(String event){
         Integer tableNumber = Integer.valueOf(event.split(";")[0].trim());
         String[] items = event.split(";")[1].split(",");

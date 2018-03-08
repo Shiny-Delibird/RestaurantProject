@@ -1,3 +1,8 @@
+/**
+ * The Server class. Represents a server who builds up orders and submits
+ * them to the OrderManager. Servers also bring food back to customers
+ */
+
 public class Server {
     private Order currentOrder;
     private String ID;
@@ -5,7 +10,6 @@ public class Server {
     public Server(String ID){
         this.ID = ID;
     }
-
 
     public void submitOrder(OrderManager manager){
         manager.placeOrder(currentOrder);
