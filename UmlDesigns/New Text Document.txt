@@ -1,0 +1,98 @@
+Food
++ingredients: Map<String, Integer>
+-price: float
+-name: String
++Food(name: String, price: float, ingredients: Map<String,Integer>)
++Food(another: Food)
++addIngredient(ingredientName: String, ingredientQuantity: int): void
++removeIngredient(ingredientName: String, ingredientQuantity: int): void
++setPrice(price: float): void
++getPrice(): float
++toString(): String
+
+
+Kitchen
+-orderManager: OrderManager
++inventoryManager: InventoryManager
+-cooks: List<Cook>
++Kitchen(orderManager: OrderManager)
++Kitchen(orderManager: OrderManager, cooks: List<Cook>)
++cook(order: Order, cook: Cook): void
++acceptOrder(order: Order)
++getCook(cookID: String): Cook
+
+
+Order
+-foods: List<Food>
+-tableNumber: int
+-classOrderNumber: int <______________________________________>
++Order(tableNumber: int)
++getAllIngredients(): Map<String, Integer>
++addFood(food: Food): void
++getPrice(): float
++getTableNumber(): int
+
+
+Server
+-currentOrder: Order
+-ID: String
++Server(ID: String)
++submiteOrder(manager: OrderManager): void
++retrieveOrder(manager: OrderManager, order: Order): void
++confirmOrder(manager: OrderManager, order: Order): void
++addFoodtoOrder(food: Food): void
++createNewOrder(tableNumber: int): void
++getID(): String
+
+
+Restaurant
+-orderManager: Ordermanager
+-kitchen: Kitchen
+-servers: List<Server>
+-menu: Map<String, Food>
+-MENU_FILE: String ________________________________________________
+-EVENT_FILE: String __________________________________________________
++Restaurant()
++Restaurant(servers: List<Server>, cooks: List<cook>)
+-constructMenu(file: String): void
+-processEvents(file: String): void
+-processEvent(event: String): void
+-parseShipment(shipment: String): Map<String, Integer>
+-parseOrder(event: String): Order
+-parseChanges(fullText: String, change: char): List<String>
+-getServer(serverID: String): Server
++main(args: String): void ______________________________________
+
+
+OrderManager
+-pendingOrders: LinkedList<Order> 
+-ordersInProgress: LinkedList<Order>
+-cookedOrders: LinkedList<Order>
+-completedOrders: LinkedList<Order>
++OrderManager()
++getPendingOrders(): LinkedList<Order>
++placeOrder(order: Order): void
++acceptOrder(order: Order): void
++orderIsCooked(order: Order):void
++retrieveOrder(order; Order): void
++confirmCompleted(order: Order): void
++getOrder(id: int, list: String): Order
+
+
+InventoryManager
+-inventory: Map<String, Integer>
+-minimums: Map<String, Integer>
+-requested: Set<String>
+-INVENTORY_FILE: String _________________________________
+-MINIMUM_FILE: String ____________________________________
+-REORDER_FILE: String ___________________________________
++InventoryManager()
+-parseFile(fileName: String): void
+-fillMinimums(): void
++checkIntegrity(ingredients Set<String>): void
++useIngredients(used: Map<String, Integer>): void
++receiveShipment(shipment: Map<String, Integer>): void
++addIngredient(food: String, amount: Integer): void
+-checkAndReorder(keys: Set<String>): void
+-updateInventory(): void
++toString(): String
