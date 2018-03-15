@@ -8,7 +8,7 @@ public class Restaurant {
     public Map<String, Food> menu;
     private List<Server> servers;
 
-    private static final String MENU_FILE = "src/menu.txt";
+    private static final String MENU_FILE = "configs/menu.txt";
 
     Restaurant() {
         this.servers = new ArrayList<>();

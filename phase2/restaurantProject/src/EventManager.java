@@ -9,7 +9,7 @@ import java.util.Map;
 public class EventManager {
     public Restaurant restaurant;
 
-    private static final String EVENT_FILE = "src/events.txt";
+    private static final String EVENT_FILE = "configs/events.txt";
 
     public EventManager() {
         this.restaurant = new Restaurant();

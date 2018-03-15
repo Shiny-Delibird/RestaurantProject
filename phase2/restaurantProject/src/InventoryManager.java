@@ -10,9 +10,9 @@ class InventoryManager {
     private Map<String, Integer> minimums;
     private Set<String> requested;
 
-    private static final String INVENTORY_FILE = "src/inventory.txt";
-    private static final String MINIMUM_FILE = "src/minimums.txt";
-    private static final String REORDER_FILE = "src/requests.txt";
+    private static final String INVENTORY_FILE = "configs/inventory.txt";
+    private static final String MINIMUM_FILE = "configs/minimums.txt";
+    private static final String REORDER_FILE = "configs/requests.txt";
 
     /**
      * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
