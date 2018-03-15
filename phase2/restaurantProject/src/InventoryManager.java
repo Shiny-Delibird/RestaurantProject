@@ -10,9 +10,9 @@ class InventoryManager {
     private Map<String, Integer> minimums;
     private Set<String> requested;
 
-    private static final String INVENTORY_FILE = "phase1/restaurantProject/src/inventory.txt";
-    private static final String MINIMUM_FILE = "phase1/restaurantProject/src/minimums.txt";
-    private static final String REORDER_FILE = "phase1/restaurantProject/src/requests.txt";
+    private static final String INVENTORY_FILE = "src/inventory.txt";
+    private static final String MINIMUM_FILE = "src/minimums.txt";
+    private static final String REORDER_FILE = "src/requests.txt";
 
     /**
      * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
@@ -166,7 +166,7 @@ class InventoryManager {
      * @param food the ingredient being added
      * @param amount the amount of the ingredient being added
      * */
-    public void addIngredient(String food, Integer amount){
+    private void addIngredient(String food, Integer amount){
         if (inventory.containsKey(food)){
             Integer old = inventory.get(food);
             inventory.replace(food, old, old + amount);

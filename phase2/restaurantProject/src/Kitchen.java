@@ -4,7 +4,7 @@ import java.util.List;
 public class Kitchen {
     private OrderManager orderManager;
     InventoryManager inventoryManager;
-    private List<Cook> cooks;
+    public List<Cook> cooks;
 
     //Constructor will take the orderManager from restaurant
 
@@ -31,8 +31,8 @@ public class Kitchen {
     /**
      * Prompts the given Cook to prepare the given Order
      *
-     * @param order
-     * @param cook
+     * @param order is the order to be prepared
+     * @param cook is the cook preparing the order
      */
     public void cook(Order order, Cook cook) {
         orderManager.orderIsCooked(order);

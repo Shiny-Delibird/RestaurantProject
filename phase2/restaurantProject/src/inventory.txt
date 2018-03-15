@@ -1,20 +1,20 @@
-raw steak | 1
+raw steak | 8
 chicken | 15
 bread | 0
 salt | 100
-cucumber | 68
+cucumber | 67
 onion | 30
-noodles | 28
-vegetable oil | 16
-tomato | 10
-ground beef | 13
-soda | 3
-lettuce | 42
+noodles | 26
+vegetable oil | 10
+tomato | 20
+ground beef | 11
+soda | 1
+lettuce | 34
 cheese | 30
-patty | 56
-potato | 36
+patty | 50
+potato | 30
 flour | 0
-bun | 22
-steak sauce | 46
+bun | 10
+steak sauce | 44
 dough | 0
 ketchup | 40
