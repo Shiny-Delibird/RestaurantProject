@@ -1,4 +1,4 @@
-/*
+package RestaurantModel;/*
 Represents a food.
  */
 import java.util.HashMap;

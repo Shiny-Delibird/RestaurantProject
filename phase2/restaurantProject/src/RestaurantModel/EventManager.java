@@ -1,3 +1,5 @@
+package RestaurantModel;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -115,7 +117,7 @@ public class EventManager {
         return allItems;
     }
 
-    //Parses the string to a valid Order object
+    //Parses the string to a valid RestaurantModel.Order object
     private Order parseOrder(String event){
         Integer tableNumber = Integer.valueOf(event.split(";")[0].trim());
         String[] items = event.split(";")[1].split(",");

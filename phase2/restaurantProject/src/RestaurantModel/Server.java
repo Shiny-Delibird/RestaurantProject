@@ -1,6 +1,8 @@
+package RestaurantModel;
+
 /**
- * The Server class. Represents a server who builds up orders and submits
- * them to the OrderManager. Servers also bring food back to customers
+ * The RestaurantModel.Server class. Represents a server who builds up orders and submits
+ * them to the RestaurantModel.OrderManager. Servers also bring food back to customers
  */
 
 public class Server {

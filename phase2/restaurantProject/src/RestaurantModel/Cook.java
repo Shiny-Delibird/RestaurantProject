@@ -1,6 +1,8 @@
+package RestaurantModel;
+
 import java.util.LinkedList;
 /**
- * The Cook class takes an Order from OrderManager to prepare and pass it on
+ * The RestaurantModel.Cook class takes an RestaurantModel.Order from RestaurantModel.OrderManager to prepare and pass it on
  */
 public class Cook {
 

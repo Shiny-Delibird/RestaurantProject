@@ -1,9 +1,11 @@
+package RestaurantModel;
+
 import java.io.*;
 import java.util.*;
 
 /**
- * The InventoryManager class.
- * Represents the inventory of a Restaurant and manages the stock of ingredients for cooking
+ * The RestaurantModel.InventoryManager class.
+ * Represents the inventory of a RestaurantModel.Restaurant and manages the stock of ingredients for cooking
  * */
 class InventoryManager {
     private Map<String, Integer> inventory;

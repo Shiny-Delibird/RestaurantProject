@@ -1,7 +1,9 @@
+package RestaurantModel;
+
 import java.util.LinkedList;
 
 /**
- * The OrderManager class. Keeps track of Orders in their various stages of completion and updates their statuses
+ * The RestaurantModel.OrderManager class. Keeps track of Orders in their various stages of completion and updates their statuses
  * when necessary
  * */
 
@@ -24,8 +26,8 @@ public class OrderManager {
     }
 
     /**
-     * Submits an Order to the kitchen through the OrderManager
-     * @param order the Order being placed
+     * Submits an RestaurantModel.Order to the kitchen through the RestaurantModel.OrderManager
+     * @param order the RestaurantModel.Order being placed
      * */
     public void placeOrder(Order order){
         if (!pendingOrders.contains(order))
@@ -35,8 +37,8 @@ public class OrderManager {
     }
 
     /**
-     * Updates the status of an Order that has been accepted by a cook from pending to in progress
-     * @param order the Order that is now being cooked
+     * Updates the status of an RestaurantModel.Order that has been accepted by a cook from pending to in progress
+     * @param order the RestaurantModel.Order that is now being cooked
      * */
     public void acceptOrder(Order order){
         if (pendingOrders.contains(order)){
@@ -48,8 +50,8 @@ public class OrderManager {
     }
 
     /**
-     * Updates the status of an Order from being cooked to cooked
-     * @param order the Order that is now cooked and ready to be served
+     * Updates the status of an RestaurantModel.Order from being cooked to cooked
+     * @param order the RestaurantModel.Order that is now cooked and ready to be served
      * */
     public void orderIsCooked(Order order){
         if (ordersInProgress.contains(order)){
@@ -61,8 +63,8 @@ public class OrderManager {
     }
 
     /**
-     * Used when an Order is retrieved from the Kitchen and brought out to the customer
-     * @param order the Order that has been retrieved to be served
+     * Used when an RestaurantModel.Order is retrieved from the RestaurantModel.Kitchen and brought out to the customer
+     * @param order the RestaurantModel.Order that has been retrieved to be served
      * */
     public void retrieveOrder(Order order){
         if (cookedOrders.contains(order))
@@ -72,9 +74,9 @@ public class OrderManager {
     }
 
     /**
-     * Updates the status of an Order to completed. This should only be called when the customer has accepted the food
-     * brought to them. Otherwise the Order is retrieved but not completed.
-     * @param order the Order that was accepted by the customer
+     * Updates the status of an RestaurantModel.Order to completed. This should only be called when the customer has accepted the food
+     * brought to them. Otherwise the RestaurantModel.Order is retrieved but not completed.
+     * @param order the RestaurantModel.Order that was accepted by the customer
      * */
     public void confirmCompleted(Order order){
         if (!completedOrders.contains(order))
@@ -84,9 +86,9 @@ public class OrderManager {
     }
 
     /**
-     * returns the Order with the given id from the given list
-     * @param id the id of the Order to be returned
-     * @param list the list that the desired Order is in
+     * returns the RestaurantModel.Order with the given id from the given list
+     * @param id the id of the RestaurantModel.Order to be returned
+     * @param list the list that the desired RestaurantModel.Order is in
      * */
     public Order getOrder(int id, String list){
         LinkedList<Order> search;

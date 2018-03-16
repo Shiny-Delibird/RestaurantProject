@@ -1,3 +1,5 @@
+package RestaurantModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +11,7 @@ public class Kitchen {
     //Constructor will take the orderManager from restaurant
 
     /**
-     * The constructor will take an orderManager from the restaurant and initialize new ArrayList of Cook and
+     * The constructor will take an orderManager from the restaurant and initialize new ArrayList of RestaurantModel.Cook and
      * inventoryManager class
      *
      * @param orderManager The general orderManager used by the restaurant
@@ -29,7 +31,7 @@ public class Kitchen {
     //Will take an order and the given cook will "cook" it, thereby moving it to next stage
 
     /**
-     * Prompts the given Cook to prepare the given Order
+     * Prompts the given RestaurantModel.Cook to prepare the given RestaurantModel.Order
      *
      * @param order is the order to be prepared
      * @param cook is the cook preparing the order
@@ -49,7 +51,7 @@ public class Kitchen {
                 return cook;
             }
         }
-        throw new IllegalArgumentException("Cook not found");
+        throw new IllegalArgumentException("RestaurantModel.Cook not found");
     }
 }
 

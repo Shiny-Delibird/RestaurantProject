@@ -1,3 +1,5 @@
+package RestaurantModel;
+
 import java.io.*;
 import java.util.*;
 
@@ -78,14 +80,14 @@ public class Restaurant {
 
     }
 
-    //Gets the Server object from the list based on the serverID
+    //Gets the RestaurantModel.Server object from the list based on the serverID
     public Server getServer(String serverID){
         for (Server server : servers){
             if (serverID.equals(server.getID())){
                 return server;
             }
         }
-        throw new IllegalArgumentException("Server not found");
+        throw new IllegalArgumentException("RestaurantModel.Server not found");
     }
 
 
