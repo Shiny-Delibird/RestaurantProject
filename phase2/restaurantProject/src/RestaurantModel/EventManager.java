@@ -18,7 +18,7 @@ public class EventManager {
         this.restaurant = new Restaurant();
     }
 
-    //Iterates through every line in the events.txt file
+    //Iterates through every line in the events.txt file and processes event
     public void processEventsFromFile(String file){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(file));

@@ -8,13 +8,13 @@ noodles | 25
 vegetable oil | 8
 tomato | 15
 ground beef | 10
-soda | 0
+soda | 20
 lettuce | 30
 cheese | 30
 patty | 48
 potato | 28
-flour | 0
+flour | 20
 bun | 6
 steak sauce | 42
-dough | 0
+dough | 20
 ketchup | 40
