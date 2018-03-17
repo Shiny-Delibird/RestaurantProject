@@ -11,12 +11,10 @@ public class Restaurant {
     public OrderManager orderManager;
     public Kitchen kitchen;
     public ObservableMap<String, Food> menu;
-    private List<Server> servers;
 
     private static final String MENU_FILE = "configs/menu.txt";
 
     Restaurant() {
-        this.servers = new ArrayList<>();
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager);
         this.menu = FXCollections.observableHashMap();
@@ -24,22 +22,6 @@ public class Restaurant {
         constructMenu(MENU_FILE);
     }
 
-    public Restaurant(List<Server> servers, List<Cook> cooks){
-        this.servers = servers;
-        this.orderManager = new OrderManager();
-        this.kitchen = new Kitchen(orderManager, cooks);
-        this.menu = FXCollections.observableHashMap();
-
-        constructMenu(MENU_FILE);
-    }
-
-    public void addServer(Server server){
-        this.servers.add(server);
-    }
-
-    public void addCook(Cook cook){
-        this.kitchen.cooks.add(cook);
-    }
 
     //Generates the Menu from the menu.txt file
     private void constructMenu(String file) {
@@ -82,16 +64,5 @@ public class Restaurant {
         }
 
     }
-
-    //Gets the RestaurantModel.Server object from the list based on the serverID
-    public Server getServer(String serverID){
-        for (Server server : servers){
-            if (serverID.equals(server.getID())){
-                return server;
-            }
-        }
-        throw new IllegalArgumentException("RestaurantModel.Server not found");
-    }
-
 
 }

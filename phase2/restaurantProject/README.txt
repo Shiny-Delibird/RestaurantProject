@@ -5,7 +5,7 @@ IMPORTANT NOTE: When running the project, ensure that the root folder opened in 
 =============EVENTS==========
 The event structure in the event.txt file is:
 
-RestaurantModel.Server/RestaurantModel.Cook doing event | Type of Event | RestaurantModel.Order that Event is happening on | Notes
+Sevr or Cook doing event | Type of Event | RestaurantModel.Order that Event is happening on | Notes
 
 Event types will be:
 

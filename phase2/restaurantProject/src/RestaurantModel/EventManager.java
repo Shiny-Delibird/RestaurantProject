@@ -52,45 +52,39 @@ public class EventManager {
         switch (eventType){
             case "takeOrder":
                 Order myOrder = parseOrder(notes);
-                Server orderServer = restaurant.getServer(workerName);
 
                 restaurant.orderManager.placeOrder(myOrder);
-                System.out.println("Order " + myOrder.orderNumber + " placed with foods: " + myOrder.foods + " by " + orderServer.getID());
+                System.out.println("Order " + myOrder.orderNumber + " placed with foods: " + myOrder.foods);
                 break;
             case "cookConfirmOrder":
                 Order toConfirm = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "pending");
-                Cook confirmingCook = restaurant.kitchen.getCook(workerName);
 
-                restaurant.kitchen.acceptOrder(toConfirm, confirmingCook);
-                System.out.println(confirmingCook.getID() + " confirmed order" + toConfirm.orderNumber);
+                restaurant.kitchen.acceptOrder(toConfirm);
+                System.out.println("Confirmed order" + toConfirm.orderNumber);
                 break;
             case "cookFinishedOrder":
                 Order toFill = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "in progress");
-                Cook cookingCook = restaurant.kitchen.getCook(workerName);
 
-                restaurant.kitchen.cook(toFill, cookingCook);
-                System.out.println(cookingCook.getID() + " cooked order" + toFill.orderNumber);
+                restaurant.kitchen.cook(toFill);
+                System.out.println("Cooked order" + toFill.orderNumber);
                 break;
             case "tableReceivedOrder":
                 Order toReceive = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "cooked");
-                Server receivingServer = restaurant.getServer(workerName);
 
                 restaurant.orderManager.retrieveOrder(toReceive);
                 restaurant.orderManager.confirmCompleted(toReceive);
-                System.out.println(receivingServer.getID() + " gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
+                System.out.println("Gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
                 break;
             case "tableRejectedOrder":
                 Order toReject = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "cooked");
-                Server rejectingServer = restaurant.getServer(workerName);
 
                 restaurant.orderManager.retrieveOrder(toReject);
-                System.out.println(rejectingServer.getID() + " rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
+                System.out.println("Rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
                 break;
             case "tableRequestedBill":
                 Order toPay = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "completed");
-                Server billServer = restaurant.getServer(workerName);
 
-                System.out.println(billServer.getID() + " gave bill of " + toPay.getPrice() + " to table " + toPay.getTableNumber());
+                System.out.println("Gave bill of " + toPay.getPrice() + " to table " + toPay.getTableNumber());
                 break;
             case "receiveShipment":
                 Map<String, Integer> inventoryShipment = parseShipment(notes);
@@ -163,20 +157,5 @@ public class EventManager {
         }
 
         return items;
-    }
-
-    //Main loop that will read the events and do them
-    public static void main(String[] args) {
-        EventManager mainManager = new EventManager();
-
-        mainManager.restaurant.addServer(new Server("server1"));
-        mainManager.restaurant.addServer(new Server("server2"));
-        mainManager.restaurant.addServer(new Server("server3"));
-
-        mainManager.restaurant.addCook(new Cook("cook1"));
-        mainManager.restaurant.addCook(new Cook("cook2"));
-        mainManager.restaurant.addCook(new Cook("cook3"));
-
-        mainManager.processEventsFromFile(EventManager.EVENT_FILE);
     }
 }
