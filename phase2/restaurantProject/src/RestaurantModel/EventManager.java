@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@SuppressWarnings("ALL")
 public class EventManager {
     public Restaurant restaurant;
 
@@ -18,7 +19,7 @@ public class EventManager {
     }
 
     //Iterates through every line in the events.txt file
-    public void processEvents(String file){
+    public void processEventsFromFile(String file){
         try {
             BufferedReader fileReader = new BufferedReader(new FileReader(file));
 
@@ -35,7 +36,7 @@ public class EventManager {
     }
 
     //Takes one event line from the file and processes it
-    private void processEvent(String event) {
+    public void processEvent(String event) {
         String notes = "";
 
         String[] split = event.split("\\|");
@@ -176,6 +177,6 @@ public class EventManager {
         mainManager.restaurant.addCook(new Cook("cook2"));
         mainManager.restaurant.addCook(new Cook("cook3"));
 
-        mainManager.processEvents(EventManager.EVENT_FILE);
+        mainManager.processEventsFromFile(EventManager.EVENT_FILE);
     }
 }

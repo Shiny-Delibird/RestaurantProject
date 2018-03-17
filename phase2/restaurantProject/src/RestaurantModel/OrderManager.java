@@ -1,5 +1,8 @@
 package RestaurantModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.LinkedList;
 
 /**
@@ -8,20 +11,20 @@ import java.util.LinkedList;
  * */
 
 public class OrderManager {
-    private LinkedList<Order> pendingOrders; // server placed order, cooking not started
-    private LinkedList<Order> ordersInProgress; // cook confirmed order, cooking in progress
-    private LinkedList<Order> cookedOrders; // order has been cooked, waiting for server pick up
-    private LinkedList<Order> completedOrders; // order has been delivered and accepted by customer
+    private ObservableList<Order> pendingOrders; // server placed order, cooking not started
+    private ObservableList<Order> ordersInProgress; // cook confirmed order, cooking in progress
+    private ObservableList<Order> cookedOrders; // order has been cooked, waiting for server pick up
+    private ObservableList<Order> completedOrders; // order has been delivered and accepted by customer
 
     OrderManager(){
-        pendingOrders = new LinkedList<>();
-        ordersInProgress = new LinkedList<>();
-        cookedOrders = new LinkedList<>();
-        completedOrders = new LinkedList<>();
+        pendingOrders = FXCollections.observableList(new LinkedList<Order>());
+        ordersInProgress = FXCollections.observableList(new LinkedList<Order>());
+        cookedOrders = FXCollections.observableList(new LinkedList<Order>());
+        completedOrders = FXCollections.observableList(new LinkedList<Order>());
     }
 
     // getter for list of pending Orders
-    public LinkedList<Order> getPendingOrders(){
+    public ObservableList<Order> getPendingOrders(){
         return pendingOrders;
     }
 
@@ -91,7 +94,7 @@ public class OrderManager {
      * @param list the list that the desired RestaurantModel.Order is in
      * */
     public Order getOrder(int id, String list){
-        LinkedList<Order> search;
+        ObservableList<Order> search;
         switch (list){
             case "pending":
                 search = pendingOrders;

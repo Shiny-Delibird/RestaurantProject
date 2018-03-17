@@ -1,5 +1,8 @@
 package RestaurantModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+
 import java.io.*;
 import java.util.*;
 
@@ -7,7 +10,7 @@ import java.util.*;
 public class Restaurant {
     public OrderManager orderManager;
     public Kitchen kitchen;
-    public Map<String, Food> menu;
+    public ObservableMap<String, Food> menu;
     private List<Server> servers;
 
     private static final String MENU_FILE = "configs/menu.txt";
@@ -16,7 +19,7 @@ public class Restaurant {
         this.servers = new ArrayList<>();
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager);
-        this.menu = new HashMap<>();
+        this.menu = FXCollections.observableHashMap();
 
         constructMenu(MENU_FILE);
     }
@@ -25,7 +28,7 @@ public class Restaurant {
         this.servers = servers;
         this.orderManager = new OrderManager();
         this.kitchen = new Kitchen(orderManager, cooks);
-        this.menu = new HashMap<>();
+        this.menu = FXCollections.observableHashMap();
 
         constructMenu(MENU_FILE);
     }
