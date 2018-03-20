@@ -10,7 +10,7 @@ import java.util.LinkedList;
  * when necessary
  * */
 
-public class OrderManager {
+class OrderManager {
     private ObservableList<Order> pendingOrders; // server placed order, cooking not started
     private ObservableList<Order> ordersInProgress; // cook confirmed order, cooking in progress
     private ObservableList<Order> cookedOrders; // order has been cooked, waiting for server pick up

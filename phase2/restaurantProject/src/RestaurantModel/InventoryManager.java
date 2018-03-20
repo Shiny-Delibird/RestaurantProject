@@ -16,6 +16,8 @@ class InventoryManager {
     private static final String MINIMUM_FILE = "configs/minimums.txt";
     private static final String REORDER_FILE = "configs/requests.txt";
 
+    //TODO MAKE INTERFACE FOR INVENTORYMANAGER FOR BETTER DESIGN
+
     /**
      * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
      * auto-generated with pre-determined values. Also creates the requests.txt file which holds all the items which

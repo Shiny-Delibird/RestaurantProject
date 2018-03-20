@@ -1,13 +1,14 @@
 package RestaurantModel;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.*;
 import java.util.*;
 
 // The main class of the project that controls all other classes
-public class Restaurant {
+public class Restaurant implements RestaurantInterface{
     public OrderManager orderManager;
     public Kitchen kitchen;
     public ObservableMap<String, Food> menu;
@@ -65,4 +66,55 @@ public class Restaurant {
 
     }
 
+    //TODO FILL ALL METHODS TO FINISH RESTAURANT
+
+    @Override
+    public Map<String, Food> getMenu() {
+        return null;
+    }
+
+    @Override
+    public Map<String, Integer> getInventory() {
+        return null;
+    }
+
+    @Override
+    public ObservableList getOrdersAtStage(String stage) {
+        return null;
+    }
+
+    @Override
+    public void placeOrder(Order order) {
+
+    }
+
+    @Override
+    public void confirmOrder(Order order) {
+
+    }
+
+    @Override
+    public void cookOrder(Order order) {
+
+    }
+
+    @Override
+    public void receiveOrder(Order order) {
+
+    }
+
+    @Override
+    public String rejectOrder(Order order) {
+        return null;
+    }
+
+    @Override
+    public String requestBill(Order order) {
+        return null;
+    }
+
+    @Override
+    public void receiveShipment(Map<String, Integer> shipment) {
+
+    }
 }

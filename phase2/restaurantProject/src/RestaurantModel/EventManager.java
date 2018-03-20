@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("ALL")
+/*
+TODO: WILL EVENTUALLY ALL BE MOVED INTO GUI CONTROLLER, IS DEPRECATED, DONT TOUCH
+ */
 public class EventManager {
     public Restaurant restaurant;
 
