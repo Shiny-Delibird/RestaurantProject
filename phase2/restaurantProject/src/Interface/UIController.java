@@ -1,6 +1,8 @@
 package Interface;
 
-import Interface.Views.MainPanelController;
+import Interface.Views.CookController;
+import Interface.Views.EmployeeController;
+import Interface.Views.ServerController;
 import RestaurantModel.Order;
 import RestaurantModel.Restaurant;
 import RestaurantModel.RestaurantModel;
@@ -17,41 +19,29 @@ import java.util.ArrayList;
 import java.util.concurrent.Callable;
 
 public class UIController extends Application {
+    private RestaurantModel restaurant;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        RestaurantModel mine = new Restaurant();
-        ArrayList<Order> test1 = new ArrayList<>();
-        test1.add(new Order(5));
-        test1.add(new Order(6));
-        ObservableList<Order> test = FXCollections.observableList(test1);
+        restaurant = new Restaurant();
 
-        FXMLLoader serverMainLoader = new FXMLLoader(getClass().getResource("/Interface/Views/MainPanel.fxml"));
-        Parent root = serverMainLoader.load();
+        EmployeeController serverController = new ServerController();
+        EmployeeController cookController = new CookController();
+
+        makeStage(serverController, "Server Interface");
+        makeStage(cookController, "Cook Interface");
+    }
+
+    private void makeStage(EmployeeController controller, String name) throws IOException {
+        FXMLLoader MainLoader = new FXMLLoader(getClass().getResource("/Interface/Views/MainPanel.fxml"));
+        MainLoader.setController(controller);
+        Parent root = MainLoader.load();
         Scene serverScene = new Scene(root, 600, 400);
-        MainPanelController serverController = serverMainLoader.getController();
-
-        serverController.initLists(test, test);
-        serverController.initButtons(new Callable() {
-            @Override
-            public Object call() throws Exception {
-                mine.confirmOrder(new Order(2));
-                return null;
-            }
-        }, new Callable() {
-            @Override
-            public Object call() throws Exception {
-                mine.cookOrder(new Order(3));
-                return null;
-            }
-        });
 
         Stage serverWindow = new Stage();
         serverWindow.setScene(serverScene);
         serverWindow.show();
-        serverWindow.setTitle("Server Interface");
-
-        test.add(new Order(7));
+        serverWindow.setTitle(name);
     }
 
     public static void main(String[] args) {
