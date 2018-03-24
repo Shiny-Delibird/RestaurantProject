@@ -112,7 +112,7 @@ class OrderManager {
                 throw new IllegalArgumentException("That's not a list I can search!");
         }
         for (Order o : search){
-            if (o.orderNumber == id)
+            if (o.getOrderNumber() == id)
                 return o;
         }
         throw new IllegalArgumentException("That list doesn't contain the specified order!");

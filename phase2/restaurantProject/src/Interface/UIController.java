@@ -1,31 +1,36 @@
 package Interface;
 
-import RestaurantModel.EventManager;
-import RestaurantModel.Restaurant;
+import Interface.Views.ServerMainPanelController;
+import RestaurantModel.Order;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class UIController extends Application {
-    private EventManager eventManager = new EventManager();
-    private Restaurant restaurant;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        restaurant = eventManager.restaurant;
+        ArrayList<Order> test1 = new ArrayList<>();
+        test1.add(new Order(5));
+        test1.add(new Order(6));
+        ObservableList<Order> test = FXCollections.observableList(test1);
 
-        FXMLLoader testLoader = new FXMLLoader(getClass().getResource("/Interface/testList.fxml"));
-        Parent root = testLoader.load();
-        testList testList = testLoader.getController();
-        testList.init(restaurant.menu);
+        FXMLLoader serverMainLoader = new FXMLLoader(getClass().getResource("/Interface/Views/ServerMainPanel.fxml"));
+        Parent root = serverMainLoader.load();
+        Scene serverScene = new Scene(root, 600, 400);
+        ServerMainPanelController serverController = serverMainLoader.getController();
+        serverController.initLists(test, test);
 
-        Scene scene = new Scene(root, 600, 400);
-        primaryStage.setScene(scene);
-        primaryStage.show();
+        Stage serverWindow = new Stage();
+        serverWindow.setScene(serverScene);
+        serverWindow.show();
     }
 
     public static void main(String[] args) {

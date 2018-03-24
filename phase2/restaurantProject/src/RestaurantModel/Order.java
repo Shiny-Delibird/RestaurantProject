@@ -14,7 +14,12 @@ public class Order {
     public List<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
-    int orderNumber;
+
+    public int getOrderNumber() {
+        return orderNumber;
+    }
+
+    private int orderNumber;
 
     /**
      * Creates an RestaurantModel.Order with a tableNumber, OrderNumber, and list of foods.
@@ -64,5 +69,10 @@ public class Order {
 
     public int getTableNumber() {
         return tableNumber;
+    }
+
+    @Override
+    public String toString(){
+        return "Order " + getOrderNumber() + " at Table " + getTableNumber();
     }
 }

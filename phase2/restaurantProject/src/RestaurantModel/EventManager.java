@@ -57,32 +57,32 @@ public class EventManager {
                 Order myOrder = parseOrder(notes);
 
                 restaurant.orderManager.placeOrder(myOrder);
-                System.out.println("Order " + myOrder.orderNumber + " placed with foods: " + myOrder.foods);
+                System.out.println("Order " + myOrder.getOrderNumber() + " placed with foods: " + myOrder.foods);
                 break;
             case "cookConfirmOrder":
                 Order toConfirm = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "pending");
 
                 restaurant.kitchen.acceptOrder(toConfirm);
-                System.out.println("Confirmed order" + toConfirm.orderNumber);
+                System.out.println("Confirmed order" + toConfirm.getOrderNumber());
                 break;
             case "cookFinishedOrder":
                 Order toFill = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "in progress");
 
                 restaurant.kitchen.cook(toFill);
-                System.out.println("Cooked order" + toFill.orderNumber);
+                System.out.println("Cooked order" + toFill.getOrderNumber());
                 break;
             case "tableReceivedOrder":
                 Order toReceive = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "cooked");
 
                 restaurant.orderManager.retrieveOrder(toReceive);
                 restaurant.orderManager.confirmCompleted(toReceive);
-                System.out.println("Gave order " + toReceive.orderNumber + " to table " + toReceive.getTableNumber());
+                System.out.println("Gave order " + toReceive.getOrderNumber() + " to table " + toReceive.getTableNumber());
                 break;
             case "tableRejectedOrder":
                 Order toReject = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "cooked");
 
                 restaurant.orderManager.retrieveOrder(toReject);
-                System.out.println("Rejected order " + toReject.orderNumber + " from table " + toReject.getTableNumber() + " for reason " + notes);
+                System.out.println("Rejected order " + toReject.getOrderNumber() + " from table " + toReject.getTableNumber() + " for reason " + notes);
                 break;
             case "tableRequestedBill":
                 Order toPay = restaurant.orderManager.getOrder(Integer.valueOf(orderId), "completed");
