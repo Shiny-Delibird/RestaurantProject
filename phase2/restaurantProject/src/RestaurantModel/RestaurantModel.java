@@ -4,7 +4,7 @@ import javafx.collections.ObservableList;
 
 import java.util.Map;
 
-public interface RestaurantInterface {
+public interface RestaurantModel {
 
     Map<String, Food> getMenu();
 

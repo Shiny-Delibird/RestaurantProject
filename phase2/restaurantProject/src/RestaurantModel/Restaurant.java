@@ -8,16 +8,16 @@ import java.io.*;
 import java.util.*;
 
 // The main class of the project that controls all other classes
-public class Restaurant implements RestaurantInterface{
-    public OrderManager orderManager;
-    public Kitchen kitchen;
-    public ObservableMap<String, Food> menu;
+public class Restaurant implements RestaurantModel{
+    private OrderManager orderManager;
+    private InventoryManager inventoryManager;
+    private ObservableMap<String, Food> menu;
 
     private static final String MENU_FILE = "configs/menu.txt";
 
-    Restaurant() {
+    public Restaurant() {
         this.orderManager = new OrderManager();
-        this.kitchen = new Kitchen(orderManager);
+        this.inventoryManager = new InventoryManager();
         this.menu = FXCollections.observableHashMap();
 
         constructMenu(MENU_FILE);
@@ -59,7 +59,7 @@ public class Restaurant implements RestaurantInterface{
                 menu.put(foodName, new Food(foodName, price, allIngredients));
                 line = fileReader.readLine();
             }
-            kitchen.inventoryManager.checkIntegrity(ingredientTypes);
+            inventoryManager.checkIntegrity(ingredientTypes);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,12 +90,13 @@ public class Restaurant implements RestaurantInterface{
 
     @Override
     public void confirmOrder(Order order) {
-
+        System.out.println("a");
     }
 
     @Override
     public void cookOrder(Order order) {
-
+        System.out.println("b");
+        //For testing
     }
 
     @Override
