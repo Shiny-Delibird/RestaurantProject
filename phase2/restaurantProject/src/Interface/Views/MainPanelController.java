@@ -25,8 +25,8 @@ public class MainPanelController {
     @FXML
     private ListView postOrderList;
 
-    private Callable f1;
-    private Callable f2;
+    private Callable prevButtonFunc;
+    private Callable postButtonFunc;
 
 
     public  void initLists(ObservableList<Order> prevList, ObservableList<Order> postList){
@@ -36,15 +36,15 @@ public class MainPanelController {
     }
 
     public void initButtons(Callable func1, Callable func2){
-        f1 = func1;
-        f2 = func2;
+        prevButtonFunc = func1;
+        postButtonFunc = func2;
     }
 
-    public void test1() throws Exception {
-        f1.call();
+    public void prevButton() throws Exception {
+        prevButtonFunc.call();
     }
 
-    public void test2() throws Exception{
-        f2.call();
+    public void postButton() throws Exception{
+        postButtonFunc.call();
     }
 }

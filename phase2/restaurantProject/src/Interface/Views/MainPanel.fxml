@@ -20,8 +20,8 @@
    <children>
       <ListView fx:id="prevOrderList" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
       <ListView fx:id="postOrderList" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-      <Button fx:id="prevOrderButton" mnemonicParsing="false" onAction="#test1" text="Deliver Order" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button fx:id="postOrderButton" mnemonicParsing="false" onAction="#test2" text="Generate Bill" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="prevOrderButton" mnemonicParsing="false" onAction="#prevButton" text="Deliver Order" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="postOrderButton" mnemonicParsing="false" onAction="#postButton" text="Generate Bill" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
       <Button fx:id="takeOrderButton" mnemonicParsing="false" text="Take Order" GridPane.halignment="CENTER" />
       <Button mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
    </children>

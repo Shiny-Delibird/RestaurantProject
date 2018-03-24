@@ -21,7 +21,6 @@ public class UIController extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         RestaurantModel mine = new Restaurant();
-
         ArrayList<Order> test1 = new ArrayList<>();
         test1.add(new Order(5));
         test1.add(new Order(6));
