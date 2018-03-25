@@ -28,6 +28,21 @@ class OrderManager {
         return pendingOrders;
     }
 
+    // getter for list of Orders in progress
+    public ObservableList<Order> getOrdersInProgress(){
+        return ordersInProgress;
+    }
+
+    // getter for list of cooked Orders
+    public ObservableList<Order> getCookedOrders(){
+        return cookedOrders;
+    }
+
+    // getter for list of completed Orders
+    public ObservableList<Order> getCompletedOrders(){
+        return completedOrders;
+    }
+
     /**
      * Submits an RestaurantModel.Order to the kitchen through the RestaurantModel.OrderManager
      * @param order the RestaurantModel.Order being placed

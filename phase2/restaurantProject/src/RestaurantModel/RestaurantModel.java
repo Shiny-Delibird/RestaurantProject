@@ -12,15 +12,20 @@ public interface RestaurantModel {
 
     ObservableList getOrdersAtStage(String stage);
 
+    // a method to submit the order to the OrderManager
     void placeOrder(Order order);
 
+    // a method for the cooks to confirm that an order as been cooked
     void confirmOrder(Order order);
 
+    // a method to for the cooks to cook the order
     void cookOrder(Order order);
 
+    // a method to indicate that the customers have received the order
     void receiveOrder(Order order);
 
-    String rejectOrder(Order order);
+    // a method to indicate that the customers have rejected the order
+    void rejectOrder(Order order);
 
     String requestBill(Order order);
 

@@ -227,6 +227,11 @@ class InventoryManager {
     /**
      * Generates a list of all ingredients and the amount in stock of each for a manager to see
      * */
+
+    public Map<String, Integer> getInventory(){
+        return inventory;
+    };
+
     @Override
     public String toString(){
         StringBuilder full = new StringBuilder();

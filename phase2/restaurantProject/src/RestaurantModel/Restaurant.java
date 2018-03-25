@@ -1,5 +1,6 @@
 package RestaurantModel;
 
+import javafx.animation.KeyValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -70,52 +71,64 @@ public class Restaurant implements RestaurantModel{
 
     @Override
     public Map<String, Food> getMenu() {
-        return null;
+        return menu;
     }
 
     @Override
     public Map<String, Integer> getInventory() {
-        return null;
+        return inventoryManager.getInventory();
     }
 
     @Override
     public ObservableList getOrdersAtStage(String stage) {
+        switch (stage){
+            case "InProgress": return orderManager.getOrdersInProgress();
+            case "Completed": return orderManager.getCompletedOrders();
+            case "Cooked": return orderManager.getCookedOrders();
+            case "Pending": return orderManager.getPendingOrders();
+        };
         return null;
     }
 
     @Override
     public void placeOrder(Order order) {
-
+        orderManager.placeOrder(order);
     }
 
     @Override
     public void confirmOrder(Order order) {
-        System.out.println("a");
+        orderManager.acceptOrder(order);
     }
 
     @Override
     public void cookOrder(Order order) {
-        System.out.println("b");
-        //For testing
+        orderManager.orderIsCooked(order);
+        inventoryManager.useIngredients(order.getAllIngredients());
     }
 
     @Override
     public void receiveOrder(Order order) {
-
+        orderManager.retrieveOrder(order);
+        orderManager.confirmCompleted(order);
     }
 
     @Override
-    public String rejectOrder(Order order) {
-        return null;
+    public void rejectOrder(Order order) {
+        orderManager.retrieveOrder(order);
     }
 
     @Override
     public String requestBill(Order order) {
-        return null;
+        StringBuilder bill = new StringBuilder();
+        for (Map.Entry<String, Float> item: order.getPrices().entrySet()){
+            String word = item.getKey() + item.getValue() + "\n";
+            bill.append(word);
+        }
+        return bill.toString();
     }
 
     @Override
     public void receiveShipment(Map<String, Integer> shipment) {
-
+        inventoryManager.receiveShipment(shipment);
     }
 }

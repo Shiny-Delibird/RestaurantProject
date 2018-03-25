@@ -59,15 +59,15 @@ public class Order {
     }
 
     //Returns the total price of all the foods
-    public float getPrice(){
-        float total = 0;
+    public Map<String, Float> getPrices(){
+        Map<String, Float> prices = new HashMap<>();
         for (Food food : foods){
-            total += food.getPrice();
+            prices.put(food.toString(),food.getPrice());
         }
-        return total;
+        return prices ;
     }
 
-    public int getTableNumber() {
+    private int getTableNumber() {
         return tableNumber;
     }
 
