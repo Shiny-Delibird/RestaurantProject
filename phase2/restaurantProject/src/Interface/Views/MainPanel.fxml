@@ -2,28 +2,32 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Interface.Views.MainPanelController">
+<GridPane hgap="5.0" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
+      <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <ListView fx:id="prevOrderList" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
-      <ListView fx:id="postOrderList" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-      <Button fx:id="prevOrderButton" mnemonicParsing="false" onAction="#test1" text="Deliver Order" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button fx:id="postOrderButton" mnemonicParsing="false" onAction="#test2" text="Generate Bill" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-      <Button fx:id="takeOrderButton" mnemonicParsing="false" text="Take Order" GridPane.halignment="CENTER" />
-      <Button mnemonicParsing="false" text="Button" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <ListView fx:id="prevOrderList" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <ListView fx:id="postOrderList" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="prevOrderButton" mnemonicParsing="false" text="Button" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Button fx:id="postOrderButton" mnemonicParsing="false" text="Button" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Button fx:id="takeOrderButton" mnemonicParsing="false" text="Take Order" visible="false" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+      <Button fx:id="receiveShipment" mnemonicParsing="false" text="Receive Shipment" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+      <Label fx:id="prevLabel" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+      <Label fx:id="postLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
    </children>
    <padding>
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
