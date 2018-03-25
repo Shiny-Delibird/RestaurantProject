@@ -85,7 +85,7 @@ public class Restaurant implements RestaurantModel{
             case "Completed": return orderManager.getCompletedOrders();
             case "Cooked": return orderManager.getCookedOrders();
             case "Pending": return orderManager.getPendingOrders();
-        };
+        }
         return null;
     }
 
