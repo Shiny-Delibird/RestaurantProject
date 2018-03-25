@@ -1,6 +1,5 @@
 package RestaurantModel;
 
-import javafx.animation.KeyValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;

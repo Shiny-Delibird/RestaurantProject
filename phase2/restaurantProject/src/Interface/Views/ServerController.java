@@ -4,12 +4,18 @@ import RestaurantModel.Order;
 import RestaurantModel.RestaurantModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ServerController implements EmployeeController{
 
@@ -51,15 +57,15 @@ public class ServerController implements EmployeeController{
 
         prevOrderButton.setOnAction(event -> deliverOrder());
         postOrderButton.setOnAction(event -> giveBill());
-        takeOrderButton.setOnAction(event -> takeOrder());
+        takeOrderButton.setOnAction(this::takeOrder);
     }
 
     private void deliverOrder(){
         if (!prevOrderList.getSelectionModel().isEmpty()){
             ObservableList<Order> orders = prevOrderList.getSelectionModel().getSelectedItems();
 
-            for (Order order : orders){
-                restaurant.receiveOrder(order);
+            for (Object order : orders){
+                restaurant.receiveOrder((Order) order);
             }
         }
     }
@@ -73,7 +79,14 @@ public class ServerController implements EmployeeController{
 
     }
 
-    private void takeOrder(){
-
+    private void takeOrder(ActionEvent event){
+        Stage sourceStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        try {
+            FXMLLoader takeOrderLoader = new FXMLLoader(getClass().getResource("/Interface/Views/TakeOrder.fxml"));
+            Parent root = takeOrderLoader.load();
+            sourceStage.setScene(new Scene(root, 600, 400));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
