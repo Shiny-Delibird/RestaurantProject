@@ -1,24 +1,13 @@
 package RestaurantModel;
 
-abstract class Entry {
-    private String name;
-    private int quantity;
+public interface Entry{
+    int getQuantity();
 
-    Entry(String n, int q){
-        name = n;
-        quantity = q;
-    }
+    void addQuantity(int q);
 
-    String getName(){
-        return name;
-    }
-    int getQuantity(){
-        return quantity;
-    }
+    void useQuantity(int q);
 
-    void setQuantity(int q){
-        quantity = q;
-    }
+    void setMinimum(int m);
 
-    abstract boolean equals(Entry other);
+    boolean hasEnough();
 }
