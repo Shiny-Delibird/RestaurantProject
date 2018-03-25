@@ -84,7 +84,7 @@ class OrderManager {
      * Used when an Order is retrieved from the Kitchen and brought out to the customer
      * @param order the Order that has been retrieved to be served
      * */
-    public void retrieveOrder(Order order){
+    public void retrieveOrder(Object order){
         if (cookedOrders.contains(order))
             cookedOrders.remove(order);
         else
