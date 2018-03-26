@@ -1,5 +1,9 @@
 package RestaurantModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
+
 import java.io.*;
 import java.util.*;
 
@@ -162,8 +166,8 @@ class InventoryManager implements InventorySystem {
         }
     }
 
-    public Map<String, Integer> getInventory(){
-        HashMap<String,Integer> quantities = new HashMap<>();
+    public ObservableMap<String, Integer> getInventory(){
+        ObservableMap<String,Integer> quantities = FXCollections.observableHashMap();
         for (String key : inventory.keySet()){
             quantities.put(key, inventory.get(key).getQuantity());
         }

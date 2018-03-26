@@ -1,20 +1,20 @@
-raw steak | 6
-chicken | 15
-bread | 0
-salt | 100
-cucumber | 66
-onion | 30
-noodles | 25
-vegetable oil | 8
-tomato | 15
-ground beef | 10
-soda | 20
-lettuce | 30
-cheese | 30
-patty | 48
-potato | 28
-flour | 20
-bun | 6
-steak sauce | 42
-dough | 20
-ketchup | 40
+raw steak | RestaurantModel.SimpleEntry@a0b53fc
+chicken | RestaurantModel.SimpleEntry@357436b
+bread | RestaurantModel.SimpleEntry@4e937112
+salt | RestaurantModel.SimpleEntry@7c0f89f4
+cucumber | RestaurantModel.SimpleEntry@2c4bb13a
+onion | RestaurantModel.SimpleEntry@15bee3c3
+noodles | RestaurantModel.SimpleEntry@40700b87
+vegetable oil | RestaurantModel.SimpleEntry@40b06a54
+tomato | RestaurantModel.SimpleEntry@3103d119
+ground beef | RestaurantModel.SimpleEntry@53c19c01
+soda | RestaurantModel.SimpleEntry@132d99cd
+lettuce | RestaurantModel.SimpleEntry@508cb336
+cheese | RestaurantModel.SimpleEntry@7fa82b27
+patty | RestaurantModel.SimpleEntry@20568147
+potato | RestaurantModel.SimpleEntry@5fca9771
+flour | RestaurantModel.SimpleEntry@6aea8abd
+bun | RestaurantModel.SimpleEntry@54a565d4
+steak sauce | RestaurantModel.SimpleEntry@406d9abe
+dough | RestaurantModel.SimpleEntry@4b17fcdd
+ketchup | RestaurantModel.SimpleEntry@75962860
