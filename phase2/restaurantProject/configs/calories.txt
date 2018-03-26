@@ -1,0 +1,25 @@
+chicken | 250
+egg | 150
+cucumber | 30
+onion | 40
+vegetable oil | 20
+tomato | 40
+ground beef | 305
+cheese | 200
+potato | 80
+flour | 50
+steak sauce | 30
+baking soda | 0
+dough | 40
+raw steak | 500
+bread | 100
+salt | 5
+noodles | 60
+milk | 90
+cream | 150
+soda | 100
+lettuce | 50
+patty | 500
+bun | 60
+sugar | 5
+ketchup | 10
