@@ -133,4 +133,9 @@ public class Restaurant implements RestaurantModel {
     public void receiveShipment(Map<String, Integer> shipment) {
         inventoryManager.receiveShipment(shipment);
     }
+
+    @Override
+    public Boolean hasEnough(Food food) {
+        return inventoryManager.hasEnough(food);
+    }
 }

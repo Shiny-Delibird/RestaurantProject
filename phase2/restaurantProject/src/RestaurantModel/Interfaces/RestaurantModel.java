@@ -34,4 +34,6 @@ public interface RestaurantModel {
 
     void receiveShipment(Map<String, Integer> shipment);
 
+    Boolean hasEnough(Food food);
+
 }

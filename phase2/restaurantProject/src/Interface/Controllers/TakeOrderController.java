@@ -1,4 +1,4 @@
-package Interface.Views;
+package Interface.Controllers;
 
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
@@ -6,6 +6,7 @@ import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -39,10 +40,10 @@ public class TakeOrderController implements EmployeeController{
         order = new Order();
         this.restaurant = restaurant;
 
-        menuList.getItems().setAll(restaurant.getMenu().keySet());
+        menuList.getItems().setAll(getFixedMenu(restaurant.getMenu()));
         restaurant.getMenu().addListener((MapChangeListener<String, Food>) change -> {
             if (change.wasAdded()){
-                menuList.getItems().setAll(restaurant.getMenu().keySet());
+                menuList.getItems().setAll(getFixedMenu(restaurant.getMenu()));
             }
         });
 
@@ -61,7 +62,6 @@ public class TakeOrderController implements EmployeeController{
             }
         );
 
-
     }
 
     @FXML
@@ -77,9 +77,13 @@ public class TakeOrderController implements EmployeeController{
     public void addIngredient() {
         if (!orderList.getSelectionModel().isEmpty() && checkIfIngredientValid(ingredientBox.getText())){
             Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-            selectedFood.addIngredient(ingredientBox.getText(), 1);
+            String selectedIngredient = ingredientBox.getText();
+            if (restaurant.getInventory().get(selectedIngredient) > selectedFood.getIngredients().get(selectedIngredient)){
 
-            ingredientList.setItems(getFixedListFromFood(selectedFood));
+                selectedFood.addIngredient(ingredientBox.getText(), 1);
+
+                ingredientList.setItems(getFixedListFromFood(selectedFood));
+            }
         }
     }
 
@@ -100,6 +104,16 @@ public class TakeOrderController implements EmployeeController{
         ingredientList.getItems().setAll(fixedIngredients);
 
         return fixedIngredients;
+    }
+
+    private ObservableList getFixedMenu(ObservableMap<String, Food> menu){
+        ObservableList fixedMenu = FXCollections.observableArrayList();
+        for (String item : menu.keySet()){
+            if (restaurant.hasEnough(menu.get(item))){
+                fixedMenu.add(item);
+            }
+        }
+        return fixedMenu;
     }
 
 
