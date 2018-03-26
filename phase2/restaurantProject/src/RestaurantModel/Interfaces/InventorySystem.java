@@ -1,4 +1,7 @@
-package RestaurantModel;
+package RestaurantModel.Interfaces;
+
+import RestaurantModel.RestaurantModel;
+import RestaurantModel.RestaurantObjects.Food;
 
 import java.util.Map;
 import java.util.Set;

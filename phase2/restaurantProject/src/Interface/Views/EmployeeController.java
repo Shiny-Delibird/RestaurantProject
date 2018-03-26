@@ -1,6 +1,6 @@
 package Interface.Views;
 
-import RestaurantModel.RestaurantModel;
+import RestaurantModel.Interfaces.RestaurantModel;
 
 public interface EmployeeController {
     void init(RestaurantModel restaurant);

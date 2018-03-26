@@ -1,4 +1,4 @@
-package RestaurantModel;
+package RestaurantModel.Interfaces;
 
 public interface Entry{
     int getQuantity();

@@ -1,5 +1,6 @@
-package RestaurantModel;
+package RestaurantModel.Managers;
 
+import RestaurantModel.RestaurantObjects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

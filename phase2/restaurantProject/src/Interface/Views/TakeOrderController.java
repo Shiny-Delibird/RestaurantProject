@@ -1,10 +1,8 @@
 package Interface.Views;
 
-import RestaurantModel.Food;
-import RestaurantModel.Order;
-import RestaurantModel.RestaurantModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+import RestaurantModel.RestaurantObjects.Food;
+import RestaurantModel.RestaurantObjects.Order;
+import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
@@ -12,13 +10,9 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
-import javax.xml.soap.Text;
 
 
 public class TakeOrderController implements EmployeeController{

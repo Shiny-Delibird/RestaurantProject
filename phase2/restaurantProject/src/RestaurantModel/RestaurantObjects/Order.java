@@ -1,4 +1,4 @@
-package RestaurantModel;
+package RestaurantModel.RestaurantObjects;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The RestaurantModel.Order class. Orders contain a list of foods to be cooked and are passed through RestaurantModel.OrderManager and are
+ * The RestaurantModel.RestaurantObjects.Order class. Orders contain a list of foods to be cooked and are passed through RestaurantModel.OrderManager and are
  * given a tableNumber
  */
 
@@ -24,7 +24,7 @@ public class Order {
     private int orderNumber;
 
     /**
-     * Creates an RestaurantModel.Order with a tableNumber, OrderNumber, and list of foods.
+     * Creates an RestaurantModel.RestaurantObjects.Order with a tableNumber, OrderNumber, and list of foods.
      * OrderNumber is set based on the number of Orders taken already
      * @param tableNumber The number of the table
      */

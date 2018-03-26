@@ -4,17 +4,17 @@ bread | 0
 salt | 100
 cucumber | 68
 onion | 30
-noodles | 28
-vegetable oil | 16
-tomato | 10
-ground beef | 13
-soda | 3
-lettuce | 42
+noodles | 27
+vegetable oil | 14
+tomato | 7
+ground beef | 12
+soda | 2
+lettuce | 40
 cheese | 30
-patty | 56
-potato | 36
+patty | 54
+potato | 34
 flour | 0
-bun | 22
+bun | 18
 steak sauce | 46
 dough | 0
 ketchup | 40

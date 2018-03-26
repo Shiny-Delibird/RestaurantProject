@@ -1,7 +1,7 @@
 package Interface.Views;
 
-import RestaurantModel.Order;
-import RestaurantModel.RestaurantModel;
+import RestaurantModel.RestaurantObjects.Order;
+import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

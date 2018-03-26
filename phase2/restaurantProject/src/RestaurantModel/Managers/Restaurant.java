@@ -1,5 +1,8 @@
-package RestaurantModel;
+package RestaurantModel.Managers;
 
+import RestaurantModel.Interfaces.RestaurantModel;
+import RestaurantModel.RestaurantObjects.Food;
+import RestaurantModel.RestaurantObjects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -8,7 +11,7 @@ import java.io.*;
 import java.util.*;
 
 // The main class of the project that controls all other classes
-public class Restaurant implements RestaurantModel{
+public class Restaurant implements RestaurantModel {
     private OrderManager orderManager;
     private InventoryManager inventoryManager;
     private ObservableMap<String, Food> menu;

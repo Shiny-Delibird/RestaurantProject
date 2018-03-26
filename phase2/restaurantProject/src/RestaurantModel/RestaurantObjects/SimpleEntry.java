@@ -1,6 +1,8 @@
-package RestaurantModel;
+package RestaurantModel.RestaurantObjects;
 
-public class SimpleEntry implements Entry{
+import RestaurantModel.Interfaces.Entry;
+
+public class SimpleEntry implements Entry {
     private int quantity;
     private int minimum;
 

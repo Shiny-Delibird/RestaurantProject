@@ -1,6 +1,7 @@
-package RestaurantModel;/*
+package RestaurantModel.RestaurantObjects;/*
 Represents a food.
  */
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,7 +17,7 @@ public class Food{
      * @param price The base price of the dish
      * @param ingredients Ingredients used to prepare this dish
      */
-    Food(String name, float price, Map<String, Integer> ingredients){
+    public Food(String name, float price, Map<String, Integer> ingredients){
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;

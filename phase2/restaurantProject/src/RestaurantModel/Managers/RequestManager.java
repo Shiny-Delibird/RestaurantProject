@@ -1,9 +1,11 @@
-package RestaurantModel;
+package RestaurantModel.Managers;
+
+import RestaurantModel.Interfaces.RequestSystem;
 
 import java.io.*;
 import java.util.*;
 
-class RequestManager implements RequestSystem{
+class RequestManager implements RequestSystem {
     private Set<String> requested;
 
     private static final String REORDER_FILE = "configs/requests.txt";

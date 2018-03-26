@@ -3,20 +3,15 @@ package Interface;
 import Interface.Views.CookController;
 import Interface.Views.EmployeeController;
 import Interface.Views.ServerController;
-import RestaurantModel.Order;
-import RestaurantModel.Restaurant;
-import RestaurantModel.RestaurantModel;
+import RestaurantModel.Managers.Restaurant;
+import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.concurrent.Callable;
 
 public class UIController extends Application {
     private RestaurantModel restaurant;

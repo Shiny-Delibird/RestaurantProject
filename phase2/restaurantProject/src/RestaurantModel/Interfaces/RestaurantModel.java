@@ -1,5 +1,7 @@
-package RestaurantModel;
+package RestaurantModel.Interfaces;
 
+import RestaurantModel.RestaurantObjects.Food;
+import RestaurantModel.RestaurantObjects.Order;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 

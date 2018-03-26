@@ -1,15 +1,17 @@
-package RestaurantModel;
+package RestaurantModel.Managers;
 
+import RestaurantModel.Interfaces.InventorySystem;
+import RestaurantModel.RestaurantObjects.Food;
+import RestaurantModel.RestaurantObjects.SimpleEntry;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.*;
 import java.util.*;
 
 /**
- * The RestaurantModel.InventoryManager class that implements the Inventory interface.
- * Represents the inventory of a RestaurantModel.Restaurant and manages the stock of ingredients for cooking
+ * The RestaurantModel.Managers.InventoryManager class that implements the Inventory interface.
+ * Represents the inventory of a RestaurantModel.Managers.Restaurant and manages the stock of ingredients for cooking
  * */
 class InventoryManager implements InventorySystem {
     private Map<String, SimpleEntry> inventory;

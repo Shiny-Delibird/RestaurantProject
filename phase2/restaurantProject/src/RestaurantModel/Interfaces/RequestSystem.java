@@ -1,4 +1,6 @@
-package RestaurantModel;
+package RestaurantModel.Interfaces;
+
+import RestaurantModel.RestaurantModel;
 
 public interface RequestSystem {
     void clear();
