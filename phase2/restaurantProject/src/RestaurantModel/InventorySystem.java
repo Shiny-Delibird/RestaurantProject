@@ -14,4 +14,6 @@ public interface InventorySystem {
     Map<String, Integer> getInventory();
 
     String toString();
+
+    boolean hasEnough(Food food);
 }
