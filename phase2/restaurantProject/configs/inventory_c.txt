@@ -7,19 +7,19 @@ tomato | 20
 ground beef | 15
 cheese | 30
 potato | 40
-flour | 0
+flour | 10
 steak sauce | 50
-baking soda | 0
-dough | 0
+baking soda | 20
+dough | 10
 raw steak | 5
-bread | 0
+bread | 10
 salt | 100
 noodles | 30
-milk | 0
-cream | 0
+milk | 5
+cream | 10
 soda | 5
 lettuce | 50
 patty | 60
 bun | 30
-sugar | 0
+sugar | 10
 ketchup | 40

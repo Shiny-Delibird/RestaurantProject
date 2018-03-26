@@ -1,6 +1,7 @@
 package RestaurantModel.Interfaces;
 
 import RestaurantModel.RestaurantObjects.Food;
+import javafx.collections.ObservableMap;
 
 import java.util.Map;
 import java.util.Set;
@@ -13,7 +14,7 @@ public interface InventorySystem {
 
     void receiveShipment(Map<String, Integer> shipment);
 
-    Map<String, Integer> getInventory();
+    ObservableMap<String, Integer> getInventory();
 
     String toString();
 

@@ -18,3 +18,8 @@ steak sauce | 10
 bread | 10
 flour | 10
 dough | 10
+egg | 10
+baking soda | 10
+milk | 10
+cream | 10
+sugar | 10
