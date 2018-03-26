@@ -1,8 +1,8 @@
 package Interface;
 
-import Interface.Views.CookController;
-import Interface.Views.EmployeeController;
-import Interface.Views.ServerController;
+import Interface.Controllers.CookController;
+import Interface.Controllers.EmployeeController;
+import Interface.Controllers.ServerController;
 import RestaurantModel.Managers.Restaurant;
 import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.application.Application;
@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class UIController extends Application {
+public class GUIInitializer extends Application {
     private RestaurantModel restaurant;
 
     @Override

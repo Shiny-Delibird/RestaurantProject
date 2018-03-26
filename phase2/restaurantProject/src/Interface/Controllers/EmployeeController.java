@@ -1,4 +1,4 @@
-package Interface.Views;
+package Interface.Controllers;
 
 import RestaurantModel.Interfaces.RestaurantModel;
 
