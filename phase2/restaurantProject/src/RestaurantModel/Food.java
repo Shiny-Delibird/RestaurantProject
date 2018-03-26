@@ -53,7 +53,7 @@ public class Food{
      * This constructor is used STRICTLY for making a copy of the given food
      * @param another The food instance that must be copied
      */
-    Food(Food another){
+    public Food(Food another){
         Map<String, Integer> ingredientsCopy = new HashMap<>(another.ingredients);
         this.name = another.name;
         this.price = another.price;

@@ -72,11 +72,16 @@ public class TakeOrderController implements EmployeeController{
 
     @FXML
     private void addFood(){
-        order.addFood(restaurant.getMenu().get(menuList.getSelectionModel().getSelectedItem()));
+        Food selectedFood = restaurant.getMenu().get(menuList.getSelectionModel().getSelectedItem());
+        order.addFood(new Food(selectedFood));
+    }
+
+    private Boolean checkIfIngredientValid(String ingredient){
+        return restaurant.getInventory().containsKey(ingredient);
     }
 
     public void addIngredient() {
-        if (!orderList.getSelectionModel().isEmpty() && !ingredientBox.getText().isEmpty()){
+        if (!orderList.getSelectionModel().isEmpty() && checkIfIngredientValid(ingredientBox.getText())){
             Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
             selectedFood.addIngredient(ingredientBox.getText(), 1);
 
@@ -85,7 +90,7 @@ public class TakeOrderController implements EmployeeController{
     }
 
     public void removeIngredient() {
-        if (!orderList.getSelectionModel().isEmpty() && !ingredientBox.getText().isEmpty()){
+        if (!orderList.getSelectionModel().isEmpty() && checkIfIngredientValid(ingredientBox.getText())){
             Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
             selectedFood.removeIngredient(ingredientBox.getText(), 1);
 

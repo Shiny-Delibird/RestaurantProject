@@ -31,4 +31,5 @@ public interface RestaurantModel {
     String requestBill(Order order);
 
     void receiveShipment(Map<String, Integer> shipment);
+
 }
