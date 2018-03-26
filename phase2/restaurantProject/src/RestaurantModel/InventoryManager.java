@@ -1,25 +1,18 @@
 package RestaurantModel;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableMap;
-
 import java.io.*;
 import java.util.*;
 
 /**
- * The RestaurantModel.InventoryManager class.
+ * The RestaurantModel.InventoryManager class that implements the Inventory interface.
  * Represents the inventory of a RestaurantModel.Restaurant and manages the stock of ingredients for cooking
  * */
-class InventoryManager {
-    private ObservableMap<String, Integer> inventory;
-    private Map<String, Integer> minimums;
-    private Set<String> requested;
+class InventoryManager implements InventorySystem {
+    private Map<String, SimpleEntry> inventory;
+    private RequestManager requests;
 
     private static final String INVENTORY_FILE = "configs/inventory.txt";
     private static final String MINIMUM_FILE = "configs/minimums.txt";
-    private static final String REORDER_FILE = "configs/requests.txt";
-
-    //TODO MAKE INTERFACE FOR INVENTORYMANAGER FOR BETTER DESIGN
 
     /**
      * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
@@ -28,34 +21,17 @@ class InventoryManager {
      */
     InventoryManager (){
         try{
-            inventory = FXCollections.observableHashMap();
+            inventory = new HashMap<>();
 
-            // Creates the inventory file if it doesn't exist
-            if (!(new File(INVENTORY_FILE).exists())) {
-                new PrintWriter(new BufferedWriter(new FileWriter(INVENTORY_FILE)));}
-            else{
-                // Adds items from the inventory.txt file to the inventory Map
-                parseFile(INVENTORY_FILE);
-            }
+            parseFile(INVENTORY_FILE);
+            Set<String> minimumKeys = parseFile(MINIMUM_FILE);
 
-            minimums = new HashMap<>();
+            requests = new RequestManager();
 
-            //Creates the minimums file if it doesn't exist
-            if (!(new File(MINIMUM_FILE).exists())) {
-                new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE)));}
-            else{
-                // Adds items from the minimums.txt file to the minimums Map
-                parseFile(MINIMUM_FILE);
-            }
+            updateInventoryFile();
+            updateMinimumsFile(minimumKeys);
 
-            // creates the file and set for reordering
-            requested = new HashSet<>();
-            new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));
-
-            // detects and fills in any missing entries in inventory and minimums
-            // this ensures the two sets and files have the same entries
-            // also reorders any insufficient stock in the inventory
-            checkIntegrity(minimums.keySet());
+            checkAndReorder(inventory.keySet());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -63,155 +39,47 @@ class InventoryManager {
 
     /**
      * reads the inventory or minimum file and creates the associated map attribute in the instance
+     * also creates the file if it doesn't exist
      * @param fileName the file to be parsed. must either be the INVENTORY_FILE or MINIMUM_FILE
      * */
-    private void parseFile(String fileName) throws IOException{
-        Map<String, Integer> target;
-        switch (fileName){
-            case INVENTORY_FILE:
-                target = inventory;
-                break;
-            case MINIMUM_FILE:
-                target = minimums;
-                break;
-            default:
-                throw new IllegalArgumentException("That's not a valid file!");
-        }
-        BufferedReader reader = new BufferedReader(new FileReader(fileName));
-        String line = reader.readLine();
-        while (line != null){
-            String[] split = line.split("\\s\\|\\s");
-            target.put(split[0], Integer.parseInt(split[1]));
+    private Set<String> parseFile(String fileName) throws IOException{
+        if (!(new File(fileName).exists())) {
+            new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
+            return null;
+        } else {
+            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+            String line = reader.readLine();
+            Set<String> found = new HashSet<>();
 
-            line = reader.readLine();
-        }
-    }
+            while (line != null) {
+                String[] split = line.split("\\s\\|\\s");
+                String key = split[0];
+                int num = Integer.parseInt(split[1]);
 
-    /**
-     * Analyses for missing entries in the minimums Map or the minimums.txt file and generates default minimums for each
-     * By default, the default minimum for all ingredients is 10 units. This can be adjusted afterwards in the
-     * minimums.txt file
-     * */
-    private void fillMinimums(){
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
-            for (String key : inventory.keySet()){
-                if (!minimums.containsKey(key)){
-                    out.println(key + " | " + 10);
-                    minimums.put(key, 10);
+                if (fileName.equals(INVENTORY_FILE)){
+                    inventory.put(key, new SimpleEntry(num));
                 }
-            }
-        }catch(IOException e){
-            e.printStackTrace();
-        }
-    }
+                else if (fileName.equals(MINIMUM_FILE)){
+                    found.add(key);
 
-    /**
-     * checks if each ingredient in a given set of ingredients is recorded in the inventory. if it is not, it is added
-     * to the inventory with a stock-value of 0. any insufficient ingredients are then reordered. entries missing in the
-     * minimums file are also added
-     * @param ingredients the set of ingredients to check
-     * */
-    public void checkIntegrity(Set<String> ingredients){
-        for (String key : ingredients){
-            if (!inventory.containsKey(key)){
-                inventory.put(key, 0);
-            }
-        }
-        fillMinimums();
-        checkAndReorder(inventory.keySet());
-    }
-
-    /**
-     * Subtracts <inventory> hashmap with a hashmap of the ingredients used.
-     * if any items in the inventory go below the minimum threshold for its stock, it is noted in requests.txt
-     * changes to the inventory are also reflected in inventory.txt
-     * @param used a HashMap that contains ingredients to be subtracted
-     */
-    public void useIngredients(Map<String, Integer> used){
-        for (String key : used.keySet()){
-            if (inventory.containsKey(key)) {
-                Integer old = inventory.get(key);
-                if (old - used.get(key) >= 0){
-                    inventory.replace(key, old, old - used.get(key));}
-                else{
-                    throw new IllegalArgumentException("We don't have enough " + key + " for that order!");}
-            } else{
-                throw new IllegalArgumentException(key + " is not a valid ingredient!");
-            }
-
-        }
-        checkAndReorder(used.keySet());
-        updateInventory();
-    }
-
-    /**
-     * Incorporates a new shipment of ingredients into the inventory. requests.txt is then cleared and ingredients still
-     * under threshold are reordered. also updates inventory.txt
-     * @param shipment A map of each ingredient name and the amount received
-     * */
-    public void receiveShipment(Map<String, Integer> shipment){
-        for (String key : shipment.keySet()){
-            addIngredient(key, shipment.get(key));
-        }
-        try{
-            // clears the requests.txt file
-            FileWriter clear = new FileWriter(REORDER_FILE, false);
-            clear.write("");
-            // clears the requested set
-            requested.clear();
-            // rechecks the inventory for insufficient stock
-            checkAndReorder(inventory.keySet());
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-        updateInventory();
-    }
-
-    /**
-     * Adds a given amount of a single ingredient into the inventory
-     * Can be used to individually add each item of a shipment into the inventory
-     * @param food the ingredient being added
-     * @param amount the amount of the ingredient being added
-     * */
-    private void addIngredient(String food, Integer amount){
-        if (inventory.containsKey(food)){
-            Integer old = inventory.get(food);
-            inventory.replace(food, old, old + amount);
-        } else{
-            inventory.put(food, amount);
-        }
-    }
-
-    /**
-     * checks if there is enough of each ingredient in the inventory for a given set of ingredients and writes to the
-     * reorder file if necessary. if an ingredient has already been noted in requests.txt then it is ignored
-     * @param keys the set of ingredients to check
-     * */
-    private void checkAndReorder(Set<String> keys){
-        // generates the reorder file if it isn't present
-        try {
-            if (!(new File(REORDER_FILE).exists())) {
-                new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));}
-        } catch(IOException e){
-            e.printStackTrace();
-        }
-            // fills the reorder file with the required ingredients and keeps note of ordered items in the requested set
-        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE, true)))) {
-            for (String key : keys) {
-                if (inventory.get(key) < minimums.get(key) && !requested.contains(key)) {
-                    out.println(key + " x 20");
-                    requested.add(key);
+                    if (inventory.keySet().contains(key)){
+                        inventory.get(key).setMinimum(num);
+                    }
+                    else{
+                        inventory.put(key, new SimpleEntry(0, num));
+                    }
                 }
+
+                line = reader.readLine();
             }
-        } catch(IOException e){
-            e.printStackTrace();
+            return found;
         }
     }
 
     /**
      * updates the inventory.txt file to match the inventory map
      * */
-    private void updateInventory(){
+    private void updateInventoryFile(){
         try{
             FileWriter clear = new FileWriter(INVENTORY_FILE,false);
             clear.write("");
@@ -228,12 +96,79 @@ class InventoryManager {
     }
 
     /**
-     * Generates a list of all ingredients and the amount in stock of each for a manager to see
+     * Analyses for missing entries in the  the minimums.txt file and generates default minimums for each
+     * By default, the default minimum for all ingredients is 10 units. This can be adjusted afterwards in the
+     * minimums.txt file
      * */
+    private void updateMinimumsFile(Set<String> currentInFile) {
+        try (PrintWriter out = new PrintWriter(new BufferedWriter(new FileWriter(MINIMUM_FILE, true)))) {
+            for (String key : inventory.keySet()){
+                if (!currentInFile.contains(key)){
+                    out.println(key + " | " + 10);
+                }
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
 
-    public ObservableMap<String, Integer> getInventory(){
-        return inventory;
-    };
+    /**
+     * checks if each ingredient in a given set of ingredients is recorded in the inventory. if it is not, it is added
+     * to the inventory with a stock-value of 0. any insufficient ingredients are then reordered. entries missing in the
+     * minimums file are also added
+     * @param ingredients the set of ingredients to check
+     * */
+    public void checkIntegrity(Set<String> ingredients){
+        Set<String> oldKeys = inventory.keySet();
+
+        for (String key : ingredients){
+            if (!inventory.containsKey(key)){
+                inventory.put(key, new SimpleEntry(0, 10));
+            }
+        }
+        updateInventoryFile();
+        updateMinimumsFile(oldKeys);
+
+        checkAndReorder(inventory.keySet());
+    }
+
+    public void useIngredients(Map<String, Integer> used){
+        for (String key : used.keySet()){
+            if (inventory.containsKey(key)) {
+                inventory.get(key).useQuantity(used.get(key));
+            } else{
+                throw new IllegalArgumentException(key + " is not a valid ingredient!");
+            }
+        }
+        checkAndReorder(used.keySet());
+        updateInventoryFile();
+    }
+
+    public void receiveShipment(Map<String, Integer> shipment){
+        for (String key : shipment.keySet()){
+            inventory.get(key).addQuantity(shipment.get(key));
+        }
+        requests.clear();
+        checkAndReorder(shipment.keySet());
+
+        updateInventoryFile();
+    }
+
+    private void checkAndReorder(Set<String> keys){
+        for (String key : keys){
+            if (!inventory.get(key).hasEnough()){
+                requests.placeRequest(key);
+            }
+        }
+    }
+
+    public Map<String, Integer> getInventory(){
+        HashMap<String,Integer> quantities = new HashMap<>();
+        for (String key : inventory.keySet()){
+            quantities.put(key, inventory.get(key).getQuantity());
+        }
+        return quantities;
+    }
 
     @Override
     public String toString(){
@@ -241,7 +176,7 @@ class InventoryManager {
         for (String key : inventory.keySet()){
             full.append(key);
             full.append(" x ");
-            full.append(inventory.get(key));
+            full.append(inventory.get(key).getQuantity());
             full.append(System.lineSeparator());
         }
         return full.toString();
