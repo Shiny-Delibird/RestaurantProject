@@ -92,7 +92,7 @@ class InventoryManager implements InventorySystem {
         }
         try(PrintWriter fresh = new PrintWriter(new BufferedWriter(new FileWriter(INVENTORY_FILE, true)))){
             for (String key : inventory.keySet()){
-                fresh.println(key + " | " + inventory.get(key));
+                fresh.println(key + " | " + inventory.get(key).getQuantity());
             }
         } catch(IOException e){
             e.printStackTrace();
