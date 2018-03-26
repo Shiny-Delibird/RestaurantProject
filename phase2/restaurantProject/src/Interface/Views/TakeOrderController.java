@@ -60,7 +60,11 @@ public class TakeOrderController implements EmployeeController{
             }
         });
 
-        orderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> ingredientList.setItems(getFixedListFromFood((Food) newValue))
+        orderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null){
+                ingredientList.setItems(TakeOrderController.this.getFixedListFromFood((Food) newValue));
+            }
+            }
         );
 
 
@@ -102,12 +106,15 @@ public class TakeOrderController implements EmployeeController{
 
     public void submitOrder(ActionEvent event) {
         if (!tableNumberInput.getText().isEmpty()){
+            order.setTableNumber(Integer.parseInt(tableNumberInput.getText()));
             restaurant.placeOrder(order);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
         }
     }
 
     public void removeFood() {
-        //TODO MAKE ORDER REMOVE FOOD METHOD
+        Food food = (Food) orderList.getSelectionModel().getSelectedItem();
+        order.removeFood(food);
+        ingredientList.getItems().clear();
     }
 }

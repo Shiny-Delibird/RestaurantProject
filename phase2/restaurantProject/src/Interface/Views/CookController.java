@@ -48,8 +48,8 @@ public class CookController implements EmployeeController{
     }
 
     private void cookOrder() {
-        if (!prevOrderList.getSelectionModel().isEmpty()){
-            ObservableList<Order> orders = prevOrderList.getSelectionModel().getSelectedItems();
+        if (!postOrderList.getSelectionModel().isEmpty()){
+            ObservableList<Order> orders = postOrderList.getSelectionModel().getSelectedItems();
 
             for (Order order : orders){
                 restaurant.cookOrder(order);
