@@ -3,9 +3,7 @@ package RestaurantModel;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -15,7 +13,7 @@ import java.util.Map;
 
 public class Order {
 
-    public ObservableList<Food> foods;
+    private ObservableList<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
 
@@ -76,6 +74,8 @@ public class Order {
     public void addFood(Food food){
         foods.add(food);
     }
+
+    public void removeFood(Food food){foods.remove(food);}
 
     //Returns the total price of all the foods
     public Map<String, Float> getPrices(){
