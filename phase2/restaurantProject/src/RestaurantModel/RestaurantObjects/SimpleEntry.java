@@ -6,12 +6,12 @@ public class SimpleEntry implements Entry {
     private int quantity;
     private int minimum;
 
-    SimpleEntry(int q){
+    public SimpleEntry(int q){
         quantity = q;
         minimum = 10;
     }
 
-    SimpleEntry(int q, int m){
+    public SimpleEntry(int q, int m){
         quantity = q;
         minimum = m;
     }

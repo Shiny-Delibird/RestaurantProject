@@ -1,6 +1,5 @@
 package RestaurantModel.Interfaces;
 
-import RestaurantModel.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 
 import java.util.Map;
