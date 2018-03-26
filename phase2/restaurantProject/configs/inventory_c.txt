@@ -1,25 +1,25 @@
-chicken | 15 | 200
-egg | 0 | 150
-cucumber | 20 | 20
-onion | 30 | 30
-vegetable oil | 20 | 10
-tomato | 20 | 20
-ground beef | 15 | 300
-cheese | 30 | 100
-potato | 40 | 80
-flour | 10 | 50
-steak sauce | 50 | 5
-baking soda | 20 | 0
-dough | 10 | 30
-raw steak | 5 | 200
-bread | 10 | 30
-salt | 100 | 2
-noodles | 30 | 50
-milk | 5 | 30
-cream | 10 | 80
-soda | 5 | 120
-lettuce | 50 | 30
-patty | 60 | 200
-bun | 30 | 50
-sugar | 10 | 5
-ketchup | 40 | 20
+chicken | 15
+egg | 0
+cucumber | 20
+onion | 30
+vegetable oil | 20
+tomato | 20
+ground beef | 15
+cheese | 30
+potato | 40
+flour | 10
+steak sauce | 50
+baking soda | 20
+dough | 10
+raw steak | 5
+bread | 10
+salt | 100
+noodles | 30
+milk | 5
+cream | 10
+soda | 5
+lettuce | 50
+patty | 60
+bun | 30
+sugar | 10
+ketchup | 40

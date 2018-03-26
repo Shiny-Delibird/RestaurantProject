@@ -1,5 +1,6 @@
 package RestaurantModel.Managers;
 
+import RestaurantModel.Interfaces.InventorySystem;
 import RestaurantModel.Interfaces.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
@@ -13,14 +14,14 @@ import java.util.*;
 // The main class of the project that controls all other classes
 public class Restaurant implements RestaurantModel {
     private OrderManager orderManager;
-    private InventoryManager inventoryManager;
+    private InventorySystem inventoryManager;
     private ObservableMap<String, Food> menu;
 
     private static final String MENU_FILE = "configs/menu.txt";
 
     public Restaurant() {
         this.orderManager = new OrderManager();
-        this.inventoryManager = new InventoryManager();
+        this.inventoryManager = new ComplexInventory();
         this.menu = FXCollections.observableHashMap();
 
         constructMenu(MENU_FILE);
