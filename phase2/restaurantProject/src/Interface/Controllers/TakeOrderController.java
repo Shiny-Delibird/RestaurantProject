@@ -75,24 +75,63 @@ public class TakeOrderController implements EmployeeController{
     }
 
     public void addIngredient() {
-        if (!orderList.getSelectionModel().isEmpty() && checkIfIngredientValid(ingredientBox.getText())){
-            Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-            String selectedIngredient = ingredientBox.getText();
-            if (restaurant.getInventory().get(selectedIngredient) > selectedFood.getIngredients().get(selectedIngredient)){
+        if (orderList.getSelectionModel().isEmpty()){
+            return;
+        }
 
-                selectedFood.addIngredient(ingredientBox.getText(), 1);
+        Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
+        String selectedIngredient = "";
+        Integer selectedItemIndex = null;
 
-                ingredientList.setItems(getFixedListFromFood(selectedFood));
-            }
+        if (checkIfIngredientValid(ingredientBox.getText())){
+            selectedIngredient = ingredientBox.getText();
+        } else if (!ingredientList.getSelectionModel().isEmpty()){
+            selectedIngredient = ((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim();
+            selectedItemIndex = (Integer) ingredientList.getSelectionModel().getSelectedIndices().get(0);
+        } else{
+            return;
+        }
+
+
+        int restaurantAmount = restaurant.getInventory().get(selectedIngredient);
+
+        if (restaurantAmount <= 0){
+            return;
+        }
+        if ((restaurantAmount > 0 && !selectedFood.getIngredients().containsKey(selectedIngredient)) ||
+                restaurantAmount > selectedFood.getIngredients().get(selectedIngredient)){
+            selectedFood.addIngredient(selectedIngredient, 1);
+            ingredientList.setItems(getFixedListFromFood(selectedFood));
+        }
+
+        if (selectedItemIndex != null){
+            ingredientList.getSelectionModel().selectIndices(selectedItemIndex);
         }
     }
 
     public void removeIngredient() {
-        if (!orderList.getSelectionModel().isEmpty() && checkIfIngredientValid(ingredientBox.getText())){
-            Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-            selectedFood.removeIngredient(ingredientBox.getText(), 1);
+        if (orderList.getSelectionModel().isEmpty()){
+            return;
+        }
 
-            ingredientList.setItems(getFixedListFromFood(selectedFood));
+        Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
+        String selectedIngredient = "";
+        Integer selectedItemIndex = null;
+
+        if (checkIfIngredientValid(ingredientBox.getText())){
+            selectedIngredient = ingredientBox.getText();
+        } else if (!ingredientList.getSelectionModel().isEmpty()){
+            selectedIngredient = ((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim();
+            selectedItemIndex = (Integer) ingredientList.getSelectionModel().getSelectedIndices().get(0);
+        }
+
+        selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
+        selectedFood.removeIngredient(selectedIngredient, 1);
+
+        ingredientList.setItems(getFixedListFromFood(selectedFood));
+
+        if (selectedItemIndex != null){
+            ingredientList.getSelectionModel().selectIndices(selectedItemIndex);
         }
     }
 

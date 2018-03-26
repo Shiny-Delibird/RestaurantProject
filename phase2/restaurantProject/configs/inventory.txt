@@ -1,20 +1,25 @@
-raw steak | 5
 chicken | 15
-bread | 0
-salt | 100
+egg | 0
 cucumber | 20
 onion | 30
-noodles | 30
 vegetable oil | 20
 tomato | 20
 ground beef | 15
-soda | 5
-lettuce | 50
 cheese | 30
-patty | 60
 potato | 40
 flour | 0
-bun | 30
 steak sauce | 50
+baking soda | 0
 dough | 0
+raw steak | 5
+bread | 0
+salt | 100
+noodles | 30
+milk | 0
+cream | 0
+soda | 5
+lettuce | 50
+patty | 60
+bun | 30
+sugar | 0
 ketchup | 40
