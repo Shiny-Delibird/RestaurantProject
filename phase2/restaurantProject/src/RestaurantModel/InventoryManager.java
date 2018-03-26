@@ -174,6 +174,17 @@ class InventoryManager implements InventorySystem {
         return quantities;
     }
 
+    public boolean hasEnough(Food food){
+        boolean enough = true;
+        Map<String, Integer> ingredients = food.getIngredients();
+        for (String key : ingredients.keySet()){
+            if (inventory.get(key).getQuantity() < ingredients.get(key)){
+                enough = false;
+            }
+        }
+        return enough;
+    }
+
     @Override
     public String toString(){
         StringBuilder full = new StringBuilder();
