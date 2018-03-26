@@ -69,12 +69,12 @@ public class Restaurant implements RestaurantModel{
     //TODO FILL ALL METHODS TO FINISH RESTAURANT
 
     @Override
-    public Map<String, Food> getMenu() {
+    public ObservableMap<String, Food> getMenu() {
         return menu;
     }
 
     @Override
-    public Map<String, Integer> getInventory() {
+    public ObservableMap<String, Integer> getInventory() {
         return inventoryManager.getInventory();
     }
 

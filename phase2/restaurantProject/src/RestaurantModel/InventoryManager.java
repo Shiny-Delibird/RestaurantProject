@@ -1,5 +1,8 @@
 package RestaurantModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableMap;
+
 import java.io.*;
 import java.util.*;
 
@@ -8,7 +11,7 @@ import java.util.*;
  * Represents the inventory of a RestaurantModel.Restaurant and manages the stock of ingredients for cooking
  * */
 class InventoryManager {
-    private Map<String, Integer> inventory;
+    private ObservableMap<String, Integer> inventory;
     private Map<String, Integer> minimums;
     private Set<String> requested;
 
@@ -25,7 +28,7 @@ class InventoryManager {
      */
     InventoryManager (){
         try{
-            inventory = new HashMap<>();
+            inventory = FXCollections.observableHashMap();
 
             // Creates the inventory file if it doesn't exist
             if (!(new File(INVENTORY_FILE).exists())) {
@@ -228,7 +231,7 @@ class InventoryManager {
      * Generates a list of all ingredients and the amount in stock of each for a manager to see
      * */
 
-    public Map<String, Integer> getInventory(){
+    public ObservableMap<String, Integer> getInventory(){
         return inventory;
     };
 

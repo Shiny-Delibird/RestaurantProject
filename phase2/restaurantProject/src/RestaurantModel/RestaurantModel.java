@@ -1,14 +1,15 @@
 package RestaurantModel;
 
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 
 import java.util.Map;
 
 public interface RestaurantModel {
 
-    Map<String, Food> getMenu();
+    ObservableMap<String, Food> getMenu();
 
-    Map<String, Integer> getInventory();
+    ObservableMap<String, Integer> getInventory();
 
     ObservableList getOrdersAtStage(String stage);
 

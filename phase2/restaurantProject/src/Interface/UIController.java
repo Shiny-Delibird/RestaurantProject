@@ -37,6 +37,7 @@ public class UIController extends Application {
         MainLoader.setController(controller);
         Parent root = MainLoader.load();
         Scene serverScene = new Scene(root, 600, 400);
+        controller.init(restaurant);
 
         Stage serverWindow = new Stage();
         serverWindow.setScene(serverScene);

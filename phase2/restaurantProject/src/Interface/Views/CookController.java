@@ -32,8 +32,8 @@ public class CookController implements EmployeeController{
     private RestaurantModel restaurant;
 
     public  void init(RestaurantModel restaurant){
-        prevOrderList.setItems(restaurant.getOrdersAtStage("pending"));
-        postOrderList.setItems(restaurant.getOrdersAtStage("in progress"));
+        prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
+        postOrderList.setItems(restaurant.getOrdersAtStage("InProgress"));
         this.restaurant = restaurant;
     }
 

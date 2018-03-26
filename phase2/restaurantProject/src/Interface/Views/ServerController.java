@@ -41,14 +41,15 @@ public class ServerController implements EmployeeController{
     private RestaurantModel restaurant;
 
     public void init(RestaurantModel restaurant){
-        prevOrderList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        prevOrderList.setItems(restaurant.getOrdersAtStage("cooked"));
+        prevOrderList.setItems(restaurant.getOrdersAtStage("Cooked"));
 
-        postOrderList.setItems(restaurant.getOrdersAtStage("completed"));
+        postOrderList.setItems(restaurant.getOrdersAtStage("Completed"));
         this.restaurant = restaurant;
     }
 
     public void initialize(){
+        prevOrderList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
         prevLabel.setText("To Deliver");
         postLabel.setText("To be Billed");
         takeOrderButton.setVisible(true);
@@ -81,9 +82,16 @@ public class ServerController implements EmployeeController{
 
     private void takeOrder(ActionEvent event){
         Stage sourceStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene sourceScene = ((Node) event.getSource()).getScene();
+
         try {
             FXMLLoader takeOrderLoader = new FXMLLoader(getClass().getResource("/Interface/Views/TakeOrder.fxml"));
             Parent root = takeOrderLoader.load();
+
+            TakeOrderController takeOrderController = takeOrderLoader.getController();
+            takeOrderController.previousScene = sourceScene;
+            takeOrderController.init(restaurant);
+
             sourceStage.setScene(new Scene(root, 600, 400));
         } catch (IOException e) {
             e.printStackTrace();

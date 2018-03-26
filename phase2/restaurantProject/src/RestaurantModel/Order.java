@@ -1,5 +1,8 @@
 package RestaurantModel;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -11,7 +14,8 @@ import java.util.Map;
  */
 
 public class Order {
-    public List<Food> foods;
+
+    public ObservableList<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
 
@@ -30,7 +34,22 @@ public class Order {
         this.tableNumber = tableNumber;
         this.orderNumber = classOrderNumber;
         classOrderNumber += 1;
-        foods = new ArrayList<>();
+        foods = FXCollections.observableArrayList();
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
+    }
+
+    public ObservableList<Food> getFoods() {
+        return foods;
+    }
+
+    public Order(){
+
+        this.orderNumber = classOrderNumber;
+        classOrderNumber += 1;
+        foods = FXCollections.observableArrayList();
     }
 
     //Returns a Map with the name and amount of each ingredient
