@@ -7,3 +7,4 @@
 20 | Steak | 1 x raw steak, 1 x steak sauce
 10 | Pizza | 2 x cheese, 1 x dough, 1 x tomato
 10 | Cake | 3 x flour,  1 x baking soda, 5 x sugar, 2 x egg, 2 x milk, 2 x cream
+10 | Baked Bread | 2 x flour

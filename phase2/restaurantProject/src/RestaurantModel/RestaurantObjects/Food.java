@@ -2,6 +2,8 @@ package RestaurantModel.RestaurantObjects;/*
 Represents a food.
  */
 
+import javafx.collections.FXCollections;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +13,11 @@ public class Food{
     private float price;
     private String name;
     private String instructions;
+    private Map<String, Integer> changedIngredients;
+
+    public Map<String, Integer> getChangedIngredients() {
+        return changedIngredients;
+    }
 
     public String getName() {
         return name;
@@ -34,12 +41,19 @@ public class Food{
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
+        this.changedIngredients = new HashMap<String, Integer>();
     }
 
     public Food(String name, float price){
         this.name = name;
         this.price = price;
         this.ingredients = new HashMap<>();
+        this.changedIngredients = new HashMap<String, Integer>();
+    }
+
+    public Food(){
+        this.ingredients = new HashMap<>();
+        this.changedIngredients = new HashMap<String, Integer>();
     }
 
     // Adds quantity of ingredient to the ingredients map. Creates a new entry if not already present
@@ -50,7 +64,15 @@ public class Food{
         }else{
             ingredients.put(ingredientName, ingredientQuantity);
         }
+
+        if (changedIngredients.containsKey(ingredientName)){
+            int originalQuantity = changedIngredients.get(ingredientName);
+            changedIngredients.put(ingredientName, originalQuantity + ingredientQuantity);
+        }else{
+            changedIngredients.put(ingredientName, ingredientQuantity);
+        }
     }
+
     // Remove quantity of ingredient to the ingredients map. Removes entry if quantity becomes 0
     public void removeIngredient(String ingredientName, int ingredientQuantity){
         if (ingredients.containsKey(ingredientName)) {
@@ -60,6 +82,16 @@ public class Food{
             } else {
                 ingredients.put(ingredientName, originalQuantity - ingredientQuantity);
             }
+        }
+        if (changedIngredients.containsKey(ingredientName)) {
+            int originalQuantity = changedIngredients.get(ingredientName);
+            if (originalQuantity - ingredientQuantity == 0){
+                changedIngredients.remove(ingredientName);
+            } else {
+                changedIngredients.put(ingredientName, originalQuantity - ingredientQuantity);
+            }
+        } else  {
+            changedIngredients.put(ingredientName, -1);
         }
     }
 
@@ -78,6 +110,7 @@ public class Food{
         this.name = another.name;
         this.price = another.price;
         this.ingredients = ingredientsCopy;
+        this.changedIngredients = new HashMap<>();
     }
 
     public Map<String, Integer> getIngredients(){

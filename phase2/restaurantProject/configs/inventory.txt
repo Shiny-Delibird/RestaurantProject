@@ -1,25 +1,25 @@
-chicken | 14
-egg | 8
+chicken | 11
+egg | 3
 cucumber | 18
 onion | 30
-vegetable oil | 19
-tomato | 8
-ground beef | 58
-cheese | 24
-potato | 39
-flour | 58
-steak sauce | 48
-baking soda | 19
-dough | 27
-raw steak | 29
-bread | 29
-salt | 97
+vegetable oil | 10
+tomato | 1
+ground beef | 55
+cheese | 21
+potato | 30
+flour | 10
+steak sauce | 43
+baking soda | 14
+dough | 25
+raw steak | 23
+bread | 27
+salt | 86
 noodles | 29
-milk | 38
-cream | 38
+milk | 28
+cream | 28
 soda | 43
-lettuce | 46
-patty | 58
-bun | 27
-sugar | 435
-ketchup | 40
+lettuce | 45
+patty | 57
+bun | 23
+sugar | 410
+ketchup | 38

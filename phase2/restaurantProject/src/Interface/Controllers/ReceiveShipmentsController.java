@@ -82,8 +82,6 @@ public class ReceiveShipmentsController implements EmployeeController{
 	}
 
 	public void confirmShipment(ActionEvent event){
-		if (!shipmentsList.getItems().isEmpty()){
-			restaurant.receiveShipment(shipment);
-			((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
-		}
+        restaurant.receiveShipment(shipment);
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
 	}}

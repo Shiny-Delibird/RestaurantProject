@@ -59,7 +59,7 @@ public class ServerController implements EmployeeController{
         takeOrderButton = new Button();
         ((GridPane) receiveShipment.getParent()).add(takeOrderButton, 0, 1);
         takeOrderButton.setText("Take Order");
-        ((GridPane) receiveShipment.getParent()).setHalignment(takeOrderButton, HPos.CENTER);
+        GridPane.setHalignment(takeOrderButton, HPos.CENTER);
 
         prevOrderList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
@@ -95,7 +95,7 @@ public class ServerController implements EmployeeController{
             closeBill = new Button();
             ((GridPane) receiveShipment.getParent()).add(closeBill, 0, 1);
             closeBill.setText("Close Bill");
-            ((GridPane) receiveShipment.getParent()).setValignment(closeBill, VPos.BOTTOM);
+            GridPane.setValignment(closeBill, VPos.BOTTOM);
             closeBill.setOnAction(this::closeBill);
             closeBill.toFront();
         }

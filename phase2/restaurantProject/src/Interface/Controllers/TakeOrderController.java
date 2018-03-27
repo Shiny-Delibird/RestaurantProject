@@ -55,11 +55,8 @@ public class TakeOrderController implements EmployeeController{
         this.restaurant = restaurant;
 
         menuList.getItems().setAll(getFixedMenu(restaurant.getMenu()));
-        restaurant.getMenu().addListener((MapChangeListener<String, Food>) change -> {
-            if (change.wasAdded()){
-                menuList.getItems().setAll(getFixedMenu(restaurant.getMenu()));
-            }
-        });
+        restaurant.getInventory().addListener((MapChangeListener<String, Integer>) change ->
+                menuList.getItems().setAll(getFixedMenu(restaurant.getMenu())));
 
         orderList.setItems(order.getFoods());
 
@@ -90,14 +87,33 @@ public class TakeOrderController implements EmployeeController{
         });
 
         ingredientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null) ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
+            if (newValue != null && newValue instanceof String) {
+                ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
+            }
         });
     }
 
     @FXML
     private void addFood(){
         Food selectedFood = restaurant.getMenu().get(menuList.getSelectionModel().getSelectedItem());
-        order.addFood(new Food(selectedFood));
+
+        if (inventoryWillHaveEnough(selectedFood)){
+            order.addFood(new Food(selectedFood));
+        }
+    }
+
+    private Boolean inventoryWillHaveEnough(Food foodToAdd){
+        Food testFood = new Food("test", 0);
+        ObservableList<Food> allFoods = FXCollections.observableArrayList();
+        allFoods.setAll(order.getFoods());
+        allFoods.add(foodToAdd);
+        for (Food food : allFoods){
+            for (String ingredient : food.getIngredients().keySet()){
+                testFood.addIngredient(ingredient, food.getIngredients().get(ingredient));
+            }
+        }
+
+        return restaurant.hasEnough(testFood);
     }
 
     private Boolean checkIfIngredientValid(String ingredient){
@@ -114,15 +130,12 @@ public class TakeOrderController implements EmployeeController{
         if (checkIfIngredientValid(ingredientBox.getText())){
             String selectedIngredient = ingredientBox.getText();
 
-            int restaurantAmount = restaurant.getInventory().get(selectedIngredient);
+            Food testFood = new Food();
+            testFood.addIngredient(selectedIngredient, 1);
 
-            if (restaurantAmount > 0){
-                if (!selectedFood.getIngredients().containsKey(selectedIngredient) ||
-                        restaurantAmount > selectedFood.getIngredients().get(selectedIngredient)){
-
-                    selectedFood.addIngredient(selectedIngredient, 1);
-                    ingredientList.setItems(getFixedListFromFood(selectedFood));
-                }
+            if (inventoryWillHaveEnough(testFood) ){
+                selectedFood.addIngredient(selectedIngredient, 1);
+                ingredientList.setItems(getFixedListFromFood(selectedFood));
 
             }
         }

@@ -29,5 +29,5 @@
     <Button fx:id="receiveShipment" mnemonicParsing="false" onAction="#receiveShipment" text="Receive Shipment" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
     <Label fx:id="prevLabel" text="Label" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
     <Label fx:id="postLabel" text="Label" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-   <Label fx:id="infoLabel" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
+   <Label fx:id="infoLabel" wrapText="true" GridPane.halignment="LEFT" GridPane.rowIndex="1" GridPane.valignment="TOP" />
 </GridPane>

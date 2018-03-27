@@ -63,25 +63,38 @@ public class CookController implements EmployeeController{
         postOrderButton.setOnAction(event -> cookOrder());
 
         prevOrderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue != null){
-                StringBuilder instructions = new StringBuilder();
-                Order newOrder = (Order) newValue;
+            displayOrderInfo((Order) newValue); });
+    }
 
-                if (!newOrder.getInstructions().isEmpty()){
-                    instructions.append(newOrder.getInstructions());
-                    instructions.append("\n\n");
-                }
+    private void displayOrderInfo(Order order) {
+        if (order != null){
+            StringBuilder instructions = new StringBuilder();
 
-                for (Food food : newOrder.getFoods()){
+            if (!order.getInstructions().isEmpty()){
+                instructions.append(order.getInstructions());
+                instructions.append("\n\n");
+            }
+
+            for (Food food : order.getFoods()){
+                if (food.getInstructions() != null || !food.getChangedIngredients().isEmpty()){
+                    instructions.append(food.getName() + ": ");
                     if (food.getInstructions() != null){
-                        instructions.append(food.getName() + ": " + food.getInstructions());
+                        instructions.append(food.getInstructions());
                         instructions.append("\n");
                     }
+                    for (String ingredient : food.getChangedIngredients().keySet()){
+                        int changedAmount = food.getChangedIngredients().get(ingredient);
+                        if (changedAmount > 0){
+                            instructions.append("Add " + ingredient + " x " + Integer.toString(changedAmount) + "\n");
+                        } else if (changedAmount < 0){
+                            instructions.append("Remove " + ingredient + " x " + Integer.toString(Math.abs(changedAmount)) + "\n");
+                        }
+                    }
                 }
-
-                infoLabel.setText(instructions.toString());
             }
-        });
+
+            infoLabel.setText(instructions.toString());
+        }
     }
 
     private void cookOrder() {
