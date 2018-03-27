@@ -70,8 +70,6 @@ public class Restaurant implements RestaurantModel {
 
     }
 
-    //TODO FILL ALL METHODS TO FINISH RESTAURANT
-
     @Override
     public ObservableMap<String, Food> getMenu() {
         return menu;
@@ -96,6 +94,7 @@ public class Restaurant implements RestaurantModel {
     @Override
     public void placeOrder(Order order) {
         orderManager.placeOrder(order);
+        inventoryManager.useIngredients(order.getAllIngredients());
     }
 
     @Override
@@ -106,7 +105,6 @@ public class Restaurant implements RestaurantModel {
     @Override
     public void cookOrder(Order order) {
         orderManager.orderIsCooked(order);
-        inventoryManager.useIngredients(order.getAllIngredients());
     }
 
     @Override
@@ -124,7 +122,7 @@ public class Restaurant implements RestaurantModel {
     public String requestBill(Order order) {
         StringBuilder bill = new StringBuilder();
         for (Map.Entry<String, Float> item: order.getPrices().entrySet()){
-            String word = item.getKey() + item.getValue() + "\n";
+            String word = item.getKey() + ": " + item.getValue() + "$\n";
             bill.append(word);
         }
         return bill.toString();

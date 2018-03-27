@@ -1,9 +1,2 @@
 egg x 20
-flour x 20
-baking soda x 20
-dough x 20
-raw steak x 20
-bread x 20
-milk x 20
-cream x 20
-sugar x 20
+tomato x 20

@@ -89,11 +89,8 @@ public class TakeOrderController implements EmployeeController{
             orderLabel.setText("Order " + "(" + Integer.toString(cals) + " cals)");
         });
 
-        ingredientList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
-            @Override
-            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
-                if (newValue != null) ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
-            }
+        ingredientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
         });
     }
 
@@ -168,10 +165,10 @@ public class TakeOrderController implements EmployeeController{
 
 
     public void submitOrder(ActionEvent event) {
-        if (!tableNumberInput.getText().isEmpty()){
+        if (!tableNumberInput.getText().isEmpty() && !order.getFoods().isEmpty()){
 
             order.setNickname(orderNickname.getText());
-            order.addInstructions(orderInstructions.getText());
+            order.setInstructions(orderInstructions.getText());
 
             order.setTableNumber(Integer.parseInt(tableNumberInput.getText()));
             restaurant.placeOrder(order);
@@ -198,8 +195,8 @@ public class TakeOrderController implements EmployeeController{
         } finally {
             if (price != null){
                 Food customFood = new Food(name, price);
+                customFood.setInstructions(customInstructions.getText());
                 order.addFood(customFood);
-                order.addInstructions(customInstructions.getText());
 
                 customName.clear();
                 customPrice.clear();

@@ -17,7 +17,7 @@ public class Order {
     private int tableNumber;
     private static int classOrderNumber = 1;
     private String nickname;
-    private ObservableList<String> instructions = FXCollections.observableArrayList();
+    private String instructions;
 
     public String getNickname() {
         return nickname;
@@ -27,12 +27,12 @@ public class Order {
         this.nickname = nickname;
     }
 
-    public ObservableList getInstructions() {
+    public String getInstructions() {
         return instructions;
     }
 
-    public void addInstructions(String instructions) {
-        this.instructions.add(instructions);
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
     }
 
     public int getOrderNumber() {
@@ -109,6 +109,11 @@ public class Order {
 
     @Override
     public String toString(){
-        return "Order " + getOrderNumber() + " at Table " + getTableNumber();
+        if (nickname.isEmpty()){
+            return "Order " + getOrderNumber() + " at Table " + getTableNumber();
+        }else{
+            return nickname + " order " + " at Table " + getTableNumber();
+        }
+
     }
 }

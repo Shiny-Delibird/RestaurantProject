@@ -12,7 +12,11 @@ public class Food{
     private String name;
     private String instructions;
 
-    String getInstructions() {
+    public String getName() {
+        return name;
+    }
+
+    public String getInstructions() {
         return instructions;
     }
 

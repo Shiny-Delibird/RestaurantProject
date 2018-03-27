@@ -1,12 +1,23 @@
 package Interface.Controllers;
 
-import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
+import RestaurantModel.RestaurantObjects.Food;
+import RestaurantModel.RestaurantObjects.Order;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.geometry.HPos;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class CookController implements EmployeeController{
 
@@ -14,9 +25,11 @@ public class CookController implements EmployeeController{
     private Label prevLabel;
     @FXML
     private Label postLabel;
+    @FXML
+    private Label infoLabel;
 
     @FXML
-    private Button takeOrderButton;
+    private Button receiveShipment;
     @FXML
     private Button prevOrderButton;
     @FXML
@@ -36,6 +49,11 @@ public class CookController implements EmployeeController{
     }
 
     public void initialize() {
+        Label infoTitle = new Label();
+        ((GridPane) receiveShipment.getParent()).add(infoTitle, 0, 0);
+        infoTitle.setText("Order Info");
+        ((GridPane) receiveShipment.getParent()).setHalignment(infoTitle, HPos.CENTER);
+
         prevLabel.setText("To Confirm");
         postLabel.setText("To Cook");
         prevOrderButton.setText("Confirm Order");
@@ -43,6 +61,27 @@ public class CookController implements EmployeeController{
 
         prevOrderButton.setOnAction(event -> confirmOrder());
         postOrderButton.setOnAction(event -> cookOrder());
+
+        prevOrderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null){
+                StringBuilder instructions = new StringBuilder();
+                Order newOrder = (Order) newValue;
+
+                if (!newOrder.getInstructions().isEmpty()){
+                    instructions.append(newOrder.getInstructions());
+                    instructions.append("\n\n");
+                }
+
+                for (Food food : newOrder.getFoods()){
+                    if (food.getInstructions() != null){
+                        instructions.append(food.getName() + ": " + food.getInstructions());
+                        instructions.append("\n");
+                    }
+                }
+
+                infoLabel.setText(instructions.toString());
+            }
+        });
     }
 
     private void cookOrder() {
@@ -62,6 +101,24 @@ public class CookController implements EmployeeController{
             for (Order order : orders){
                 restaurant.confirmOrder(order);
             }
+        }
+    }
+
+    public void receiveShipment(ActionEvent event){
+        Stage sourceStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+        Scene sourceScene = ((Node) event.getSource()).getScene();
+
+        try {
+            FXMLLoader takeOrderLoader = new FXMLLoader(getClass().getResource("/Interface/Views/ReceiveShipment.fxml"));
+            Parent root = takeOrderLoader.load();
+
+            ReceiveShipmentsController receiveShipmentsController = takeOrderLoader.getController();
+            receiveShipmentsController.previousScene = sourceScene;
+            receiveShipmentsController.init(restaurant);
+
+            sourceStage.setScene(new Scene(root, 600, 400));
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

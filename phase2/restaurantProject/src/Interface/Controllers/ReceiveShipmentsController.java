@@ -3,11 +3,14 @@ package Interface.Controllers;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableMapValue;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,6 +18,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.function.Predicate;
 import java.util.regex.Pattern;
 import java.util.HashMap;
 
@@ -28,15 +33,27 @@ public class ReceiveShipmentsController implements EmployeeController{
 	@FXML
 	private TextField quantityBox;
 
+	@FXML
+    private TextField searchBar;
+
+	private FilteredList<String> ingredientsFiltered;
+
 	private ObservableMap<String, Integer> shipment;
 	private RestaurantModel restaurant;
 
 	@Override
 	public void init(RestaurantModel restaurant) {
 		this.restaurant = restaurant;
-		ingredientsList.getItems().setAll(getFixedInventory(restaurant.getInventory()));
+        ObservableList<String> ingredientNames = FXCollections.observableArrayList(restaurant.getInventory().keySet()).sorted();
+		ingredientsFiltered = new FilteredList<String>(ingredientNames);
+		ingredientsList.setItems(ingredientsFiltered);
 		shipment = FXCollections.observableHashMap();
-	}
+
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> ingredientsFiltered.setPredicate(s -> {
+            String lowerCaseSearch = newValue.toLowerCase();
+            return s.contains(lowerCaseSearch);
+        }));
+    }
 
 	@FXML
 	private void addIngredient(){
@@ -63,16 +80,10 @@ public class ReceiveShipmentsController implements EmployeeController{
 		shipmentsList.getItems().remove(selectedIngredient);
 
 	}
-	private ObservableList<String> getFixedInventory(ObservableMap<String, Integer> inventory){
-		ObservableList<String> fixedInventory= FXCollections.observableArrayList();
-		fixedInventory.addAll(inventory.keySet());
-		return fixedInventory;
-	}
 
 	public void confirmShipment(ActionEvent event){
 		if (!shipmentsList.getItems().isEmpty()){
 			restaurant.receiveShipment(shipment);
 			((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
 		}
-	}
-}
+	}}
