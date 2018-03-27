@@ -139,4 +139,9 @@ public class Restaurant implements RestaurantModel {
     public Boolean hasEnough(Food food) {
         return inventoryManager.hasEnough(food);
     }
+
+    @Override
+    public int getCalories(Food food) {
+        return inventoryManager.getCalories(food);
+    }
 }

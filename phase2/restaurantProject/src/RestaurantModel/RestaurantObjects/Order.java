@@ -16,6 +16,24 @@ public class Order {
     private ObservableList<Food> foods;
     private int tableNumber;
     private static int classOrderNumber = 1;
+    private String nickname;
+    private ObservableList<String> instructions = FXCollections.observableArrayList();
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
+    }
+
+    public ObservableList getInstructions() {
+        return instructions;
+    }
+
+    public void addInstructions(String instructions) {
+        this.instructions.add(instructions);
+    }
 
     public int getOrderNumber() {
         return orderNumber;
@@ -44,7 +62,6 @@ public class Order {
     }
 
     public Order(){
-
         this.orderNumber = classOrderNumber;
         classOrderNumber += 1;
         foods = FXCollections.observableArrayList();

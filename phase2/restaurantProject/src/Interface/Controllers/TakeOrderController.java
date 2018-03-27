@@ -3,14 +3,14 @@ package Interface.Controllers;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
-import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
-import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -31,6 +31,20 @@ public class TakeOrderController implements EmployeeController{
     private TextField tableNumberInput;
     @FXML
     private TextField ingredientBox;
+    @FXML
+    private TextField orderNickname;
+    @FXML
+    private TextField orderInstructions;
+
+    @FXML
+    private TextField customName;
+    @FXML
+    private TextField customPrice;
+    @FXML
+    private TextField customInstructions;
+
+    @FXML
+    private Label orderLabel;
 
     private Order order;
     private RestaurantModel restaurant;
@@ -55,13 +69,32 @@ public class TakeOrderController implements EmployeeController{
             }
         });
 
+        customPrice.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*\\.?\\d*$")) {
+                customPrice.setText(newValue.replaceAll("[^(\\d*.?\\d*$)]", ""));
+            }
+        });
+
         orderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
                 ingredientList.setItems(TakeOrderController.this.getFixedListFromFood((Food) newValue));
-            }
-            }
+            } }
         );
 
+        order.getFoods().addListener((ListChangeListener<Food>) c -> {
+            int cals = 0;
+            for (Food food : order.getFoods()){
+                cals = cals + restaurant.getCalories(food);
+            }
+            orderLabel.setText("Order " + "(" + Integer.toString(cals) + " cals)");
+        });
+
+        ingredientList.getSelectionModel().selectedItemProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue observable, Object oldValue, Object newValue) {
+                if (newValue != null) ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
+            }
+        });
     }
 
     @FXML
@@ -80,32 +113,21 @@ public class TakeOrderController implements EmployeeController{
         }
 
         Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-        String selectedIngredient = "";
-        Integer selectedItemIndex = null;
 
         if (checkIfIngredientValid(ingredientBox.getText())){
-            selectedIngredient = ingredientBox.getText();
-        } else if (!ingredientList.getSelectionModel().isEmpty()){
-            selectedIngredient = ((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim();
-            selectedItemIndex = (Integer) ingredientList.getSelectionModel().getSelectedIndices().get(0);
-        } else{
-            return;
-        }
+            String selectedIngredient = ingredientBox.getText();
 
+            int restaurantAmount = restaurant.getInventory().get(selectedIngredient);
 
-        int restaurantAmount = restaurant.getInventory().get(selectedIngredient);
+            if (restaurantAmount > 0){
+                if (!selectedFood.getIngredients().containsKey(selectedIngredient) ||
+                        restaurantAmount > selectedFood.getIngredients().get(selectedIngredient)){
 
-        if (restaurantAmount <= 0){
-            return;
-        }
-        if ((restaurantAmount > 0 && !selectedFood.getIngredients().containsKey(selectedIngredient)) ||
-                restaurantAmount > selectedFood.getIngredients().get(selectedIngredient)){
-            selectedFood.addIngredient(selectedIngredient, 1);
-            ingredientList.setItems(getFixedListFromFood(selectedFood));
-        }
+                    selectedFood.addIngredient(selectedIngredient, 1);
+                    ingredientList.setItems(getFixedListFromFood(selectedFood));
+                }
 
-        if (selectedItemIndex != null){
-            ingredientList.getSelectionModel().selectIndices(selectedItemIndex);
+            }
         }
     }
 
@@ -115,28 +137,17 @@ public class TakeOrderController implements EmployeeController{
         }
 
         Food selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-        String selectedIngredient = "";
-        Integer selectedItemIndex = null;
 
         if (checkIfIngredientValid(ingredientBox.getText())){
-            selectedIngredient = ingredientBox.getText();
-        } else if (!ingredientList.getSelectionModel().isEmpty()){
-            selectedIngredient = ((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim();
-            selectedItemIndex = (Integer) ingredientList.getSelectionModel().getSelectedIndices().get(0);
-        }
+            String selectedIngredient = ingredientBox.getText();
 
-        selectedFood = (Food) orderList.getSelectionModel().getSelectedItem();
-        selectedFood.removeIngredient(selectedIngredient, 1);
-
-        ingredientList.setItems(getFixedListFromFood(selectedFood));
-
-        if (selectedItemIndex != null){
-            ingredientList.getSelectionModel().selectIndices(selectedItemIndex);
+            selectedFood.removeIngredient(selectedIngredient, 1);
+            ingredientList.setItems(getFixedListFromFood(selectedFood));
         }
     }
 
-    private ObservableList getFixedListFromFood(Food food){
-        ObservableList fixedIngredients = FXCollections.observableArrayList();
+    private ObservableList<String> getFixedListFromFood(Food food){
+        ObservableList<String> fixedIngredients = FXCollections.observableArrayList();
         for (String ingredient : food.getIngredients().keySet()){
             fixedIngredients.add(ingredient + " x " + food.getIngredients().get(ingredient));
         }
@@ -145,8 +156,8 @@ public class TakeOrderController implements EmployeeController{
         return fixedIngredients;
     }
 
-    private ObservableList getFixedMenu(ObservableMap<String, Food> menu){
-        ObservableList fixedMenu = FXCollections.observableArrayList();
+    private ObservableList<String> getFixedMenu(ObservableMap<String, Food> menu){
+        ObservableList<String> fixedMenu = FXCollections.observableArrayList();
         for (String item : menu.keySet()){
             if (restaurant.hasEnough(menu.get(item))){
                 fixedMenu.add(item);
@@ -158,15 +169,43 @@ public class TakeOrderController implements EmployeeController{
 
     public void submitOrder(ActionEvent event) {
         if (!tableNumberInput.getText().isEmpty()){
+
+            order.setNickname(orderNickname.getText());
+            order.addInstructions(orderInstructions.getText());
+
             order.setTableNumber(Integer.parseInt(tableNumberInput.getText()));
             restaurant.placeOrder(order);
             ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
         }
     }
 
+    public void cancelOrder(ActionEvent event){
+        ((Stage) ((Node) event.getSource()).getScene().getWindow()).setScene(previousScene);
+    }
+
     public void removeFood() {
         Food food = (Food) orderList.getSelectionModel().getSelectedItem();
         order.removeFood(food);
         ingredientList.getItems().clear();
+    }
+
+    public void addCustomFood(){
+        String name = customName.getText().isEmpty() ? "Custom Food" : customName.getText();
+        Float price = null;
+        try{
+            price = Float.parseFloat(customPrice.getText());
+        } catch (Exception ignored){
+        } finally {
+            if (price != null){
+                Food customFood = new Food(name, price);
+                order.addFood(customFood);
+                order.addInstructions(customInstructions.getText());
+
+                customName.clear();
+                customPrice.clear();
+                customInstructions.clear();
+            }
+        }
+
     }
 }

@@ -36,4 +36,6 @@ public interface RestaurantModel {
 
     Boolean hasEnough(Food food);
 
+    int getCalories(Food food);
+
 }
