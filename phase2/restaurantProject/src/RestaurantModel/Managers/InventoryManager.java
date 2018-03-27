@@ -188,6 +188,11 @@ class InventoryManager implements InventorySystem {
     }
 
     @Override
+    public int getCalories(Food food) {
+        return 0;
+    }
+
+    @Override
     public String toString(){
         StringBuilder full = new StringBuilder();
         for (String key : inventory.keySet()){

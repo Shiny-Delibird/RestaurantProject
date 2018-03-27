@@ -10,6 +10,15 @@ public class Food{
     private Map<String, Integer> ingredients;
     private float price;
     private String name;
+    private String instructions;
+
+    String getInstructions() {
+        return instructions;
+    }
+
+    public void setInstructions(String instructions) {
+        this.instructions = instructions;
+    }
 
     /**
      * Creates a item on the menu with a name, price, and ingredients
@@ -21,6 +30,12 @@ public class Food{
         this.name = name;
         this.price = price;
         this.ingredients = ingredients;
+    }
+
+    public Food(String name, float price){
+        this.name = name;
+        this.price = price;
+        this.ingredients = new HashMap<>();
     }
 
     // Adds quantity of ingredient to the ingredients map. Creates a new entry if not already present

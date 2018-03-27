@@ -16,8 +16,9 @@ public class ComplexInventory implements InventorySystem {
     private Map<String, CalorieEntry> inventory;
     private RequestManager requests;
 
-    private static final String INVENTORY_FILE = "configs/inventory_c.txt";
+    private static final String INVENTORY_FILE = "configs/inventory.txt";
     private static final String MINIMUM_FILE = "configs/minimums.txt";
+    private static final String CALORIE_TABLE = "configs/calories.txt";
 
     /**
      * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
@@ -30,6 +31,7 @@ public class ComplexInventory implements InventorySystem {
 
             parseFile(INVENTORY_FILE);
             Set<String> minimumKeys = parseFile(MINIMUM_FILE);
+            parseFile(CALORIE_TABLE);
 
             requests = new RequestManager();
 
@@ -62,10 +64,7 @@ public class ComplexInventory implements InventorySystem {
                 int num = Integer.parseInt(split[1]);
 
                 if (fileName.equals(INVENTORY_FILE)){
-                    CalorieEntry ingredient = new CalorieEntry(num);
-                    ingredient.setCalorieCount(Integer.parseInt(split[2]));
-                    inventory.put(key, ingredient);
-
+                    inventory.put(key, new CalorieEntry(num));
                 }
                 else if (fileName.equals(MINIMUM_FILE)){
                     found.add(key);
@@ -75,6 +74,11 @@ public class ComplexInventory implements InventorySystem {
                     }
                     else{
                         inventory.put(key, new CalorieEntry(0, num));
+                    }
+                }
+                else if (fileName.equals(CALORIE_TABLE)){
+                    if (inventory.keySet().contains(key)){
+                        inventory.get(key).setCalorieCount(num);
                     }
                 }
 
