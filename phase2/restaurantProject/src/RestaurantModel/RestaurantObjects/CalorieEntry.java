@@ -2,6 +2,25 @@ package RestaurantModel.RestaurantObjects;
 
 import RestaurantModel.Interfaces.Entry;
 
+/*
+* @startuml
+* class CalorieEntry{
+* -quantity: int
+* -minimum: int
+* -calorieCount: int
+* +CalorieEntry(q; int)
+* +CalorieEntry(q: int, m: int)
+* +getCalorieCount(): int
+* +setCalorieCount(c: int): void
+* +getQuantity(): int
+* +addQuantity(q: int): void
+* +useQuantity(q: int): void
+* +setMinimum(m: int): void
+* +hasEnough(): boolean
+* }
+* @enduml
+ */
+
 public class CalorieEntry implements Entry {
     private int quantity;
     private int minimum;

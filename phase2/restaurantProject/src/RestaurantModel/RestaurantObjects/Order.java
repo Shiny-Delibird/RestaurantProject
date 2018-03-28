@@ -11,6 +11,30 @@ import java.util.Map;
  * given a tableNumber
  */
 
+/*
+* @startuml
+* class Order{
+* -foods: ObservableList<Food>
+* -tableNumber: int
+* -{static} classOrderNumber: int
+* -nickname: String
+* -instructions: String
+* -orderNumber: int
+* +setNickname(nickname: String): void
+* +getInstructions(): String
+* +setInstructions(instructions: String): void
+* +getOrderNumber(): int
+* +Order()
+* +getAllIngredients(): Map<String, Integer>
+* +addFood(food: Food): void
+* +removeFood(food: Food): void
+* +getPrices(): Map<String, float>
+* +getTotalPrice(): double
+* +toString(): String
+ *  }
+* @enduml
+ */
+
 public class Order {
 
     private ObservableList<Food> foods;
