@@ -5,6 +5,18 @@ import RestaurantModel.Interfaces.RequestSystem;
 import java.io.*;
 import java.util.*;
 
+/*
+* @startuml
+* class RequestManager{
+* -requested: Set<String>
+* -{static} REORDER_FILE: String
+* +RequestManager()
+* +clear(): void
+* +placeRequest(item: String): void
+* }
+* @enduml
+ */
+
 class RequestManager implements RequestSystem {
     private Set<String> requested;
 
