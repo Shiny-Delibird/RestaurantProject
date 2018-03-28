@@ -1,13 +1,7 @@
 package Interface.Controllers;
 
-import RestaurantModel.RestaurantObjects.Food;
-import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableMapValue;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 import javafx.collections.transformation.FilteredList;
@@ -19,12 +13,10 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
-import java.util.HashMap;
 
 
-public class ReceiveShipmentsController implements EmployeeController{
+public class ReceiveShipmentsController implements WorkerController {
 	public Scene previousScene;
 	@FXML
 	private ListView<String> ingredientsList;

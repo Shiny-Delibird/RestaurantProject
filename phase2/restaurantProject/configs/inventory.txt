@@ -1,17 +1,17 @@
 chicken | 11
-egg | 3
+egg | 32
 cucumber | 18
 onion | 30
 vegetable oil | 10
-tomato | 1
+tomato | 20
 ground beef | 55
-cheese | 21
+cheese | 19
 potato | 30
-flour | 10
-steak sauce | 43
+flour | 110
+steak sauce | 42
 baking soda | 14
-dough | 25
-raw steak | 23
+dough | 24
+raw steak | 21
 bread | 27
 salt | 86
 noodles | 29

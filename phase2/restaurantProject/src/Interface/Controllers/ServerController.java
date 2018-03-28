@@ -7,7 +7,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
-import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -21,7 +20,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class ServerController implements EmployeeController{
+public class ServerController implements WorkerController {
 
     @FXML
     private Label prevLabel;

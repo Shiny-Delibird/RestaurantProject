@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class CookController implements EmployeeController{
+public class CookController implements WorkerController {
 
     @FXML
     private Label prevLabel;

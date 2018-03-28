@@ -3,8 +3,6 @@ package Interface.Controllers;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,7 +14,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 
-public class TakeOrderController implements EmployeeController{
+public class TakeOrderController implements WorkerController {
 
     public Scene previousScene;
 
