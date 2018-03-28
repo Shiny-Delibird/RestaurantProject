@@ -57,8 +57,12 @@ public class ReceiveShipmentsController implements WorkerController {
 			String text = quantityBox.getText();
 			if (Pattern.matches("[1-9][0-9]*$", text)) {
 				int quantity = Integer.parseInt(quantityBox.getText());
-				shipment.put(selectedIngredient, quantity);
-				shipmentsList.getItems().add(selectedIngredient + " x " + String.valueOf(quantity));
+				if (shipment.containsKey(selectedIngredient)){
+                    shipment.put(selectedIngredient, quantity + shipment.get(selectedIngredient));
+                } else{
+                    shipment.put(selectedIngredient, quantity);
+                }
+				shipmentsList.getItems().add(selectedIngredient + " x " + quantity);
 			}
 		}
 	}

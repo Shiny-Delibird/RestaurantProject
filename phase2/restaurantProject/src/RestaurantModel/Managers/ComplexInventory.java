@@ -197,7 +197,7 @@ public class ComplexInventory implements InventorySystem {
         int sum = 0;
         Map<String, Integer> ingredients = food.getIngredients();
         for (String key : ingredients.keySet()){
-            sum += inventory.get(key).getCalorieCount();
+            sum += ingredients.get(key) * inventory.get(key).getCalorieCount();
         }
         return sum;
     }

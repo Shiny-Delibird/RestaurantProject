@@ -77,11 +77,7 @@ public class TakeOrderController implements WorkerController {
         );
 
         order.getFoods().addListener((ListChangeListener<Food>) c -> {
-            int cals = 0;
-            for (Food food : order.getFoods()){
-                cals = cals + restaurant.getCalories(food);
-            }
-            orderLabel.setText("Order " + "(" + Integer.toString(cals) + " cals)");
+            setLabelCalories();
         });
 
         ingredientList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
@@ -89,6 +85,14 @@ public class TakeOrderController implements WorkerController {
                 ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
             }
         });
+    }
+
+    private void setLabelCalories(){
+        int cals = 0;
+        for (Food food : order.getFoods()){
+            cals = cals + restaurant.getCalories(food);
+        }
+        orderLabel.setText("Order " + "(" + Integer.toString(cals) + " cals)");
     }
 
     @FXML
@@ -133,6 +137,7 @@ public class TakeOrderController implements WorkerController {
 
             if (inventoryWillHaveEnough(testFood) ){
                 selectedFood.addIngredient(selectedIngredient, 1);
+                setLabelCalories();
                 ingredientList.setItems(getFixedListFromFood(selectedFood));
 
             }
@@ -150,6 +155,7 @@ public class TakeOrderController implements WorkerController {
             String selectedIngredient = ingredientBox.getText();
 
             selectedFood.removeIngredient(selectedIngredient, 1);
+            setLabelCalories();
             ingredientList.setItems(getFixedListFromFood(selectedFood));
         }
     }

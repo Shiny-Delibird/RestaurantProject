@@ -3,6 +3,7 @@ package Interface.Controllers;
 import RestaurantModel.Interfaces.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -52,6 +53,8 @@ public class CookController implements WorkerController {
     }
 
     public void initialize() {
+        localToCook = FXCollections.observableArrayList();
+
         Label infoTitle = new Label();
         ((GridPane) prevOrderList.getParent()).add(infoTitle, 0, 0);
         infoTitle.setText("Order Info");
