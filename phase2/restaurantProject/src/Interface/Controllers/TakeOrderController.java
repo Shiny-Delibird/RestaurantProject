@@ -1,19 +1,18 @@
 package Interface.Controllers;
 
+import RestaurantModel.Interfaces.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
-import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.collections.*;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
 /*
@@ -79,11 +78,14 @@ public class TakeOrderController implements WorkerController {
     private RestaurantModel restaurant;
     private FilteredList<String> ingredientsFiltered;
 
+    int serverNumberPlacingOrder;
+
     @Override
     public void init(RestaurantModel restaurant) {
         ingredientsFiltered = new FilteredList<String>(FXCollections.observableArrayList(restaurant.getInventory().keySet()).sorted());
 
         order = new Order();
+        order.setServerNumber(serverNumberPlacingOrder);
         this.restaurant = restaurant;
 
         menuList.getItems().setAll(getFixedMenu(restaurant.getMenu()));
@@ -123,7 +125,15 @@ public class TakeOrderController implements WorkerController {
         ingredientBox.setOnKeyPressed(event -> {
             ingredientsFiltered.setPredicate(s -> {
                 String lowerCaseSearch = ingredientBox.getText().toLowerCase();
-                return s.contains(lowerCaseSearch);
+                String extraChar = event.getText();
+                String fullString;
+
+                if (event.getCode() == KeyCode.BACK_SPACE){
+                    fullString = lowerCaseSearch.substring(0, lowerCaseSearch.length() - 1);
+                } else {
+                    fullString = lowerCaseSearch + extraChar;;
+                }
+                return s.contains(fullString);
             });
             ingredientList.setItems(ingredientsFiltered);
         });

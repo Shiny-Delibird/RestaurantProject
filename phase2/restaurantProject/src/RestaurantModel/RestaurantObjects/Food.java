@@ -10,7 +10,25 @@ import java.util.Map;
 /*
 * @startuml
 * class Food{
-*
+* -ingredients: Map<String, Integer>
+* -price: float
+* name: String
+* -instructions: String
+* -changedIngredients: Map<String, Integer>
+* +Food(name: String, price: float, ingredients: Map<String, Integer>)
+* +Food(name: String, price: float)
+* +Food()
+* +Food(another: Food)
+* +getChangedIngredients(): Map<String, Integer>
+* +getName(): String
+* +getInstructions(): String
+* +setInstructions(instructions: String): void
+* +addIngredient(ingredientName: String, ingredientQuantity: int): void
+* +removeIngredient(ingredientName: String, ingredientQuantity: int): void
+* +setPrice(price: float): void
+* +getPrice(): float
+* +getIngredients(): Map<String, Integer>
+* +toString(): String
 * }
 * @enduml
  */

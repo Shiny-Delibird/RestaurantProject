@@ -2,6 +2,7 @@ package Interface.Controllers;
 
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,14 +13,32 @@ import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+
+/*
+* @startuml
+* class ServerController{
+* -receiveShipment: Button
+* -prevLabel: Label
+* -postLabel: Label
+* -prevOrderButton: Button
+* -postOrderButton: Button
+* -takeOrderButton: Button
+* prevOrderList: ListView
+* -postOrderList: ListView
+* -restaurant: RestaurantModel
+* +init(restaurant: RestaurantModel): void
+* +initialize(): void
+* +receiveShipment(event: ActionEvent):void
+* +cancelOrder():void
+* }
+* @enduml
+ */
+
 
 public class ServerController implements WorkerController {
 
@@ -34,6 +53,8 @@ public class ServerController implements WorkerController {
     private Button prevOrderButton;
     @FXML
     private Button postOrderButton;
+    @FXML
+    private Button selectOrdersButton;
     private Button takeOrderButton;
 
     @FXML
@@ -41,7 +62,13 @@ public class ServerController implements WorkerController {
     @FXML
     private ListView postOrderList;
 
+    @FXML
+    private TextField tableForOrders;
+
     private RestaurantModel restaurant;
+
+    private int serverID;
+    private static int totalServers = 1;
 
     public void init(RestaurantModel restaurant){
         this.restaurant = restaurant;
@@ -53,12 +80,20 @@ public class ServerController implements WorkerController {
             if (prevOrderList.getItems().isEmpty()){
                 takeOrderButton.setDisable(false);
             }else{
-                takeOrderButton.setDisable(true);
+                for (Object order : restaurant.getOrdersAtStage("Cooked")){
+                    if (((Order) order).getServerNumber() == serverID ){
+                        takeOrderButton.setDisable(true);
+                        return;
+                    }
+                }
             }
         });
     }
 
     public void initialize(){
+        serverID = totalServers;
+        totalServers += 1;
+
         takeOrderButton = new Button();
         ((GridPane) receiveShipment.getParent()).add(takeOrderButton, 0, 1);
         takeOrderButton.setText("Take Order");
@@ -76,6 +111,13 @@ public class ServerController implements WorkerController {
         prevOrderButton.setOnAction(event -> deliverOrder());
         postOrderButton.setOnAction(event -> giveBill());
         takeOrderButton.setOnAction(this::takeOrder);
+        selectOrdersButton.setOnAction(event -> selectOrdersAtTable());
+
+        tableForOrders.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                tableForOrders.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
     }
 
     private void deliverOrder(){
@@ -118,6 +160,7 @@ public class ServerController implements WorkerController {
             TakeOrderController takeOrderController = takeOrderLoader.getController();
             takeOrderController.previousScene = sourceScene;
             takeOrderController.init(restaurant);
+            takeOrderController.serverNumberPlacingOrder = serverID;
 
             sourceStage.setScene(new Scene(root, 600, 400));
         } catch (IOException e) {
@@ -147,6 +190,17 @@ public class ServerController implements WorkerController {
         if (!prevOrderList.getSelectionModel().isEmpty()){
             Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
             restaurant.rejectOrder(order);
+        }
+    }
+
+    public void selectOrdersAtTable(){
+        if (!tableForOrders.getText().isEmpty()){
+            postOrderList.getSelectionModel().clearSelection();
+            for (Object order : postOrderList.getItems()){
+                if (((Order) order).getTableNumber() == Integer.parseInt(tableForOrders.getText())){
+                    postOrderList.getSelectionModel().select(order);
+                }
+            }
         }
     }
 }

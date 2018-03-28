@@ -17,6 +17,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -63,6 +64,9 @@ public class CookController implements WorkerController {
     @FXML
     private ListView postOrderList;
 
+    @FXML
+    private GridPane subGrid;
+
     private ObservableList<Order> localToCook;
 
     private RestaurantModel restaurant;
@@ -75,11 +79,16 @@ public class CookController implements WorkerController {
 
     public void initialize() {
         localToCook = FXCollections.observableArrayList();
+        GridPane currentGrid = ((GridPane) prevOrderList.getParent());
 
         Label infoTitle = new Label();
-        ((GridPane) prevOrderList.getParent()).add(infoTitle, 0, 0);
+        currentGrid.add(infoTitle, 0, 0);
         infoTitle.setText("Order Info");
-        ((GridPane) prevOrderList.getParent()).setHalignment(infoTitle, HPos.CENTER);
+        currentGrid.setHalignment(infoTitle, HPos.CENTER);
+
+        currentGrid.getChildren().remove(subGrid);
+        currentGrid.add(postOrderList, 2, 1);
+
 
         prevLabel.setText("To Confirm");
         postLabel.setText("To Cook");

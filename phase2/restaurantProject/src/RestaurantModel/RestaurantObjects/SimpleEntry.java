@@ -2,6 +2,22 @@ package RestaurantModel.RestaurantObjects;
 
 import RestaurantModel.Interfaces.Entry;
 
+/*
+* @startuml
+* class SimpleEntry{
+* -quantity: int
+* -minimum: int
+* +SimpleEntry(q; int)
+* +SimpleEntry(q: int, m: int)
+* +getQuantity(): int
+* +addQuantity(q: int): void
+* +useQuantity(q: int): void
+* +setMinimum(m: int): void
+* +hasEnough(): boolean
+* }
+* @enduml
+ */
+
 public class SimpleEntry implements Entry {
     private int quantity;
     private int minimum;
