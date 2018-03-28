@@ -126,7 +126,7 @@ public class Restaurant implements RestaurantModel {
     }
 
     @Override
-    public ObservableList getOrdersAtStage(String stage) {
+    public ObservableList<Order> getOrdersAtStage(String stage) {
         switch (stage){
             case "InProgress": return orderManager.getOrdersInProgress();
             case "Completed": return orderManager.getCompletedOrders();
@@ -170,6 +170,7 @@ public class Restaurant implements RestaurantModel {
             String word = item.getKey() + ": " + item.getValue() + "$\n";
             bill.append(word);
         }
+        orderManager.getCompletedOrders().remove(order);
     logger.log(Level.INFO, bill.toString());
         return bill.toString();
     }
