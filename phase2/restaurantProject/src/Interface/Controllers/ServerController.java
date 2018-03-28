@@ -2,6 +2,7 @@ package Interface.Controllers;
 
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,10 +47,18 @@ public class ServerController implements WorkerController {
     private RestaurantModel restaurant;
 
     public void init(RestaurantModel restaurant){
+        this.restaurant = restaurant;
         prevOrderList.setItems(restaurant.getOrdersAtStage("Cooked"));
 
         postOrderList.setItems(restaurant.getOrdersAtStage("Completed"));
-        this.restaurant = restaurant;
+
+        restaurant.getOrdersAtStage("Cooked").addListener((ListChangeListener) c -> {
+            if (prevOrderList.getItems().isEmpty()){
+                takeOrderButton.setDisable(false);
+            }else{
+                takeOrderButton.setDisable(true);
+            }
+        });
     }
 
     public void initialize(){
@@ -140,6 +149,13 @@ public class ServerController implements WorkerController {
             sourceStage.setScene(new Scene(root, 600, 400));
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void cancelOrder(){
+        if (!prevOrderList.getSelectionModel().isEmpty()){
+            Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
+            restaurant.cancelOrder(order);
         }
     }
 }

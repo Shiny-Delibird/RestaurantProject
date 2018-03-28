@@ -1,2 +1,0 @@
-egg x 20
-tomato x 20

@@ -3,6 +3,7 @@ package Interface.Controllers;
 import RestaurantModel.Interfaces.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -43,16 +44,24 @@ public class CookController implements WorkerController {
     private RestaurantModel restaurant;
 
     public  void init(RestaurantModel restaurant){
+        this.restaurant = restaurant;
         prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
         postOrderList.setItems(restaurant.getOrdersAtStage("InProgress"));
-        this.restaurant = restaurant;
+
+        restaurant.getOrdersAtStage("Pending").addListener((ListChangeListener) c -> {
+            if (prevOrderList.getItems().isEmpty()){
+                postOrderButton.setDisable(false);
+            }else{
+                postOrderButton.setDisable(true);
+            }
+        });
     }
 
     public void initialize() {
         Label infoTitle = new Label();
-        ((GridPane) receiveShipment.getParent()).add(infoTitle, 0, 0);
+        ((GridPane) prevOrderList.getParent()).add(infoTitle, 0, 0);
         infoTitle.setText("Order Info");
-        ((GridPane) receiveShipment.getParent()).setHalignment(infoTitle, HPos.CENTER);
+        ((GridPane) prevOrderList.getParent()).setHalignment(infoTitle, HPos.CENTER);
 
         prevLabel.setText("To Confirm");
         postLabel.setText("To Cook");
@@ -135,4 +144,12 @@ public class CookController implements WorkerController {
             e.printStackTrace();
         }
     }
+
+    public void cancelOrder(){
+        if (!prevOrderList.getSelectionModel().isEmpty()){
+            Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
+            restaurant.rejectOrder(order);
+        }
+    }
+
 }

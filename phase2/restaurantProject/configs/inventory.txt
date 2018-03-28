@@ -3,7 +3,7 @@ egg | 32
 cucumber | 18
 onion | 30
 vegetable oil | 10
-tomato | 20
+tomato | 19
 ground beef | 55
 cheese | 19
 potato | 30
@@ -18,8 +18,8 @@ noodles | 29
 milk | 28
 cream | 28
 soda | 43
-lettuce | 45
-patty | 57
-bun | 23
+lettuce | 44
+patty | 56
+bun | 21
 sugar | 410
 ketchup | 38
