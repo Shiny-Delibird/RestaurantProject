@@ -4,13 +4,16 @@ import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
 import RestaurantModel.Interfaces.RestaurantModel;
 import javafx.collections.*;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 
@@ -46,9 +49,12 @@ public class TakeOrderController implements WorkerController {
 
     private Order order;
     private RestaurantModel restaurant;
+    private FilteredList<String> ingredientsFiltered;
 
     @Override
     public void init(RestaurantModel restaurant) {
+        ingredientsFiltered = new FilteredList<String>(FXCollections.observableArrayList(restaurant.getInventory().keySet()).sorted());
+
         order = new Order();
         this.restaurant = restaurant;
 
@@ -84,6 +90,14 @@ public class TakeOrderController implements WorkerController {
             if (newValue != null && newValue instanceof String) {
                 ingredientBox.setText(((String) ingredientList.getSelectionModel().getSelectedItem()).split("x")[0].trim());
             }
+        });
+
+        ingredientBox.setOnKeyPressed(event -> {
+            ingredientsFiltered.setPredicate(s -> {
+                String lowerCaseSearch = ingredientBox.getText().toLowerCase();
+                return s.contains(lowerCaseSearch);
+            });
+            ingredientList.setItems(ingredientsFiltered);
         });
     }
 
@@ -139,7 +153,6 @@ public class TakeOrderController implements WorkerController {
                 selectedFood.addIngredient(selectedIngredient, 1);
                 setLabelCalories();
                 ingredientList.setItems(getFixedListFromFood(selectedFood));
-
             }
         }
     }
