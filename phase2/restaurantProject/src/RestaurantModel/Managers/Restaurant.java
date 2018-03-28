@@ -173,6 +173,8 @@ public class Restaurant implements RestaurantModel {
 
     @Override
     public String requestBill(Order order) {
+        orderManager.getCompletedOrders().remove(order);
+
         StringBuilder bill = new StringBuilder();
         for (Map.Entry<String, Float> item: order.getPrices().entrySet()){
             String word = item.getKey() + ": " + item.getValue() + "$\n";
