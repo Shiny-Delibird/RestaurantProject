@@ -18,6 +18,16 @@ public class Order {
     private static int classOrderNumber = 1;
     private String nickname;
     private String instructions;
+    private int orderNumber;
+    private int serverNumber;
+
+    public int getServerNumber() {
+        return serverNumber;
+    }
+
+    public void setServerNumber(int serverNumber) {
+        this.serverNumber = serverNumber;
+    }
 
     public String getNickname() {
         return nickname;
@@ -39,7 +49,6 @@ public class Order {
         return orderNumber;
     }
 
-    private int orderNumber;
 
     /**
      * Creates an RestaurantModel.RestaurantObjects.Order with a tableNumber, OrderNumber, and list of foods.
@@ -111,7 +120,7 @@ public class Order {
         return price;
     }
 
-    private int getTableNumber() {
+    public int getTableNumber() {
         return tableNumber;
     }
 

@@ -23,3 +23,6 @@ baking soda | 10
 milk | 10
 cream | 10
 sugar | 10
+tomato sauce | 10
+mushrooms | 10
+cornflour | 10
