@@ -55,7 +55,7 @@ public class ReceiveShipmentsController implements WorkerController {
 		String selectedIngredient = ingredientsList.getSelectionModel().getSelectedItem();
 		if (!quantityBox.getText().isEmpty()){
 			String text = quantityBox.getText();
-			if (Pattern.matches("[0-9]*$", text)) {
+			if (Pattern.matches("[1-9][0-9]*$", text)) {
 				int quantity = Integer.parseInt(quantityBox.getText());
 				shipment.put(selectedIngredient, quantity);
 				shipmentsList.getItems().add(selectedIngredient + " x " + String.valueOf(quantity));

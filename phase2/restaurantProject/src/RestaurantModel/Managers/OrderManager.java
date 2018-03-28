@@ -92,6 +92,18 @@ class OrderManager {
             throw new IllegalArgumentException("This order isn't ready to be picked up!");
     }
 
+	/**
+	 * Used when an Order is cancelled by the cook
+	 * @param order the Order to be cancelled
+	 * */
+	public void cancelOrder(Object order){
+		if (ordersInProgress.contains(order))
+			cookedOrders.remove(order);
+		else
+			throw new IllegalArgumentException("This order isn't ready to be picked up!");
+	}
+
+
     /**
      * Updates the status of an Order to completed. This should only be called when the customer has accepted the food
      * brought to them. Otherwise the Order is retrieved but not completed.
@@ -133,4 +145,7 @@ class OrderManager {
         }
         throw new IllegalArgumentException("That list doesn't contain the specified order!");
     }
+
+
+
 }

@@ -22,14 +22,14 @@ import java.io.IOException;
 public class CookController implements WorkerController {
 
     @FXML
+    private Button receiveShipment;
+    @FXML
     private Label prevLabel;
     @FXML
     private Label postLabel;
     @FXML
     private Label infoLabel;
 
-    @FXML
-    private Button receiveShipment;
     @FXML
     private Button prevOrderButton;
     @FXML
@@ -58,6 +58,7 @@ public class CookController implements WorkerController {
         postLabel.setText("To Cook");
         prevOrderButton.setText("Confirm Order");
         postOrderButton.setText("Cook Order");
+
 
         prevOrderButton.setOnAction(event -> confirmOrder());
         postOrderButton.setOnAction(event -> cookOrder());

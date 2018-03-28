@@ -30,6 +30,8 @@ public interface RestaurantModel {
     // a method to indicate that the customers have rejected the order
     void rejectOrder(Order order);
 
+    void cancelOrder(Order order);
+
     String requestBill(Order order);
 
     void receiveShipment(Map<String, Integer> shipment);
