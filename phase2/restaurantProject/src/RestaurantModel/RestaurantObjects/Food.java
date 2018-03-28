@@ -7,6 +7,14 @@ import javafx.collections.FXCollections;
 import java.util.HashMap;
 import java.util.Map;
 
+/*
+* @startuml
+* class Food{
+*
+* }
+* @enduml
+ */
+
 public class Food{
     //Make list of types of ingredients
     private Map<String, Integer> ingredients;

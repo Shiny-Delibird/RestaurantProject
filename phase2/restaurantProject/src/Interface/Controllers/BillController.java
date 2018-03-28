@@ -12,6 +12,25 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+/*
+* @startuml
+* class BillController{
+* +parentGrid: GridPane
+* -finalPrice: Label
+* -fullBill: Label
+* -tipPrice: Label
+* -subTotal: Label
+* -tipInput: TextField
+* -prevButton: Button
+* -tipAmount: double
+* -totalPrice: double
+* +init(orders: ObservableList<Order>, restaurant: RestaurantModel, button: Button):void
+* -setLabels(taxAmount: double, tipAmount: double, totalPrice: double): void
+* +closeBill(): void
+* }
+* @enduml
+ */
+
 public class BillController {
 
     @FXML
