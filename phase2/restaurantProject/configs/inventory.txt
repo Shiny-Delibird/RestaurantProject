@@ -1,12 +1,12 @@
 chicken | 28
 egg | 20
-cucumber | 17
+cucumber | 14
 onion | 30
-vegetable oil | 12
-tomato | 269
+vegetable oil | 11
+tomato | 266
 ground beef | 50
 cheese | 17
-potato | 27
+potato | 26
 flour | 78
 steak sauce | 37
 baking soda | 8
@@ -18,8 +18,8 @@ noodles | 23
 tomato sauce | 0
 milk | 16
 cream | 16
-soda | 41
-lettuce | 42
+soda | 39
+lettuce | 36
 patty | 56
 mushrooms | 0
 bun | 27
