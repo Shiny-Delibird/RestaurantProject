@@ -27,8 +27,6 @@ public class ServerController implements WorkerController {
     private Label prevLabel;
     @FXML
     private Label postLabel;
-    @FXML
-    private Label infoLabel;
 
     @FXML
     private Button receiveShipment;
@@ -37,7 +35,6 @@ public class ServerController implements WorkerController {
     @FXML
     private Button postOrderButton;
     private Button takeOrderButton;
-    private Button closeBill;
 
     @FXML
     private ListView prevOrderList;
@@ -62,14 +59,13 @@ public class ServerController implements WorkerController {
     }
 
     public void initialize(){
-        infoLabel.setVisible(false);
-
         takeOrderButton = new Button();
         ((GridPane) receiveShipment.getParent()).add(takeOrderButton, 0, 1);
         takeOrderButton.setText("Take Order");
         GridPane.setHalignment(takeOrderButton, HPos.CENTER);
 
         prevOrderList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        postOrderList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
         prevLabel.setText("To Deliver");
         postLabel.setText("To be Billed");
@@ -94,27 +90,22 @@ public class ServerController implements WorkerController {
 
     private void giveBill(){
         if (!postOrderList.getSelectionModel().isEmpty()){
-            Order order = (Order) postOrderList.getSelectionModel().getSelectedItem();
+            try {
+                ObservableList<Order> orders = postOrderList.getSelectionModel().getSelectedItems();
 
-            takeOrderButton.setVisible(false);
-            infoLabel.setText(restaurant.requestBill(order));
-            infoLabel.setVisible(true);
+                FXMLLoader billFragmentLoader = new FXMLLoader(getClass().getResource("/Interface/Views/BillFragment.fxml"));
+                Parent billRoot = billFragmentLoader.load();
+                BillController billController = billFragmentLoader.getController();
+                billController.init(orders, restaurant, takeOrderButton);
 
-            closeBill = new Button();
-            ((GridPane) receiveShipment.getParent()).add(closeBill, 0, 1);
-            closeBill.setText("Close Bill");
-            GridPane.setValignment(closeBill, VPos.BOTTOM);
-            closeBill.setOnAction(this::closeBill);
-            closeBill.toFront();
+                takeOrderButton.setVisible(false);
+                ((GridPane) prevOrderList.getParent()).add(billRoot, 0, 1);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-
     }
 
-    private void closeBill(ActionEvent event) {
-        ((GridPane) receiveShipment.getParent()).getChildren().remove(closeBill);
-        infoLabel.setVisible(false);
-        takeOrderButton.setVisible(true);
-    }
 
     private void takeOrder(ActionEvent event){
         Stage sourceStage = (Stage) ((Node) event.getSource()).getScene().getWindow();

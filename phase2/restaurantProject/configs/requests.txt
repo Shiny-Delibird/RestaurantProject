@@ -1,0 +1,2 @@
+chicken x 20
+vegetable oil x 20

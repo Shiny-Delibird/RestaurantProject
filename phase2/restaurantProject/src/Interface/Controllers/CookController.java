@@ -41,20 +41,14 @@ public class CookController implements WorkerController {
     @FXML
     private ListView postOrderList;
 
+    private ObservableList<Order> localToCook;
+
     private RestaurantModel restaurant;
 
     public  void init(RestaurantModel restaurant){
         this.restaurant = restaurant;
         prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
-        postOrderList.setItems(restaurant.getOrdersAtStage("InProgress"));
-
-        restaurant.getOrdersAtStage("Pending").addListener((ListChangeListener) c -> {
-            if (prevOrderList.getItems().isEmpty()){
-                postOrderButton.setDisable(false);
-            }else{
-                postOrderButton.setDisable(true);
-            }
-        });
+        postOrderList.setItems(localToCook);
     }
 
     public void initialize() {
@@ -113,6 +107,7 @@ public class CookController implements WorkerController {
 
             for (Order order : orders){
                 restaurant.cookOrder(order);
+                localToCook.remove(order);
             }
         }
     }
@@ -123,6 +118,7 @@ public class CookController implements WorkerController {
 
             for (Order order : orders){
                 restaurant.confirmOrder(order);
+                localToCook.add(order);
             }
         }
     }

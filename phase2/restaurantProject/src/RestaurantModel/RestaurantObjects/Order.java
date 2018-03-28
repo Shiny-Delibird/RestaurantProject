@@ -100,7 +100,15 @@ public class Order {
         for (Food food : foods){
             prices.put(food.toString(),food.getPrice());
         }
-        return prices ;
+        return prices;
+    }
+
+    public double getTotalPrice(){
+        float price = 0;
+        for (Food food : foods){
+            price = price + food.getPrice();
+        }
+        return price;
     }
 
     private int getTableNumber() {
