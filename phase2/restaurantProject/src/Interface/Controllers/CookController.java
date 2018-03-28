@@ -3,6 +3,7 @@ package Interface.Controllers;
 import RestaurantModel.Interfaces.RestaurantModel;
 import RestaurantModel.RestaurantObjects.Food;
 import RestaurantModel.RestaurantObjects.Order;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -40,19 +41,21 @@ public class CookController implements WorkerController {
     @FXML
     private ListView postOrderList;
 
+    private ObservableList<Order> localToCook;
+
     private RestaurantModel restaurant;
 
     public  void init(RestaurantModel restaurant){
-        prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
-        postOrderList.setItems(restaurant.getOrdersAtStage("InProgress"));
         this.restaurant = restaurant;
+        prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
+        postOrderList.setItems(localToCook);
     }
 
     public void initialize() {
         Label infoTitle = new Label();
-        ((GridPane) receiveShipment.getParent()).add(infoTitle, 0, 0);
+        ((GridPane) prevOrderList.getParent()).add(infoTitle, 0, 0);
         infoTitle.setText("Order Info");
-        ((GridPane) receiveShipment.getParent()).setHalignment(infoTitle, HPos.CENTER);
+        ((GridPane) prevOrderList.getParent()).setHalignment(infoTitle, HPos.CENTER);
 
         prevLabel.setText("To Confirm");
         postLabel.setText("To Cook");
@@ -104,6 +107,7 @@ public class CookController implements WorkerController {
 
             for (Order order : orders){
                 restaurant.cookOrder(order);
+                localToCook.remove(order);
             }
         }
     }
@@ -114,6 +118,7 @@ public class CookController implements WorkerController {
 
             for (Order order : orders){
                 restaurant.confirmOrder(order);
+                localToCook.add(order);
             }
         }
     }
@@ -135,4 +140,12 @@ public class CookController implements WorkerController {
             e.printStackTrace();
         }
     }
+
+    public void cancelOrder(){
+        if (!prevOrderList.getSelectionModel().isEmpty()){
+            Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
+            restaurant.rejectOrder(order);
+        }
+    }
+
 }

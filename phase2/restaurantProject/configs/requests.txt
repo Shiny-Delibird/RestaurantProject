@@ -1,2 +1,2 @@
-egg x 20
-tomato x 20
+chicken x 20
+vegetable oil x 20
