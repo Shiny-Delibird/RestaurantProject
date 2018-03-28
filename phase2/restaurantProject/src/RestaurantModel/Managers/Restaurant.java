@@ -15,6 +15,33 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 
+/*
+* @startuml
+* class Restaurant{
+* -orderManager: OrderManager
+* -inventoryManager: InventorySystem
+* -menu: ObservableMap<String, Food>
+* -{static} MENU_FILE: String
+* -logger: Logger
+* +fh: FileHandler
+* +Restaurant()
+* +createLog(): void
+* +getMenu(): ObservableMap<String, Foodr>
+* +getInventory(): ObservableMap<String, Integer>
+* +getOrdersAtStage(stage: String): ObservableList
+* +placeOrder(order: Order): void
+* +confirmOrder(order: Order): void
+* +cookOrder(order: Order): void
+* +receiveOrder(order: Order): void
+* +rejectOrder(order: Order): void
+* +requestBill(order: Order): String
+* +receiveShipment(shipment: Map<String, Integer>): void
+* +hasEnough(food: Food): Boolean
+* +getCalories(food: Food) int
+* }
+* @enduml
+ */
+
 // The main class of the project that controls all other classes
 public class Restaurant implements RestaurantModel {
     private OrderManager orderManager;

@@ -9,6 +9,24 @@ import javafx.collections.ObservableMap;
 import java.io.*;
 import java.util.*;
 
+/*
+* @startuml
+* class InventoryManager{
+* -inventory: Map<String, SimpleEntry>
+* -requests: RequestManager
+* - {static} INVENTORY_FILE: String
+* - {static} MINIMUM_FILE: String
+* +InventoryManager()
+* +checkIntegrity(ingredients: Set<String>): void
+* +useIngredients(used: Map<String, Integer>): void
+* +receiveShipment(shipment: Map<String, Integer>): void
+* +getInventory(): ObservableMap<String, Integer>
+* +toString(): String
+* +hasEnough(food: Food): boolean
+* +getCalories(food: Food): int
+* }
+* @enduml
+ */
 /**
  * The RestaurantModel.Managers.InventoryManager class that implements the Inventory interface.
  * Represents the inventory of a RestaurantModel.Managers.Restaurant and manages the stock of ingredients for cooking

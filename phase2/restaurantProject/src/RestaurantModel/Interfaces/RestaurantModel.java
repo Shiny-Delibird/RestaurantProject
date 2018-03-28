@@ -7,6 +7,25 @@ import javafx.collections.ObservableMap;
 
 import java.util.Map;
 
+/*
+* @startuml
+* Interface RestaurantModel{
+* +getMenu(): ObservableMap<String, Foodr>
+* +getInventory(): ObservableMap<String, Integer>
+* +getOrdersAtStage(stage: String): ObservableList
+* +placeOrder(order: Order): void
+* +confirmOrder(order: Order): void
+* +cookOrder(order: Order): void
+* +receiveOrder(order: Order): void
+* +rejectOrder(order: Order): void
+* +requestBill(order: Order): String
+* +receiveShipment(shipment: Map<String, Integer>): void
+* +hasEnough(food: Food): Boolean
+* +getCalories(food: Food) int
+* }
+* @enduml
+ */
+
 public interface RestaurantModel {
 
     ObservableMap<String, Food> getMenu();

@@ -15,6 +15,34 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
 
+/*
+* @startuml
+* class TakeOrderController{
+* -previousScene: Scene
+* -menuList: ListView
+* -orderList: ListView
+* -ingredientList: ListView
+* -tableNumberInput: TextField
+* -ingredientBox: TextField
+* -orderNickname: TextField
+* -orderInstructions: TextField
+* -customName: TextField
+* -customPrice: TextField
+* -customInstructions: TextFields
+* -orderLabel: Label
+* -order: Order
+* -restaurant: RestaurantModel
+* -ingredientsFiltered: FilteredList<String>
+* +init(restaurant: RestaurantModel): void
+* +addIngredient(): void
+* +removeIngredient(): void
+* +submitOrder(event: ActionEvent): void
+* +cancelOrder(event: ActionEvent): void
+* +removeFood(): void
+* +addCustomFood(): void
+* }
+* @enduml
+ */
 
 public class TakeOrderController implements WorkerController {
 

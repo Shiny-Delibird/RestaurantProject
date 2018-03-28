@@ -15,6 +15,23 @@ import javafx.stage.Stage;
 
 import java.util.regex.Pattern;
 
+/*
+* @startuml
+* class ReceiveShipmentController{
+* +previousScene: scene
+* -ingredientsList: ListView<String>
+* -shipmentsList: ListView<String>
+* -quantityBox: TextField
+* -searchBar: TextField
+* -ingredientsFiltered: FilteredList<String>
+* -shipment: ObservableMap<String, Integer>
+* -restaurant: RestaurantModel
+* +init(restaurant: RestaurantModel): void
+* +removeIngredient(): void
+* +confirmShipment(event: ActionEvent): void
+* }
+* @enduml
+ */
 
 public class ReceiveShipmentsController implements WorkerController {
 	public Scene previousScene;

@@ -12,6 +12,26 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+/*
+* @startuml
+* class ComplexInventory{
+* -inventory: Map<String, CalorieEntry>
+* -requests: RequestManager
+* - {static} INVENTORY_FILE: String
+* - {static} MINIMUM_FILE: String
+* - {static} CALORIE_TABLE: String
+* +ComplexInventory()
+* +checkIntegrity(ingredients: Set<String>): void
+* +useIngredients(used: Map<String, Integer>): void
+* +receiveShipment(shipment: Map<String, Integer>): void
+* +getInventory(): ObservableMap<String, Integer>
+* +hasEnough(food: Food): boolean
+* +getCalories(food: Food): int
+* +toString(): String
+* }
+* @enduml
+ */
+
 public class ComplexInventory implements InventorySystem {
     private Map<String, CalorieEntry> inventory;
     private RequestManager requests;

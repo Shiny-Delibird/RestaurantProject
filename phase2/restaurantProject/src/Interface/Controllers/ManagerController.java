@@ -17,6 +17,24 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/*
+* @startuml
+* class ManagerController{
+* -confirmList: ListView
+* -cookList: ListView
+* -deliverList: ListView
+* -billList: ListView
+* -inventoryList: ListView
+* -restaurant: restaurantModel
+* +init(restaurant: RestaurantModel): void
+* +receiveShipment(event: ActionEvent): void
+* +addServer(): void
+* +addCook(): void
+*
+* }
+* @enduml
+ */
+
 public class ManagerController implements WorkerController {
 
     @FXML

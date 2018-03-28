@@ -22,6 +22,27 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/*
+* @startuml
+* class CookController{
+* -receiveShipment: Button
+* -prevLabel: Label
+* -postLabel: Label
+* -infoLabel: Label
+* -prevOrderButton: Button
+* -postOrderButton: Button
+* -prevOrderList: ListView
+* -postOrderList: ListView
+* -localToCook: ObservableList<Order>
+* -restaurant: RestaurantModel
+* +init(restaurant: RestaurantModel): void
+* +initialize(): void
+* +receiveShipment(event: ActionEvent): void
+* +cancelOrder(): void
+* }
+* @enduml
+*/
+
 public class CookController implements WorkerController {
 
     @FXML

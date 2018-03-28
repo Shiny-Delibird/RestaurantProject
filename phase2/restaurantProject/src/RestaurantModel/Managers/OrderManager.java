@@ -6,6 +6,27 @@ import javafx.collections.ObservableList;
 
 import java.util.LinkedList;
 
+/*
+* @startuml
+* class OrderManager{
+* -pendingOrders: ObservableList<Order>
+* -ordersInProgress: ObservableList<Order>
+* -cookedOrders: ObservableList<Order>
+* -completedOrders: ObservableList<Order>
+* +OrderManager()
+* +getPendingOrders(): ObservableList<Order>
+* +getOrdersInProgress: ObservableList<Order>
+* +getCookedOrders(): ObservableList<Order>
+* +getCompletedOrders(): ObservableList<Order>
+* +placeOrder(order: Order): void
+* +acceptOrder(order: Order): void
+* +orderIsCooked(order: Order): void
+* +retreiveOrder(order: Order): void
+* +confirmCompleted(order: Order): void
+* }
+* @enduml
+ */
+
 /**
  * The OrderManager class. Keeps track of Orders in their various stages of completion and updates their statuses
  * when necessary
