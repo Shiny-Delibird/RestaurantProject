@@ -21,6 +21,27 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/*
+* @startuml
+* class ServerController{
+* -receiveShipment: Button
+* -prevLabel: Label
+* -postLabel: Label
+* -prevOrderButton: Button
+* -postOrderButton: Button
+* -takeOrderButton: Button
+* prevOrderList: ListView
+* -postOrderList: ListView
+* -restaurant: RestaurantModel
+* +init(restaurant: RestaurantModel): void
+* +initialize(): void
+* +receiveShipment(event: ActionEvent):void
+* +cancelOrder():void
+* }
+* @enduml
+ */
+
+
 public class ServerController implements WorkerController {
 
     @FXML
