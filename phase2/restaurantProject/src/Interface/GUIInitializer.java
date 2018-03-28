@@ -15,6 +15,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+/*
+* @startuml
+* class GUIInitializer{
+* -restaurant: RestaurantModel
+* +start(primaryStage: Stage):void
+* +{static} main(args: String[]): void
+* }
+* @enduml
+ */
+
 public class GUIInitializer extends Application {
     private RestaurantModel restaurant;
 
