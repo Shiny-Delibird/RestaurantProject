@@ -72,7 +72,7 @@ public class TakeOrderController implements WorkerController {
 
         orderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null){
-                ingredientList.setItems(TakeOrderController.this.getFixedListFromFood((Food) newValue));
+                ingredientList.setItems(getFixedListFromFood((Food) newValue));
             } }
         );
 
@@ -165,9 +165,8 @@ public class TakeOrderController implements WorkerController {
         for (String ingredient : food.getIngredients().keySet()){
             fixedIngredients.add(ingredient + " x " + food.getIngredients().get(ingredient));
         }
-        ingredientList.getItems().setAll(fixedIngredients);
 
-        return fixedIngredients;
+        return fixedIngredients.sorted();
     }
 
     private ObservableList<String> getFixedMenu(ObservableMap<String, Food> menu){
@@ -177,7 +176,7 @@ public class TakeOrderController implements WorkerController {
                 fixedMenu.add(item);
             }
         }
-        return fixedMenu;
+        return fixedMenu.sorted();
     }
 
 

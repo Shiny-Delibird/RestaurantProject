@@ -71,6 +71,8 @@ public class CookController implements WorkerController {
 
         prevOrderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             displayOrderInfo((Order) newValue); });
+        postOrderList.getSelectionModel().selectedItemProperty().addListener(((observable, oldValue, newValue) -> {
+            displayOrderInfo((Order) newValue); }));
     }
 
     private void displayOrderInfo(Order order) {
@@ -147,7 +149,9 @@ public class CookController implements WorkerController {
     public void cancelOrder(){
         if (!prevOrderList.getSelectionModel().isEmpty()){
             Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
-            restaurant.rejectOrder(order);
+            restaurant.getOrdersAtStage("Pending").remove(order);
+            restaurant.receiveShipment(order.getAllIngredients());
+            infoLabel.setText("");
         }
     }
 

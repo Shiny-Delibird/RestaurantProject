@@ -146,7 +146,7 @@ public class ServerController implements WorkerController {
     public void cancelOrder(){
         if (!prevOrderList.getSelectionModel().isEmpty()){
             Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
-            restaurant.cancelOrder(order);
+            restaurant.rejectOrder(order);
         }
     }
 }

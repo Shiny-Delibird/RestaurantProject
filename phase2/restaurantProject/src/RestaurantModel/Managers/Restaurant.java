@@ -137,10 +137,6 @@ public class Restaurant implements RestaurantModel {
     }
 
     @Override
-    public void cancelOrder(Order order){
-        orderManager.cancelOrder(order);
-    }
-    @Override
     public String requestBill(Order order) {
         StringBuilder bill = new StringBuilder();
         for (Map.Entry<String, Float> item: order.getPrices().entrySet()){

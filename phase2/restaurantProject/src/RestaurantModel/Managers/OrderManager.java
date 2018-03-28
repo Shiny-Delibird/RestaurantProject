@@ -92,18 +92,6 @@ class OrderManager {
             throw new IllegalArgumentException("This order isn't ready to be picked up!");
     }
 
-	/**
-	 * Used when an Order is cancelled by the cook
-	 * @param order the Order to be cancelled
-	 * */
-	public void cancelOrder(Object order){
-		if (ordersInProgress.contains(order))
-			cookedOrders.remove(order);
-		else
-			throw new IllegalArgumentException("This order isn't ready to be picked up!");
-	}
-
-
     /**
      * Updates the status of an Order to completed. This should only be called when the customer has accepted the food
      * brought to them. Otherwise the Order is retrieved but not completed.
@@ -115,37 +103,6 @@ class OrderManager {
         else
             throw new IllegalArgumentException("This order has already been completed!");
     }
-
-    /**
-     * returns the Order with the given id from the given list
-     * @param id the id of the Order to be returned
-     * @param list the list that the desired Order is in
-     * */
-    public Order getOrder(int id, String list){
-        ObservableList<Order> search;
-        switch (list){
-            case "pending":
-                search = pendingOrders;
-                break;
-            case "in progress":
-                search = ordersInProgress;
-                break;
-            case "cooked":
-                search = cookedOrders;
-                break;
-            case "completed":
-                search = completedOrders;
-                break;
-            default:
-                throw new IllegalArgumentException("That's not a list I can search!");
-        }
-        for (Order o : search){
-            if (o.getOrderNumber() == id)
-                return o;
-        }
-        throw new IllegalArgumentException("That list doesn't contain the specified order!");
-    }
-
 
 
 }

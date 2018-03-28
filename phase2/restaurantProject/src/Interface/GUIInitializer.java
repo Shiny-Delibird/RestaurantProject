@@ -22,12 +22,6 @@ public class GUIInitializer extends Application {
     public void start(Stage primaryStage) throws IOException {
         restaurant = new Restaurant();
 
-        WorkerController serverController = new ServerController();
-        WorkerController cookController = new CookController();
-
-        makeStage(serverController, "Server Interface");
-        makeStage(cookController, "Cook Interface");
-
         FXMLLoader managerLoader = new FXMLLoader(getClass().getResource("/Interface/Views/ManagerPanel.fxml"));
         Parent root = managerLoader.load();
         WorkerController managerController = managerLoader.getController();
@@ -40,18 +34,6 @@ public class GUIInitializer extends Application {
         serverWindow.setTitle("Manager Interface");
     }
 
-    private void makeStage(WorkerController controller, String name) throws IOException {
-        FXMLLoader MainLoader = new FXMLLoader(getClass().getResource("/Interface/Views/MainPanel.fxml"));
-        MainLoader.setController(controller);
-        Parent root = MainLoader.load();
-        Scene serverScene = new Scene(root, 600, 400);
-        controller.init(restaurant);
-
-        Stage serverWindow = new Stage();
-        serverWindow.setScene(serverScene);
-        serverWindow.show();
-        serverWindow.setTitle(name);
-    }
 
     public static void main(String[] args) {
         launch(args);
