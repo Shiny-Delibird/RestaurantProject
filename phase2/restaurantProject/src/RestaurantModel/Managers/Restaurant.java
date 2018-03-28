@@ -10,6 +10,10 @@ import javafx.collections.ObservableMap;
 
 import java.io.*;
 import java.util.*;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 // The main class of the project that controls all other classes
 public class Restaurant implements RestaurantModel {
@@ -18,13 +22,27 @@ public class Restaurant implements RestaurantModel {
     private ObservableMap<String, Food> menu;
 
     private static final String MENU_FILE = "configs/menu.txt";
-
-    public Restaurant() {
+    private Logger logger;
+    FileHandler fh;
+    public Restaurant() throws IOException{
         this.orderManager = new OrderManager();
         this.inventoryManager = new ComplexInventory();
         this.menu = FXCollections.observableHashMap();
 
         constructMenu(MENU_FILE);
+        createLog();
+    }
+
+    public void createLog() throws IOException{
+        File f = new File("configs/payments");
+        if (!f.exists()){
+            f.createNewFile();
+        }
+        fh = new FileHandler("configs/payments", true);
+        logger = Logger.getLogger("test");
+        logger.addHandler(fh);
+        SimpleFormatter formatter = new SimpleFormatter();
+        fh.setFormatter(formatter);
     }
 
 
@@ -129,6 +147,7 @@ public class Restaurant implements RestaurantModel {
             String word = item.getKey() + ": " + item.getValue() + "$\n";
             bill.append(word);
         }
+    logger.log(Level.INFO, bill.toString());
         return bill.toString();
     }
 
