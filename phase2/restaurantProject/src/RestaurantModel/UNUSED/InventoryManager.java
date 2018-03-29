@@ -1,8 +1,8 @@
-package RestaurantModel.Managers;
+package RestaurantModel.UNUSED;
 
 import RestaurantModel.Interfaces.InventorySystem;
+// import RestaurantModel.Managers.RequestManager;
 import RestaurantModel.RestaurantObjects.Food;
-import RestaurantModel.RestaurantObjects.SimpleEntry;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
 
@@ -28,12 +28,12 @@ import java.util.*;
 * @enduml
  */
 /**
- * The RestaurantModel.Managers.InventoryManager class that implements the Inventory interface.
- * Represents the inventory of a RestaurantModel.Managers.Restaurant and manages the stock of ingredients for cooking
+ * The InventoryManager class that implements the Inventory interface.
+ * Represents the inventory of a Restaurant and manages the stock of ingredients for cooking
  * */
 class InventoryManager implements InventorySystem {
     private Map<String, SimpleEntry> inventory;
-    private RequestManager requests;
+    // private RequestManager requests;
 
     private static final String INVENTORY_FILE = "configs/inventory.txt";
     private static final String MINIMUM_FILE = "configs/minimums.txt";
@@ -50,7 +50,7 @@ class InventoryManager implements InventorySystem {
             parseFile(INVENTORY_FILE);
             Set<String> minimumKeys = parseFile(MINIMUM_FILE);
 
-            requests = new RequestManager();
+            // requests = new RequestManager();
 
             updateInventoryFile();
             updateMinimumsFile(minimumKeys);
@@ -172,7 +172,7 @@ class InventoryManager implements InventorySystem {
         for (String key : shipment.keySet()){
             inventory.get(key).addQuantity(shipment.get(key));
         }
-        requests.clear();
+        // requests.clear();
         checkAndReorder(shipment.keySet());
 
         updateInventoryFile();
@@ -181,7 +181,7 @@ class InventoryManager implements InventorySystem {
     private void checkAndReorder(Set<String> keys){
         for (String key : keys){
             if (!inventory.get(key).hasEnough()){
-                requests.placeRequest(key);
+                // requests.placeRequest(key);
             }
         }
     }

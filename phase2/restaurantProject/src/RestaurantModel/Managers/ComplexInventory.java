@@ -31,7 +31,11 @@ import java.util.Set;
 * }
 * @enduml
  */
-
+/**
+ * The ComplexInventory class
+ * Used by the RestaurantModel to keep track of it's inventory of ingredients. This specific implementation of
+ * InventorySystem supports the storage of calorie information along with standard ingredient information
+ * */
 public class ComplexInventory implements InventorySystem {
     private Map<String, CalorieEntry> inventory;
     private RequestManager requests;
@@ -48,16 +52,16 @@ public class ComplexInventory implements InventorySystem {
     ComplexInventory (){
         try{
             inventory = new HashMap<>();
-
+            // read and organize data from files
             parseFile(INVENTORY_FILE);
             Set<String> minimumKeys = parseFile(MINIMUM_FILE);
             parseFile(CALORIE_TABLE);
-
+            // initialize the RequestSystem
             requests = new RequestManager();
-
+            // ensure consistency of files and the inventory hashmap
             updateInventoryFile();
             updateMinimumsFile(minimumKeys);
-
+            // check for insufficient stock and reorder
             checkAndReorder(inventory.keySet());
         } catch (IOException e) {
             e.printStackTrace();
@@ -65,12 +69,13 @@ public class ComplexInventory implements InventorySystem {
     }
 
     /**
-     * reads the inventory or minimum file and creates the associated map attribute in the instance
-     * also creates the file if it doesn't exist
-     * @param fileName the file to be parsed. must either be the INVENTORY_FILE or MINIMUM_FILE
+     * Reads the given config file and creates/updates the associated information (ingredient, minimum or calorie
+     * information) in the instance. This method also creates the given file if it does not exist.
+     * @param fileName the file to be parsed. must either be the INVENTORY_FILE, MINIMUM_FILE or CALORIE_TABLE
      * */
     private Set<String> parseFile(String fileName) throws IOException{
         if (!(new File(fileName).exists())) {
+            // create file if it does not exist
             new PrintWriter(new BufferedWriter(new FileWriter(fileName)));
             return null;
         } else {
@@ -164,6 +169,10 @@ public class ComplexInventory implements InventorySystem {
         checkAndReorder(inventory.keySet());
     }
 
+    /**
+     * subtracts the given map of ingredients from the inventory map
+     * @param used the map of ingredients and quantities used
+     * */
     public void useIngredients(Map<String, Integer> used){
         for (String key : used.keySet()){
             if (inventory.containsKey(key)) {
@@ -176,6 +185,10 @@ public class ComplexInventory implements InventorySystem {
         updateInventoryFile();
     }
 
+    /**
+     * adds the given map of ingredients to the inventory map
+     * @param shipment the map of ingredients and quantities to be addede
+     * */
     public void receiveShipment(Map<String, Integer> shipment){
         for (String key : shipment.keySet()){
             inventory.get(key).addQuantity(shipment.get(key));
@@ -186,6 +199,11 @@ public class ComplexInventory implements InventorySystem {
         updateInventoryFile();
     }
 
+    /**
+     * checks each ingredient in the given set to see if they have sufficient stock. if the stock level is below
+     * the minimum, a request for more is placed by the RequestSystem
+     * @param keys the set of ingredients to be checked
+     * */
     private void checkAndReorder(Set<String> keys){
         for (String key : keys){
             if (!inventory.get(key).hasEnough()){
@@ -194,6 +212,9 @@ public class ComplexInventory implements InventorySystem {
         }
     }
 
+    /**
+     * returns a map with keys being ingredient names and values being their individual quantities.
+     * */
     public ObservableMap<String, Integer> getInventory(){
         ObservableMap<String,Integer> quantities = FXCollections.observableHashMap();
         for (String key : inventory.keySet()){
@@ -202,6 +223,10 @@ public class ComplexInventory implements InventorySystem {
         return quantities;
     }
 
+    /**
+     * checks the inventory to see if there is enough ingredients in stock to make a given food
+     * @param food the food that needs to be made
+     * */
     public boolean hasEnough(Food food){
         boolean enough = true;
         Map<String, Integer> ingredients = food.getIngredients();
@@ -213,6 +238,10 @@ public class ComplexInventory implements InventorySystem {
         return enough;
     }
 
+    /**
+     * returns the calorie count of a given food, which is the sum of the calories of each ingredient in the food
+     * @param food the food in question
+     * */
     public int getCalories(Food food){
         int sum = 0;
         Map<String, Integer> ingredients = food.getIngredients();

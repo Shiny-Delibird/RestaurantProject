@@ -21,10 +21,14 @@ import RestaurantModel.Interfaces.Entry;
 * @enduml
  */
 
+/**
+ * The Entry of an ingredient in the InventorySystem
+ * this implementation of Entry supports the recording of calorie information
+ * */
 public class CalorieEntry implements Entry {
-    private int quantity;
-    private int minimum;
-    private int calorieCount;
+    private int quantity;   // the amount of this ingredient in the inventory
+    private int minimum;    // the minimum accepted amount of this ingredient in the inventory
+    private int calorieCount;   // the caloric count of one unit of this ingredient
 
     public CalorieEntry(int q){
         quantity = q;
@@ -37,6 +41,8 @@ public class CalorieEntry implements Entry {
         minimum = m;
         calorieCount = 0;
     }
+
+    // getters and setters
     public int getCalorieCount(){
         return calorieCount;
     }
@@ -47,18 +53,29 @@ public class CalorieEntry implements Entry {
 
     public int getQuantity(){return quantity;}
 
-    public void addQuantity(int q){
-        quantity += q;
-    }
-
-    public void useQuantity(int q){
-        quantity -= q;
-    }
-
     public void setMinimum(int m){
         minimum = m;
     }
 
+    /**
+     * increments the quantity of this ingredient by the given amount
+     * @param q the amount of this ingredient added to the inventory
+     * */
+    public void addQuantity(int q){
+        quantity += q;
+    }
+
+    /**
+     * decrements the quantity of this ingredient by the given amount
+     * @param q the amount of this ingredient taken from the inventory and used
+     * */
+    public void useQuantity(int q){
+        quantity -= q;
+    }
+
+    /**
+     * returns whether the quantity of this ingredient is above the minimum allowed amount
+     * */
     public boolean hasEnough(){
         return (quantity >= minimum);
     }
