@@ -36,7 +36,7 @@
          </GridPane.margin></Label>
       <HBox alignment="BOTTOM_CENTER" GridPane.halignment="RIGHT" GridPane.rowIndex="4" GridPane.valignment="BOTTOM">
          <children>
-            <TextField fx:id="tipInput" promptText="Tip" />
+            <TextField fx:id="tipInput" promptText="Tip Percent" />
             <Button alignment="BOTTOM_RIGHT" minWidth="70.0" mnemonicParsing="false" onAction="#closeBill" text="Close Bill">
                <HBox.margin>
                   <Insets left="5.0" />

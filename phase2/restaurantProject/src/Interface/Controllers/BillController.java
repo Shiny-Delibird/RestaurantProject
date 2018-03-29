@@ -93,9 +93,9 @@ public class BillController {
     private void setLabels(double taxAmount, double tipAmount, double totalPrice){
         DecimalFormat price = new DecimalFormat("#,###.00");
 
-        tipPrice.setText("Tip of " + price.format(tipAmount * totalPrice) + "$ at " + tipAmount*100 + "%");
-        subTotal.setText("Subtotal: " + price.format(totalPrice) + "$ plus " + taxAmount*100 + "% tax of " + price.format(totalPrice) + "$");
-        finalPrice.setText("Total Price: " + price.format(totalPrice + totalPrice * taxAmount + tipAmount * totalPrice) + "$");
+        tipPrice.setText("Tip of $" + price.format(tipAmount * totalPrice) + " at " + tipAmount*100 + "%");
+        subTotal.setText("Subtotal: $" + price.format(totalPrice) + " plus " + taxAmount*100 + "% tax of $" + price.format(totalPrice));
+        finalPrice.setText("Total Price: $" + price.format(totalPrice + totalPrice * taxAmount + tipAmount * totalPrice));
     }
 
     public void closeBill(){

@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
 
 import java.io.*;
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
@@ -175,10 +176,11 @@ public class Restaurant implements RestaurantModel {
     @Override
     public String requestBill(Order order) {
         orderManager.getCompletedOrders().remove(order);
+        DecimalFormat price = new DecimalFormat("#,###.00");
 
         StringBuilder bill = new StringBuilder();
         for (Map.Entry<String, Float> item: order.getPrices().entrySet()){
-            String word = item.getKey() + ": " + item.getValue() + "$\n";
+            String word = item.getKey() + ": " + price.format(item.getValue()) + "$\n";
             bill.append(word);
         }
         String finalBill = bill.toString();
