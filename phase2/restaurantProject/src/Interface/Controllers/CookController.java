@@ -30,7 +30,7 @@ import java.io.IOException;
 * -postLabel: Label
 * -infoLabel: Label
 * -prevOrderButton: Button
-* -postOrderButton: Button
+* -postOrderCook: Button
 * -prevOrderList: ListView
 * -postOrderList: ListView
 * -localToCook: ObservableList<Order>
@@ -46,8 +46,6 @@ import java.io.IOException;
 public class CookController implements WorkerController {
 
     @FXML
-    private Button receiveShipment;
-    @FXML
     private Label prevLabel;
     @FXML
     private Label postLabel;
@@ -57,7 +55,13 @@ public class CookController implements WorkerController {
     @FXML
     private Button prevOrderButton;
     @FXML
+    private Button postOrderCook;
+    @FXML
     private Button postOrderButton;
+    @FXML
+    private Button postOrderCancel;
+    @FXML
+    private Button receiveShipment;
 
     @FXML
     private ListView prevOrderList;
@@ -67,7 +71,13 @@ public class CookController implements WorkerController {
     @FXML
     private GridPane subGrid;
 
+    @FXML
+    private HBox postOrderCancelBox;
+
     private ObservableList<Order> localToCook;
+
+    private int cookID;
+    private static int totalCooks = 1;
 
     private RestaurantModel restaurant;
 
@@ -75,9 +85,26 @@ public class CookController implements WorkerController {
         this.restaurant = restaurant;
         prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
         postOrderList.setItems(localToCook);
+
+        restaurant.getOrdersAtStage("Cooked").addListener(new ListChangeListener() {
+            @Override
+            public void onChanged(Change c) {
+                for (Object order : restaurant.getOrdersAtStage("InProgress")){
+                    if (((Order) order).getCookNumber() == cookID){
+                        localToCook.add(((Order) order));
+                    }
+                }
+            }
+        });
     }
 
     public void initialize() {
+        postOrderButton.setVisible(false);
+        postOrderCancelBox.setVisible(true);
+
+        cookID = totalCooks;
+        totalCooks += 1;
+
         localToCook = FXCollections.observableArrayList();
         GridPane currentGrid = ((GridPane) prevOrderList.getParent());
 
@@ -93,11 +120,12 @@ public class CookController implements WorkerController {
         prevLabel.setText("To Confirm");
         postLabel.setText("To Cook");
         prevOrderButton.setText("Confirm Order");
-        postOrderButton.setText("Cook Order");
+        postOrderCook.setText("Cook Order");
 
 
         prevOrderButton.setOnAction(event -> confirmOrder());
-        postOrderButton.setOnAction(event -> cookOrder());
+        postOrderCook.setOnAction(event -> cookOrder());
+        postOrderCancel.setOnAction(event -> postOrderCancel());
 
         prevOrderList.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             displayOrderInfo((Order) newValue); });
@@ -152,6 +180,7 @@ public class CookController implements WorkerController {
             ObservableList<Order> orders = prevOrderList.getSelectionModel().getSelectedItems();
 
             for (Order order : orders){
+                order.setCookNumber(cookID);
                 restaurant.confirmOrder(order);
                 localToCook.add(order);
             }
@@ -182,6 +211,13 @@ public class CookController implements WorkerController {
             restaurant.getOrdersAtStage("Pending").remove(order);
             restaurant.receiveShipment(order.getAllIngredients());
             infoLabel.setText("");
+        }
+    }
+
+    private void postOrderCancel(){
+        if (!postOrderList.getSelectionModel().isEmpty()){
+            Order order = (Order) postOrderList.getSelectionModel().getSelectedItem();
+            restaurant.getOrdersAtStage("InProgress").remove(order);
         }
     }
 

@@ -15,6 +15,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -55,6 +56,8 @@ public class ServerController implements WorkerController {
     private Button postOrderButton;
     @FXML
     private Button selectOrdersButton;
+    @FXML
+    private Button rejectButton;
     private Button takeOrderButton;
 
     @FXML
@@ -64,6 +67,13 @@ public class ServerController implements WorkerController {
 
     @FXML
     private TextField tableForOrders;
+    @FXML
+    private TextField rejectReason;
+
+    @FXML
+    private HBox rejectBox;
+    @FXML
+    private HBox prevControlBox;
 
     private RestaurantModel restaurant;
 
@@ -83,7 +93,6 @@ public class ServerController implements WorkerController {
                 for (Object order : restaurant.getOrdersAtStage("Cooked")){
                     if (((Order) order).getServerNumber() == serverID ){
                         takeOrderButton.setDisable(true);
-                        return;
                     }
                 }
             }
@@ -112,6 +121,7 @@ public class ServerController implements WorkerController {
         postOrderButton.setOnAction(event -> giveBill());
         takeOrderButton.setOnAction(this::takeOrder);
         selectOrdersButton.setOnAction(event -> selectOrdersAtTable());
+        rejectButton.setOnAction(event -> rejectOrder());
 
         tableForOrders.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -159,8 +169,8 @@ public class ServerController implements WorkerController {
 
             TakeOrderController takeOrderController = takeOrderLoader.getController();
             takeOrderController.previousScene = sourceScene;
-            takeOrderController.init(restaurant);
             takeOrderController.serverNumberPlacingOrder = serverID;
+            takeOrderController.init(restaurant);
 
             sourceStage.setScene(new Scene(root, 600, 400));
         } catch (IOException e) {
@@ -188,8 +198,24 @@ public class ServerController implements WorkerController {
 
     public void cancelOrder(){
         if (!prevOrderList.getSelectionModel().isEmpty()){
+            prevOrderList.setMouseTransparent(true);
             Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
+
+            prevControlBox.setVisible(false);
+            rejectBox.setVisible(true);
+        }
+    }
+
+    public void rejectOrder(){
+        Order order = (Order) prevOrderList.getSelectionModel().getSelectedItem();
+
+        if (!rejectReason.getText().isEmpty()){
+            order.setInstructions(rejectReason.getText());
             restaurant.rejectOrder(order);
+            prevOrderList.setMouseTransparent(false);
+
+            prevControlBox.setVisible(true);
+            rejectBox.setVisible(false);
         }
     }
 

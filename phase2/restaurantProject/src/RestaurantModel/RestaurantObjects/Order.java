@@ -44,6 +44,11 @@ public class Order {
     private String instructions;
     private int orderNumber;
     private int serverNumber;
+    private int cookNumber;
+
+    public int getCookNumber() { return cookNumber; }
+
+    public void setCookNumber(int cookNumber) { this.cookNumber = cookNumber; }
 
     public int getServerNumber() {
         return serverNumber;

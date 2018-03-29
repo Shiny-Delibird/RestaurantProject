@@ -1,24 +1,24 @@
-chicken | 28
+chicken | 26
 egg | 20
 cucumber | 14
 onion | 30
-vegetable oil | 11
+vegetable oil | 10
 tomato | 266
 ground beef | 50
 cheese | 17
-potato | 26
+potato | 25
 flour | 78
 steak sauce | 37
 baking soda | 8
 dough | 23
 raw steak | 16
-bread | 24
-salt | 73
+bread | 22
+salt | 71
 noodles | 23
 tomato sauce | 0
 milk | 16
 cream | 16
-soda | 39
+soda | 32
 lettuce | 36
 patty | 56
 mushrooms | 0
