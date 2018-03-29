@@ -40,6 +40,13 @@ inventory (this is also the case with an incomplete minimums file with missing e
 
 NOTE: the minimums can be changed directly by altering the minimums.txt file. PLEASE ONLY INSERT NON-NEGATIVE INTEGERS
 
+=============CALORIES=============
+the calories.txt file contains the caloric information of the ingredients in the inventory
+
+The file is structured in the format ingredient | caloric value of one unit of the ingredient
+
+This file must be filled in manually if not present. Items with no caloric value recorded have a default of 0 calories
+
 ================REORDERING============
 Requests for more ingredients are auto-generated and stored in the requests.txt file as ingredients are used.
 
