@@ -21,12 +21,12 @@ import java.util.*;
  * The RequestManager class
  * Used by the InventorySystem in the event of an ingredient being low on stock to generate a request for more
  * */
-class RequestManager implements RequestSystem {
+public class RequestManager implements RequestSystem {
     private Set<String> requested;  // the set of items that a request has been placed for
 
     private static final String REORDER_FILE = "configs/requests.txt";
 
-    RequestManager(){
+    public RequestManager(){
         requested = new HashSet<>();
         try {
             new PrintWriter(new BufferedWriter(new FileWriter(REORDER_FILE)));

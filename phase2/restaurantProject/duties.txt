@@ -5,13 +5,15 @@ Mohammad Saad Khan - 1004138818
 -Created Restaurant class and interface
 -Designed and implemented event handling system
 
-David Cao
--Built OrderManager and InventoryManager
--Created modular interfaces for InventoryManager allowing for more Manager and Entry types
--Implemented request handling system
--Came up with ideas for GUI design
+David Fu Cao
+-Built the Entry and InventorySystem interfaces, allowing for easily extensibility and storage of additional information
+    ex. calorie information
+-Also built the OrderSystem, and RequestSystem interfaces, which handles orders and requests for more ingredients
+-Coded the ComplexInventory, OrderManager, RequestManager, CalorieEntry classes, which implements the above interfaces
+-Came up with ideas for GUI design (mainly ServerController) and implementation
+-Created javadoc documentation for majority of backend
 
-Leon
+Leon Yao
 -Built parts of GUI such as receiveShipments
 -Created entire Logging system
 -Primary bug-tester
