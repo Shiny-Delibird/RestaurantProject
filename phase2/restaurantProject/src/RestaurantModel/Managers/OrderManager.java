@@ -1,5 +1,6 @@
 package RestaurantModel.Managers;
 
+import RestaurantModel.Interfaces.OrderSystem;
 import RestaurantModel.RestaurantObjects.Order;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -32,17 +33,17 @@ import java.util.LinkedList;
  * when necessary
  * */
 
-class OrderManager {
+class OrderManager implements OrderSystem {
     private ObservableList<Order> pendingOrders; // server placed order, cooking not started
     private ObservableList<Order> ordersInProgress; // cook confirmed order, cooking in progress
     private ObservableList<Order> cookedOrders; // order has been cooked, waiting for server pick up
     private ObservableList<Order> completedOrders; // order has been delivered and accepted by customer
 
     OrderManager(){
-        pendingOrders = FXCollections.observableList(new LinkedList<Order>());
-        ordersInProgress = FXCollections.observableList(new LinkedList<Order>());
-        cookedOrders = FXCollections.observableList(new LinkedList<Order>());
-        completedOrders = FXCollections.observableList(new LinkedList<Order>());
+        pendingOrders = FXCollections.observableList(new LinkedList<>());
+        ordersInProgress = FXCollections.observableList(new LinkedList<>());
+        cookedOrders = FXCollections.observableList(new LinkedList<>());
+        completedOrders = FXCollections.observableList(new LinkedList<>());
     }
 
     // getter for list of pending Orders
@@ -106,7 +107,7 @@ class OrderManager {
      * Used when an Order is retrieved from the Kitchen and brought out to the customer
      * @param order the Order that has been retrieved to be served
      * */
-    public void retrieveOrder(Object order){
+    public void retrieveOrder(Order order){
         if (cookedOrders.contains(order))
             cookedOrders.remove(order);
         else

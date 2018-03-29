@@ -6,11 +6,6 @@ import javafx.collections.ObservableList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * The RestaurantModel.RestaurantObjects.Order class. Orders contain a list of foods to be cooked and are passed through RestaurantModel.OrderManager and are
- * given a tableNumber
- */
-
 /*
 * @startuml
 * class Order{
@@ -35,15 +30,46 @@ import java.util.Map;
 * @enduml
  */
 
+/**
+ * The Order class
+ * represents and contains the associated information of an order placed in the restaurant
+ * */
 public class Order {
 
-    private ObservableList<Food> foods;
-    private int tableNumber;
-    private static int classOrderNumber = 1;
-    private String nickname;
-    private String instructions;
-    private int orderNumber;
-    private int serverNumber;
+    private ObservableList<Food> foods;     // the foods in this order
+    private int tableNumber;    // the table this order was placed at
+    private static int classOrderNumber = 1;    // the global order counter
+    private String nickname;    // the nickname for this order (typically customer name)
+    private String instructions;    // the instructions for the cook
+    private int orderNumber;    // the order number of this order
+    private int serverNumber;   // the number of the server who placed this order
+
+    public Order(){
+        this.orderNumber = classOrderNumber;
+        classOrderNumber += 1;
+        foods = FXCollections.observableArrayList();
+    }
+
+    /**
+     * Creates an RestaurantModel.RestaurantObjects.Order with a tableNumber, OrderNumber, and list of foods.
+     * OrderNumber is set based on the number of Orders taken already
+     * @param tableNumber The number of the table
+     */
+    public Order(int tableNumber){
+        this.tableNumber = tableNumber;
+        this.orderNumber = classOrderNumber;
+        classOrderNumber += 1;
+        foods = FXCollections.observableArrayList();
+    }
+
+    // getters and setters
+    public int getTableNumber() {
+        return tableNumber;
+    }
+
+    public void setTableNumber(int tableNumber) {
+        this.tableNumber = tableNumber;
+    }
 
     public int getServerNumber() {
         return serverNumber;
@@ -51,10 +77,6 @@ public class Order {
 
     public void setServerNumber(int serverNumber) {
         this.serverNumber = serverNumber;
-    }
-
-    public String getNickname() {
-        return nickname;
     }
 
     public void setNickname(String nickname) {
@@ -69,38 +91,14 @@ public class Order {
         this.instructions = instructions;
     }
 
-    public int getOrderNumber() {
-        return orderNumber;
-    }
-
-
-    /**
-     * Creates an RestaurantModel.RestaurantObjects.Order with a tableNumber, OrderNumber, and list of foods.
-     * OrderNumber is set based on the number of Orders taken already
-     * @param tableNumber The number of the table
-     */
-    public Order(int tableNumber){
-        this.tableNumber = tableNumber;
-        this.orderNumber = classOrderNumber;
-        classOrderNumber += 1;
-        foods = FXCollections.observableArrayList();
-    }
-
-    public void setTableNumber(int tableNumber) {
-        this.tableNumber = tableNumber;
-    }
-
     public ObservableList<Food> getFoods() {
         return foods;
     }
 
-    public Order(){
-        this.orderNumber = classOrderNumber;
-        classOrderNumber += 1;
-        foods = FXCollections.observableArrayList();
-    }
-
-    //Returns a Map with the name and amount of each ingredient
+    /**
+     * returns all the ingredients needed to cook all of the foods in this order
+     * @return a map with the ingredients (keys) and their individual quantities (values) required
+     * */
     public Map<String, Integer> getAllIngredients(){
         Map<String, Integer> allIngredients = new HashMap<>();
 
@@ -120,14 +118,24 @@ public class Order {
         return allIngredients;
     }
 
-    //Adds the food to the order
+    /**
+     * adds the given food to the order
+     * @param food the new food
+     * */
     public void addFood(Food food){
         foods.add(food);
     }
 
+    /**
+     * removes the given food from the order
+     * @param food the unwanted food
+     * */
     public void removeFood(Food food){foods.remove(food);}
 
-    //Returns the total price of all the foods
+    /**
+     * returns the foods on this order and their individual prices
+     * @return a map consisting of the foods in this order as keys and the price of each food as values
+     * */
     public Map<String, Float> getPrices(){
         Map<String, Float> prices = new HashMap<>();
         for (Food food : foods){
@@ -136,6 +144,10 @@ public class Order {
         return prices;
     }
 
+    /**
+     * calculates the total cumulative price of all items in this order
+     * @return the total price of the order
+     * */
     public double getTotalPrice(){
         float price = 0;
         for (Food food : foods){
@@ -144,14 +156,10 @@ public class Order {
         return price;
     }
 
-    public int getTableNumber() {
-        return tableNumber;
-    }
-
     @Override
     public String toString(){
         if (nickname.isEmpty()){
-            return "Order " + getOrderNumber() + " at Table " + getTableNumber();
+            return "Order " + orderNumber + " at Table " + getTableNumber();
         }else{
             return nickname + " order " + " at Table " + getTableNumber();
         }

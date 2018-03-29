@@ -74,7 +74,8 @@ public class CalorieEntry implements Entry {
     }
 
     /**
-     * returns whether the quantity of this ingredient is above the minimum allowed amount
+     * checks whether the quantity of this ingredient is above the minimum allowed amount
+     * @return true or false depending on whether the quantity is greater than or equal to the minimum
      * */
     public boolean hasEnough(){
         return (quantity >= minimum);

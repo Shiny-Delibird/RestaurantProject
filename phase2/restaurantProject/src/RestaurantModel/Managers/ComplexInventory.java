@@ -72,6 +72,7 @@ public class ComplexInventory implements InventorySystem {
      * Reads the given config file and creates/updates the associated information (ingredient, minimum or calorie
      * information) in the instance. This method also creates the given file if it does not exist.
      * @param fileName the file to be parsed. must either be the INVENTORY_FILE, MINIMUM_FILE or CALORIE_TABLE
+     * @return in the case of parsing the MINIMUM_FILE, we set of all the ingredients processed is returned
      * */
     private Set<String> parseFile(String fileName) throws IOException{
         if (!(new File(fileName).exists())) {
@@ -213,7 +214,8 @@ public class ComplexInventory implements InventorySystem {
     }
 
     /**
-     * returns a map with keys being ingredient names and values being their individual quantities.
+     * generates a basic version of the inventory with no extra information
+     * @return a map of the ingredients (keys) and their quantities (values) in the inventory
      * */
     public ObservableMap<String, Integer> getInventory(){
         ObservableMap<String,Integer> quantities = FXCollections.observableHashMap();
@@ -226,6 +228,7 @@ public class ComplexInventory implements InventorySystem {
     /**
      * checks the inventory to see if there is enough ingredients in stock to make a given food
      * @param food the food that needs to be made
+     * @return true or false depending on whether the food can be made or not
      * */
     public boolean hasEnough(Food food){
         boolean enough = true;
@@ -239,8 +242,9 @@ public class ComplexInventory implements InventorySystem {
     }
 
     /**
-     * returns the calorie count of a given food, which is the sum of the calories of each ingredient in the food
+     * calculates the calorie count of a given food, which is the sum of the calories of each ingredient in the food
      * @param food the food in question
+     * @return the calorie count
      * */
     public int getCalories(Food food){
         int sum = 0;
