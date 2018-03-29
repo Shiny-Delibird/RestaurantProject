@@ -43,6 +43,7 @@ public class Order {
     private String instructions;    // the instructions for the cook
     private int orderNumber;    // the order number of this order
     private int serverNumber;   // the number of the server who placed this order
+    private int cookNumber;
 
     public Order(){
         this.orderNumber = classOrderNumber;
@@ -94,6 +95,10 @@ public class Order {
     public ObservableList<Food> getFoods() {
         return foods;
     }
+
+    public int getCookNumber() { return cookNumber; }
+
+    public void setCookNumber(int cookNumber) { this.cookNumber = cookNumber; }
 
     /**
      * returns all the ingredients needed to cook all of the foods in this order
