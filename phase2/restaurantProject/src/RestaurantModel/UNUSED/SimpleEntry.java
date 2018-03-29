@@ -1,4 +1,4 @@
-package RestaurantModel.RestaurantObjects;
+package RestaurantModel.UNUSED;
 
 import RestaurantModel.Interfaces.Entry;
 

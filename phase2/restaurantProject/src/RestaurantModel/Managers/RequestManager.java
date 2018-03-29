@@ -17,8 +17,12 @@ import java.util.*;
 * @enduml
  */
 
+/**
+ * The RequestManager class
+ * Used by the InventorySystem in the event of an ingredient being low on stock to generate a request for more
+ * */
 class RequestManager implements RequestSystem {
-    private Set<String> requested;
+    private Set<String> requested;  // the set of items that a request has been placed for
 
     private static final String REORDER_FILE = "configs/requests.txt";
 
@@ -31,6 +35,9 @@ class RequestManager implements RequestSystem {
         }
     }
 
+    /**
+     * clears the requests.txt file and the set of requested items
+     * */
     public void clear(){
         try{
             // clears the requests.txt file
@@ -43,6 +50,10 @@ class RequestManager implements RequestSystem {
         }
     }
 
+    /**
+     * writes a request for an item to the requests.txt file
+     * @param item the ingredient that needs to be reordered
+     * */
     public void placeRequest(String item){
         // generates the reorder file if it isn't present
         try {
