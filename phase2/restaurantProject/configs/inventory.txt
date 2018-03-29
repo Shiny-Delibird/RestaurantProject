@@ -2,11 +2,11 @@ chicken | 26
 egg | 20
 cucumber | 14
 onion | 30
-vegetable oil | 10
+vegetable oil | 9
 tomato | 266
 ground beef | 50
 cheese | 17
-potato | 25
+potato | 24
 flour | 78
 steak sauce | 37
 baking soda | 8

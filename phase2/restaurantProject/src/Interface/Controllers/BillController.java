@@ -81,13 +81,15 @@ public class BillController {
             if (!newValue.matches("\\d*\\.?\\d*$")) {
                 tipInput.setText(newValue.replaceAll("[^(\\d*.?\\d*$)]", ""));
             }
-        });
-
-        tipInput.textProperty().addListener((observable, oldValue, newValue) -> {
             try {
                 tipAmount = Double.parseDouble(newValue)/100;
-                setLabels(taxAmount, tipAmount, totalPrice);
-            } catch (Exception ignored){} });
+                if (tipAmount < 2){
+                    setLabels(taxAmount, tipAmount, totalPrice);
+                } else {
+                    tipInput.setText(oldValue);
+                }
+            } catch (Exception ignored){}
+        });
     }
 
     private void setLabels(double taxAmount, double tipAmount, double totalPrice){
