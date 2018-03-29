@@ -1,0 +1,25 @@
+Mohammad Saad Khan - 1004138818
+-Project Manager
+-Lead for GUI and JavaFX design
+-Implemented most of the GUI including Server, Cook, Manager, and TakeOrder
+-Created Restaurant class and interface
+-Designed and implemented event handling system
+
+David Cao
+-Built OrderManager and InventoryManager
+-Created modular interfaces for InventoryManager allowing for more Manager and Entry types
+-Implemented request handling system
+-Came up with ideas for GUI design
+
+Leon
+-Built parts of GUI such as receiveShipments
+-Created entire Logging system
+-Primary bug-tester
+-Implemented many interface methods in the classes
+-Implemented Order and Food classes
+
+Aliraza Nagamia
+-Created uml diagram
+-Came up with many ideas for the gui
+-Ensured consistent implementation of design patterns and SOLID principles
+-Helped with overall backend model design

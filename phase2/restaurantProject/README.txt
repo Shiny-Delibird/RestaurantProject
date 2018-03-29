@@ -1,31 +1,20 @@
-IMPORTANT NOTE: When running the project, ensure that the root folder opened in IntelliJ is the "group_0221" folder
+IMPORTANT NOTE: When running the project, ensure that the root folder opened in IntelliJ is the "restaurantProject" folder,
+                    in the phase2 directory
                 Otherwise, the program may crash when trying to open its files as they are all referenced via that root
-                If the program crashes with a file not found error, try ensureing the root folder opened is "group_0221"
+                If the program crashes with a file not found error, try ensuring the root folder opened is "restaurantProject"
 
-=============EVENTS==========
-The event structure in the event.txt file is:
+==============GUI=================
+The GUI is opened by running the main() method in src\Interface\GUIInitializer.java
 
-Sevr or Cook doing event | Type of Event | RestaurantModel.RestaurantObjects.Order that Event is happening on | Notes
+It opens the Manager's GUI to start with, and because this is not yet running on tablets,
+   servers and cooks can be opened from there
 
-Event types will be:
+Each Cook and Server has their own window, representing what they would see personal tablet
 
-takeOrder           -- notes has order details
-cookConfirmOrder
-cookFinishedOrder
-tableReceivedOrder
-tableRejectedOrder  -- notes has why order was rejected
-tableRequestedBill
-receiveShipment     -- notes has shipment info
+===========LOGGING================
+The log is stored in configs/log.txt
 
-Notes will contain misc. info, like order details for example
-
-ex:
-
-server1 | takeOrder |  | 4 ; Burger x 2 +lettuce, fries x 1
-
-cook1 | cookConfirmOrder | 2 |
-
- | receiveShipment |  | bread x 2, eggs x 12, milk x 5
+This is also where payments made today can be seen
 
 ==============MENU================
 The menu is generated when the program runs from the file called menu.txt

@@ -212,6 +212,7 @@ public class Restaurant implements RestaurantModel {
      * */
     @Override
     public void rejectOrder(Order order) {
+        orderManager.getOrdersInProgress().add(order);
         orderManager.retrieveOrder(order);
         logger.log(Level.INFO, "Rejected Order for " + order.toString());
     }
