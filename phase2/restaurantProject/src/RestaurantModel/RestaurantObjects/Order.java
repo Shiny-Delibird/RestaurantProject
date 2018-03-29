@@ -7,27 +7,27 @@ import java.util.HashMap;
 import java.util.Map;
 
 /*
-* @startuml
-* class Order{
-* -foods: ObservableList<Food>
-* -tableNumber: int
-* -{static} classOrderNumber: int
-* -nickname: String
-* -instructions: String
-* -orderNumber: int
-* +setNickname(nickname: String): void
-* +getInstructions(): String
-* +setInstructions(instructions: String): void
-* +getOrderNumber(): int
-* +Order()
-* +getAllIngredients(): Map<String, Integer>
-* +addFood(food: Food): void
-* +removeFood(food: Food): void
-* +getPrices(): Map<String, float>
-* +getTotalPrice(): double
-* +toString(): String
+ * @startuml
+ * class Order{
+ * -foods: ObservableList<Food>
+ * -tableNumber: int
+ * -{static} classOrderNumber: int
+ * -nickname: String
+ * -instructions: String
+ * -orderNumber: int
+ * +setNickname(nickname: String): void
+ * +getInstructions(): String
+ * +setInstructions(instructions: String): void
+ * +getOrderNumber(): int
+ * +Order()
+ * +getAllIngredients(): Map<String, Integer>
+ * +addFood(food: Food): void
+ * +removeFood(food: Food): void
+ * +getPrices(): Map<String, float>
+ * +getTotalPrice(): double
+ * +toString(): String
  *  }
-* @enduml
+ * @enduml
  */
 
 /**
