@@ -86,13 +86,10 @@ public class CookController implements WorkerController {
         prevOrderList.setItems(restaurant.getOrdersAtStage("Pending"));
         postOrderList.setItems(localToCook);
 
-        restaurant.getOrdersAtStage("Cooked").addListener(new ListChangeListener() {
-            @Override
-            public void onChanged(Change c) {
-                for (Object order : restaurant.getOrdersAtStage("InProgress")){
-                    if (((Order) order).getCookNumber() == cookID){
-                        localToCook.add(((Order) order));
-                    }
+        restaurant.getOrdersAtStage("Cooked").addListener((ListChangeListener) c -> {
+            for (Object order : restaurant.getOrdersAtStage("InProgress")){
+                if (((Order) order).getCookNumber() == cookID){
+                    localToCook.add(((Order) order));
                 }
             }
         });
