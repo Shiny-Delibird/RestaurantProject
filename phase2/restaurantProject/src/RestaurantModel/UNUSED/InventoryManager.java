@@ -1,7 +1,7 @@
 package RestaurantModel.UNUSED;
 
 import RestaurantModel.Interfaces.InventorySystem;
-// import RestaurantModel.Managers.RequestManager;
+import RestaurantModel.Managers.RequestManager;
 import RestaurantModel.RestaurantObjects.Food;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableMap;
@@ -33,15 +33,13 @@ import java.util.*;
  * */
 class InventoryManager implements InventorySystem {
     private Map<String, SimpleEntry> inventory;
-    // private RequestManager requests;
+    private RequestManager requests;
 
     private static final String INVENTORY_FILE = "configs/inventory.txt";
     private static final String MINIMUM_FILE = "configs/minimums.txt";
 
     /**
-     * Initializes the inventory and minimums maps using their respective files. If the files are not present, they are
-     * auto-generated with pre-determined values. Also creates the requests.txt file which holds all the items which
-     * a manager must order from the supplier
+     * Initializes the inventory and the RequestManager used to place reorder requests
      */
     InventoryManager (){
         try{
@@ -50,7 +48,7 @@ class InventoryManager implements InventorySystem {
             parseFile(INVENTORY_FILE);
             Set<String> minimumKeys = parseFile(MINIMUM_FILE);
 
-            // requests = new RequestManager();
+            requests = new RequestManager();
 
             updateInventoryFile();
             updateMinimumsFile(minimumKeys);
@@ -62,7 +60,7 @@ class InventoryManager implements InventorySystem {
     }
 
     /**
-     * reads the inventory or minimum file and creates the associated map attribute in the instance
+     * reads the inventory or minimum file and updates the associated information in the inventory
      * also creates the file if it doesn't exist
      * @param fileName the file to be parsed. must either be the INVENTORY_FILE or MINIMUM_FILE
      * */
@@ -101,7 +99,7 @@ class InventoryManager implements InventorySystem {
     }
 
     /**
-     * updates the inventory.txt file to match the inventory map
+     * updates the inventory.txt file to match the inventory map by wiping and rewriting the file
      * */
     private void updateInventoryFile(){
         try{
@@ -156,6 +154,10 @@ class InventoryManager implements InventorySystem {
         checkAndReorder(inventory.keySet());
     }
 
+    /**
+     * subtracts the given ingredients from the inventory
+     * @param used map of the ingredients (keys) and quantities (values) to be removed
+     * */
     public void useIngredients(Map<String, Integer> used){
         for (String key : used.keySet()){
             if (inventory.containsKey(key)) {
@@ -168,24 +170,36 @@ class InventoryManager implements InventorySystem {
         updateInventoryFile();
     }
 
+    /**
+     * adds a fresh batch of ingredients to the inventory
+     * @param shipment a map of the ingredients (keys) and quantities (values) in the shipment
+     * */
     public void receiveShipment(Map<String, Integer> shipment){
         for (String key : shipment.keySet()){
             inventory.get(key).addQuantity(shipment.get(key));
         }
-        // requests.clear();
+        requests.clear();
         checkAndReorder(shipment.keySet());
 
         updateInventoryFile();
     }
 
+    /**
+     * checks the given set of ingredients and places a reorder request if they are under-stocked
+     * @param keys the list of ingredients to be checked
+     * */
     private void checkAndReorder(Set<String> keys){
         for (String key : keys){
             if (!inventory.get(key).hasEnough()){
-                // requests.placeRequest(key);
+                requests.placeRequest(key);
             }
         }
     }
 
+    /**
+     * creates a map of the inventory consisting of the ingredients and their amounts
+     * @return a map with ingredients (keys) and their current quantity in the inventory (values)
+     * */
     public ObservableMap<String, Integer> getInventory(){
         ObservableMap<String,Integer> quantities = FXCollections.observableHashMap();
         for (String key : inventory.keySet()){
@@ -194,6 +208,10 @@ class InventoryManager implements InventorySystem {
         return quantities;
     }
 
+    /**
+     * determines whether there is enough ingredients in the inventory to make the given food
+     * @return true or false depending on whether the inventory has all the required ingredients
+     * */
     public boolean hasEnough(Food food){
         boolean enough = true;
         Map<String, Integer> ingredients = food.getIngredients();
@@ -203,11 +221,6 @@ class InventoryManager implements InventorySystem {
             }
         }
         return enough;
-    }
-
-    @Override
-    public int getCalories(Food food) {
-        return 0;
     }
 
     @Override

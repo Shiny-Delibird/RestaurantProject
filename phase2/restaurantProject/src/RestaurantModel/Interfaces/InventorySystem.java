@@ -33,6 +33,4 @@ public interface InventorySystem {
     String toString();
 
     boolean hasEnough(Food food);
-
-    public int getCalories(Food food);
 }

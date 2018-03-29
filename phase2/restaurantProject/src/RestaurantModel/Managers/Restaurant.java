@@ -262,6 +262,6 @@ public class Restaurant implements RestaurantModel {
      * */
     @Override
     public int getCalories(Food food) {
-        return inventoryManager.getCalories(food);
+        return ((ComplexInventory)inventoryManager).getCalories(food);
     }
 }
