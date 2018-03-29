@@ -131,7 +131,7 @@ public class ServerController implements WorkerController {
     }
 
     private void giveBill(){
-        if (!postOrderList.getSelectionModel().isEmpty()){
+        if (!postOrderList.getSelectionModel().isEmpty() && takeOrderButton.isVisible()){
             try {
                 ObservableList<Order> orders = postOrderList.getSelectionModel().getSelectedItems();
 

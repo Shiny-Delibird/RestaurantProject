@@ -12,6 +12,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
+
 /*
 * @startuml
 * class BillController{
@@ -59,7 +63,9 @@ public class BillController {
         totalPrice = 0;
         StringBuilder totalBill = new StringBuilder();
 
-        for (Order order : orders){
+        List<Order> fixedOrders = new ArrayList<>(orders);
+
+        for (Order order : fixedOrders){
             totalBill.append(order.toString() + ":\n");
             totalBill.append(restaurant.requestBill(order));
             totalBill.append("Order total: " + order.getTotalPrice() + "\n\n");
@@ -85,9 +91,11 @@ public class BillController {
     }
 
     private void setLabels(double taxAmount, double tipAmount, double totalPrice){
-        tipPrice.setText("Tip of " + tipAmount * totalPrice + "$ at " + tipAmount*100 + "%");
-        subTotal.setText("Subtotal: " + totalPrice + "$ plus " + taxAmount*100 + "% tax of " + totalPrice * taxAmount + "$");
-        finalPrice.setText("Total Price: " + Double.toString(totalPrice + totalPrice * taxAmount + tipAmount * totalPrice) + "$");
+        DecimalFormat price = new DecimalFormat("#,###.00");
+
+        tipPrice.setText("Tip of " + price.format(tipAmount * totalPrice) + "$ at " + tipAmount*100 + "%");
+        subTotal.setText("Subtotal: " + price.format(totalPrice) + "$ plus " + taxAmount*100 + "% tax of " + price.format(totalPrice) + "$");
+        finalPrice.setText("Total Price: " + price.format(totalPrice + totalPrice * taxAmount + tipAmount * totalPrice) + "$");
     }
 
     public void closeBill(){

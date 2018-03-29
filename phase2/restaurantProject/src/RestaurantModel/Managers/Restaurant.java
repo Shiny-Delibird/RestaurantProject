@@ -61,15 +61,17 @@ public class Restaurant implements RestaurantModel {
     }
 
     public void createLog() throws IOException{
-        File f = new File("configs/payments");
-        if (!f.exists()){
-            f.createNewFile();
+        File f = new File("configs/log.txt");
+        if (f.exists()) {
+            f.delete();
         }
-        fh = new FileHandler("configs/payments", true);
+        f.createNewFile();
+        fh = new FileHandler("configs/log.txt", true);
         logger = Logger.getLogger("test");
         logger.addHandler(fh);
         SimpleFormatter formatter = new SimpleFormatter();
         fh.setFormatter(formatter);
+        logger.setUseParentHandlers(false);
     }
 
 
@@ -126,7 +128,7 @@ public class Restaurant implements RestaurantModel {
     }
 
     @Override
-    public ObservableList<Order> getOrdersAtStage(String stage) {
+    public ObservableList getOrdersAtStage(String stage) {
         switch (stage){
             case "InProgress": return orderManager.getOrdersInProgress();
             case "Completed": return orderManager.getCompletedOrders();
@@ -140,6 +142,8 @@ public class Restaurant implements RestaurantModel {
     public void placeOrder(Order order) {
         orderManager.placeOrder(order);
         inventoryManager.useIngredients(order.getAllIngredients());
+        logger.log(Level.INFO, "Placed Order for " + order.toString());
+
     }
 
     @Override
@@ -150,29 +154,35 @@ public class Restaurant implements RestaurantModel {
     @Override
     public void cookOrder(Order order) {
         orderManager.orderIsCooked(order);
+        logger.log(Level.INFO, "Prepared Order for " + order.toString());
+        logger.log(Level.INFO, "Used ingredients" + order.getAllIngredients().toString());
     }
 
     @Override
     public void receiveOrder(Order order) {
         orderManager.retrieveOrder(order);
         orderManager.confirmCompleted(order);
+        logger.log(Level.INFO, "Received Order for " + order.toString());
     }
 
     @Override
     public void rejectOrder(Order order) {
         orderManager.retrieveOrder(order);
+        logger.log(Level.INFO, "Rejected Order for " + order.toString());
     }
 
     @Override
     public String requestBill(Order order) {
+        orderManager.getCompletedOrders().remove(order);
+
         StringBuilder bill = new StringBuilder();
         for (Map.Entry<String, Float> item: order.getPrices().entrySet()){
             String word = item.getKey() + ": " + item.getValue() + "$\n";
             bill.append(word);
         }
-        orderManager.getCompletedOrders().remove(order);
-    logger.log(Level.INFO, bill.toString());
-        return bill.toString();
+        String finalBill = bill.toString();
+        logger.log(Level.INFO, finalBill);
+        return finalBill;
     }
 
     @Override
