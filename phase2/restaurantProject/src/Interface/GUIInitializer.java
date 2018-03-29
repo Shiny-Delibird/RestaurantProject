@@ -22,6 +22,24 @@ import java.io.IOException;
 * +start(primaryStage: Stage):void
 * +{static} main(args: String[]): void
 * }
+* GUIInitializer *-- Restaurant
+* Restaurant *-- OrderManager
+* Restaurant *-- ComplexInventory
+* ComplexInventory *-- RequestManager
+* OrderManager *-- Order
+* Order *-- Food
+* Food *-- CalorieEntry
+* GUIInitializer *-- ManagerController
+* ManagerController *-- CookController
+* ManagerController *-- ServerController
+* ManagerController *-- ReceiveShipmentController
+* ServerController *-- TakeOrderController
+* ServerController *-- BillController
+* ServerController *-- ReceiveShipmentController
+* CookController *-- ReceiveShipmentController
+*
+*
+*
 * @enduml
  */
 
