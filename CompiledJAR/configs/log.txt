@@ -1,0 +1,2 @@
+Oct 25, 2018 6:32:20 PM RestaurantModel.Managers.Restaurant placeOrder
+INFO: Placed Order for Order 1 at Table 4

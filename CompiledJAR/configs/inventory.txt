@@ -1,0 +1,28 @@
+chicken | 107
+egg | 102
+cucumber | 110
+onion | 108
+vegetable oil | 110
+tomato | 110
+ground beef | 108
+cheese | 107
+potato | 110
+flour | 98
+steak sauce | 110
+baking soda | 106
+dough | 110
+raw steak | 154
+bread | 154
+salt | 108
+noodles | 109
+tomato sauce | 107
+milk | 102
+cream | 102
+soda | 110
+lettuce | 109
+patty | 110
+mushrooms | 110
+bun | 110
+cornflour | 106
+sugar | 10
+ketchup | 110
